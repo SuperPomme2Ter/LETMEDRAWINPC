@@ -28,28 +28,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="350b7801-790f-4668-bcdf-89d8bb1331e4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LETMEDRAWINPC.3dsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LETMEDRAWINPC.elf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LETMEDRAWINPC.smdh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Source/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Source/.idea/Source.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Source/.idea/editor.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Source/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Source/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Source/main.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/.idea/PC.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/.idea/editor.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/main.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/test.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/test.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/test.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,6 +127,7 @@
       <workItem from="1752522698704" duration="222000" />
       <workItem from="1752522981256" duration="1733000" />
       <workItem from="1752785648828" duration="2904000" />
+      <workItem from="1752844668278" duration="615000" />
     </task>
     <task id="LOCAL-00001" summary="wut">
       <option name="closed" value="true" />

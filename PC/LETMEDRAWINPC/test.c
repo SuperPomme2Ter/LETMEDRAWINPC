@@ -1,3 +1,4 @@
+/*
 // client.c - un micro-client qui envoie un message à un serveur et attend sa réponse
 #include <stdio.h>
 #include <string.h>
@@ -95,6 +96,7 @@ int main(int ac, char **av)
     closesocket(socket_fd);
     return (0);
 }
+*/
 
 
 
