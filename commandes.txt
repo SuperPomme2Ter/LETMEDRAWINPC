@@ -1,0 +1,6 @@
+COMPILER CORRECTEMENT LE SERVEUR PC
+
+mkdir build // fichier build
+cd build // aller dans build
+cmake .. // generer les fichiers cmake
+cmake --build . // build l'exe

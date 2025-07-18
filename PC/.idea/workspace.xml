@@ -5,7 +5,6 @@
   </component>
   <component name="BackendCodeEditorMiscSettings">
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
-    <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppCodeGeneration" type="string" />
   </component>
   <component name="CMakePresetLoader">{
   &quot;useNewFormat&quot;: true
@@ -18,32 +17,33 @@
   </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="LETMEDRAWINPC" targetName="LETMEDRAWINPC" />
+      <config projectName="PC" targetName="PC" />
     </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Debug-Coverage" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="350b7801-790f-4668-bcdf-89d8bb1331e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../PC/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PC/.idea/PC.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PC/.idea/editor.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PC/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PC/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PC/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PC/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PC/test.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PC/test.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/LETMEDRAWINPC.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/editor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CMakeLists.txt" beforeDir="false" />
+    <list default="true" id="456f4c9b-ddd1-4c59-bb56-2bfce16cc288" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../3DS/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/LETMEDRAWINPC.3dsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/LETMEDRAWINPC.elf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/LETMEDRAWINPC.smdh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/Source/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/Source/.idea/Source.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/Source/.idea/editor.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/Source/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/Source/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3DS/Source/main.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.c" beforeDir="false" afterPath="$PROJECT_DIR$/test.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.h" beforeDir="false" afterPath="$PROJECT_DIR$/test.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +53,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug-Coverage" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -69,6 +69,10 @@
     &quot;accountId&quot;: &quot;73de8421-0bc7-4096-902f-3e9d4846989d&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2025" />
@@ -76,16 +80,17 @@
     <option name="productBranch" value="Classic" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="2zrcAN2Jw8h0ECso9PiPTGVjgJn" />
+  <component name="ProjectId" id="2zsbe8YJPhXwETnZ7S9imM7cqw4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "CMake Application.LETMEDRAWINPC.executor": "Coverage",
+    "CMake Application.PC.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -97,32 +102,28 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "F:/LETMEDRAWINPC/3DS",
+    "last_opened_file_path": "F:/LETMEDRAWINPC/PC",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "settings.editor.selected.configurable": "clion.custom.compiler.configurable",
     "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "PLAIN_TEXT"
-    ]
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\LETMEDRAWINPC" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\LETMEDRAWINPC\Source" />
+      <recent name="F:\LETMEDRAWINPC\PC" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="LETMEDRAWINPC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LETMEDRAWINPC" TARGET_NAME="LETMEDRAWINPC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LETMEDRAWINPC" RUN_TARGET_NAME="LETMEDRAWINPC">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="true" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PC" TARGET_NAME="PC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="PC" RUN_TARGET_NAME="PC">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -130,26 +131,17 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="350b7801-790f-4668-bcdf-89d8bb1331e4" name="Changes" comment="" />
+      <changelist id="456f4c9b-ddd1-4c59-bb56-2bfce16cc288" name="Changes" comment="" />
       <created>1752489774203</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1752489774203</updated>
-      <workItem from="1752492489851" duration="1301000" />
-      <workItem from="1752493821734" duration="9097000" />
-      <workItem from="1752518619754" duration="3504000" />
-      <workItem from="1752522698704" duration="222000" />
-      <workItem from="1752522981256" duration="1733000" />
+      <workItem from="1752522821915" duration="91000" />
+      <workItem from="1752522923027" duration="5043000" />
+      <workItem from="1752528330573" duration="112000" />
+      <workItem from="1752770723055" duration="7756000" />
+      <workItem from="1752780937828" duration="3284000" />
     </task>
-    <task id="LOCAL-00001" summary="wut">
-      <option name="closed" value="true" />
-      <created>1752492733607</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1752492733607</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,10 +151,6 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticReloadCMake value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="wut" />
-    <option name="LAST_COMMIT_MESSAGE" value="wut" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,0 +1,2 @@
+CMakeFiles/LETMEDRAWINPC.dir/test.c.o: \
+ F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.c

@@ -1,0 +1,3 @@
+/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir
+/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/build/CMakeFiles/edit_cache.dir
+/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/build/CMakeFiles/rebuild_cache.dir
