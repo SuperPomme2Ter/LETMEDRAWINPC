@@ -1,24 +1,18 @@
-CMakeFiles/LETMEDRAWINPC.dir/test.c.o: \
- F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.c \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdio.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/crtdefs.h \
+CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o: \
+ F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Debug.c \
+ F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Debug.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/winsock2.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_unicode.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/windows.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_mac.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_secapi.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/vadefs.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sdks/_mingw_directx.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_print_push.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_off_t.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/swprintf.inl \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_print_pop.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/ws2tcpip.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_unicode.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/winsock2.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/windows.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sdkddkver.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/excpt.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/crtdefs.h \
  C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdarg.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdarg.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_stdarg.h \
@@ -234,8 +228,10 @@ CMakeFiles/LETMEDRAWINPC.dir/test.c.o: \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/ws2def.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/psdk_inc/_wsa_errnos.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/qos.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/ws2ipdef.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/in6addr.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/psdk_inc/_ip_mreq1.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/mstcpip.h \
- F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Debug.h
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/assert.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdio.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_print_push.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_off_t.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/swprintf.inl \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_print_pop.h

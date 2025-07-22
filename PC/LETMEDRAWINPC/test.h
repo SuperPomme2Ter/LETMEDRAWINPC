@@ -1,3 +1,10 @@
 //
-// Created by rapha on 14/07/2025.
+// Created by rapha on 22/07/2025.
 //
+
+#ifndef TEST_H
+#define TEST_H
+
+#endif //TEST_H
+
+int ClientStart(int* socket_fd);

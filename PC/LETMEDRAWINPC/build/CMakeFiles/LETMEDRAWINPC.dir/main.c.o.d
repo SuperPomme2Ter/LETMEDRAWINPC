@@ -237,4 +237,6 @@ CMakeFiles/LETMEDRAWINPC.dir/main.c.o: \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/ws2ipdef.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/in6addr.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/psdk_inc/_ip_mreq1.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/mstcpip.h
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/mstcpip.h \
+ F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Debug.h \
+ F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.h

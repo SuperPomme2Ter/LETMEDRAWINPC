@@ -1,81 +1,72 @@
-/*
-// client.c - un micro-client qui envoie un message à un serveur et attend sa réponse
+// client.c - un micro-client qui envoie un message à un serveur et attend DSAdr réponse
+
 #include <stdio.h>
-#include <string.h>
-#include <winsock2.h>
 #include <ws2tcpip.h>
 
+#include "Debug.h"
 
-#define PORT 4242  // le port du serveur auquel on va se connecter
-
-void print_wsa_error(const char *msg) {
-    DWORD err = WSAGetLastError();
-    char *s = NULL;
-    FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-                   NULL, err,
-                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                   (LPSTR)&s, 0, NULL);
-    fprintf(stderr, "%s: %s\n", msg, s);
-    LocalFree(s);
-}
+#define SERVPORT 8000
 
 
-int main(int ac, char **av)
+int ClientStart(int* socket_fd)
 {
+        WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        printf("WSAStartup failed\n");
+        return 1;
+    }
     printf("---- CLIENT ----\n\n");
-    struct sockaddr_in sa;
-    int socket_fd;
+    struct sockaddr_in DSAdr;
     int status;
     char buffer[BUFSIZ];
     int bytes_read;
-    char *msg;
-    int msg_len;
-    int bytes_sent;
-
-    if (ac != 2) {
-        printf("Usage: ./client \"Message to send\"");
-        return (1);
-    }
+    int a=1;
+    char ServerAdrStr[24];
 
     // on prépare l'adresse et le port auquel on veut se connecter
-    memset(&sa, 0, sizeof sa);
-    sa.sin_family = AF_INET; // IPv4
-    sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK); // 127.0.0.1, localhost
-    sa.sin_port = htons(PORT);
+
+    memset(&DSAdr, 0, sizeof DSAdr);
+    scanf( "%s", ServerAdrStr);
+    a=inet_pton(AF_INET, ServerAdrStr, &(DSAdr.sin_addr)); //DS adress
+    DSAdr.sin_family = AF_INET; // IPv4
+    DSAdr.sin_port = htons(SERVPORT);
+    if (a==-1) {
+        printf("Hate you\n");
+    }
+    if (a==0) {
+
+        printf("adresse marche pas :(\n");
+        printf("Adresse : %s",ServerAdrStr);
+    }
+    char aa[24];
+    inet_ntop(AF_INET,&(DSAdr.sin_addr),aa,24);
+
+
+
+
+
 
     // on crée la socket et on la connecte au serveur distant
-    socket_fd = socket(sa.sin_family, SOCK_STREAM, 0);
-    if (socket_fd == SOCKET_ERROR) {
+    *socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (*socket_fd == SOCKET_ERROR) {
         print_wsa_error("socket fd error");
         return (2);
     }
-    printf("Created socket fd: %d\n", socket_fd);
+    printf("Created socket fd: %d\n", *socket_fd);
 
-    status = connect(socket_fd, (struct sockaddr *)&sa, sizeof sa);
+    status = connect(*socket_fd, (const struct sockaddr *)&DSAdr, sizeof DSAdr);
     if (status != 0) {
         print_wsa_error("socket fd error");
         return (3);
     }
-    printf("Connected socket to localhost port %d\n", PORT);
+    printf("Connected socket to localhost port %d\n", SERVPORT);
 
-    // on envoie un message au serveur
-    msg = av[1];
-    msg_len = strlen(msg);
-    bytes_sent = send(socket_fd, msg, msg_len, 0);
-    if (bytes_sent == -1) {
-        print_wsa_error("socket fd error");
-    }
-    else if (bytes_sent == msg_len) {
-        printf("Sent full message: \"%s\"\n", msg);
-    }
-    else {
-        printf("Sent partial message: %d bytes sent.\n", bytes_sent);
-    }
 
     // on attend de recevoir un message via la socket
+    int succeded=0;
     bytes_read = 1;
     while (bytes_read >= 0) {
-        bytes_read = recv(socket_fd, buffer, BUFSIZ, 0);
+        bytes_read = recv(*socket_fd, buffer, BUFSIZ, 0);
         if (bytes_read == 0) {
             printf("Server closed connection.\n");
             break ;
@@ -88,15 +79,14 @@ int main(int ac, char **av)
             // Si on a bien reçu un message, on va l'imprimer
             buffer[bytes_read] = '\0';
             printf("Message received: \"%s\"\n", buffer);
+            succeded = 1;
             break ;
         }
     }
 
-    printf("Closing socket\n");
-    closesocket(socket_fd);
-    return (0);
+    return (succeded);
+
 }
-*/
 
 
 

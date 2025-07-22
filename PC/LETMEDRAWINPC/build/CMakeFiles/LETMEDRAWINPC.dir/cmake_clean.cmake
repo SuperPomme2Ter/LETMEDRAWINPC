@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o"
+  "CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o.d"
   "CMakeFiles/LETMEDRAWINPC.dir/main.c.o"
   "CMakeFiles/LETMEDRAWINPC.dir/main.c.o.d"
   "CMakeFiles/LETMEDRAWINPC.dir/test.c.o"

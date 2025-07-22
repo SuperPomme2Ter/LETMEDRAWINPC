@@ -5,7 +5,10 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(LETMEDRAWINPC
         main.c
-test.c test.h)
+        test.c
+        test.h
+        Debug.h
+        Debug.c)
 target_link_libraries(LETMEDRAWINPC ws2_32)
 #[[
 include_directories(F:/devkitPro/devkitARM/include)

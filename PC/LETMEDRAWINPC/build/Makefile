@@ -136,6 +136,30 @@ LETMEDRAWINPC/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/build
 .PHONY : LETMEDRAWINPC/fast
 
+Debug.o: Debug.c.o
+.PHONY : Debug.o
+
+# target to build an object file
+Debug.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o
+.PHONY : Debug.c.o
+
+Debug.i: Debug.c.i
+.PHONY : Debug.i
+
+# target to preprocess a source file
+Debug.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Debug.c.i
+.PHONY : Debug.c.i
+
+Debug.s: Debug.c.s
+.PHONY : Debug.s
+
+# target to generate assembly for a file
+Debug.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Debug.c.s
+.PHONY : Debug.c.s
+
 main.o: main.c.o
 .PHONY : main.o
 
@@ -194,6 +218,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... LETMEDRAWINPC"
+	@echo "... Debug.o"
+	@echo "... Debug.i"
+	@echo "... Debug.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

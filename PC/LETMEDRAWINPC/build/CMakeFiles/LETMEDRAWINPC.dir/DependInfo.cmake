@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Debug.c" "CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o" "gcc" "CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o.d"
   "/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/main.c" "CMakeFiles/LETMEDRAWINPC.dir/main.c.o" "gcc" "CMakeFiles/LETMEDRAWINPC.dir/main.c.o.d"
   "/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.c" "CMakeFiles/LETMEDRAWINPC.dir/test.c.o" "gcc" "CMakeFiles/LETMEDRAWINPC.dir/test.c.o.d"
   )

@@ -2,31 +2,34 @@
 #include <string.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include "Debug.h"
+#include "test.h"
 
 
-#define PORT 4242  // le port de notre serveur
+
+ // le port de notre serveur
 #define BACKLOG 10 // nombre max de demandes de connexion
 
-void print_wsa_error(const char *msg) {
-    DWORD err = WSAGetLastError();
-    char *s = NULL;
-    FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-                   NULL, err,
-                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                   (LPSTR)&s, 0, NULL);
-    fprintf(stderr, "%s: %s\n", msg, s);
-    LocalFree(s);
-}
+
 
 int main(void) {
 
-    WSADATA wsaData;
-    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        printf("WSAStartup failed\n");
-        return 1;
+    int socket_fd;
+
+    if (!ClientStart(&socket_fd))
+    {
+        printf("Closing socket\n");
+        closesocket(socket_fd);
+        WSACleanup();
+        return (0);
     }
 
+    return 0;
 
+}
+
+
+/*
 printf("---- SERVER ----\n\n");
     struct sockaddr_in sa;
     int socket_fd;
@@ -117,6 +120,5 @@ printf("---- SERVER ----\n\n");
     printf("Closing server socket\n");
     closesocket(socket_fd);
     WSACleanup();
-    return (0);
-}
+    return (0);*/
 
