@@ -14,78 +14,74 @@
 
 int main(void) {
 
-    int socket_fd;
+    int SocketDS;
+    int SocketPC;
+    struct sockaddr_in DSAdr;
+    struct sockaddr_in PCAdr;
+    char buffer[BUFSIZ];
+    int bytes_read;
 
-    if (!ClientStart(&socket_fd))
+
+    if (!ClientStart(&SocketDS, &DSAdr, buffer, &bytes_read))
     {
         printf("Closing socket\n");
-        closesocket(socket_fd);
+        closesocket(SocketDS);
         WSACleanup();
         return (0);
     }
 
-    return 0;
-
-}
-
-
-/*
 printf("---- SERVER ----\n\n");
-    struct sockaddr_in sa;
-    int socket_fd;
-    int client_fd;
-    int tempClientFd;
+
+
     int status;
     struct sockaddr_storage client_addr;
     socklen_t addr_size;
-    char buffer[BUFSIZ];
-    int bytes_read;
 
     // on prépare l'adresse et le port pour la socket de notre serveur
-    memset(&sa, 0, sizeof sa);
-    sa.sin_family = AF_INET; // IPv4
-    sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK); // 127.0.0.1, localhost
-    sa.sin_port = htons(PORT);
+    memset(&PCAdr, 0, sizeof PCAdr);
+    PCAdr.sin_family = AF_INET; // IPv4
+    PCAdr.sin_addr.s_addr = htonl(INADDR_LOOPBACK); // 127.0.0.1, localhost
+    PCAdr.sin_port = DSAdr.sin_port;
 
 
     // on crée la socket, on a lit et on écoute dessus
-    socket_fd = socket(sa.sin_family, SOCK_STREAM, 0);
-    if (socket_fd == SOCKET_ERROR) {
+    SocketPC = socket(PCAdr.sin_family, SOCK_STREAM, 0);
+    if (SocketPC == SOCKET_ERROR) {
         print_wsa_error("socket fd error");
         return (1);
     }
-    printf("Created server socket fd: %d\n", socket_fd);
+    printf("Created server socket fd: %d\n", SocketPC);
 
-    status = bind(socket_fd, (struct sockaddr *)&sa, sizeof sa);
+    status = bind(SocketPC, (struct sockaddr *)&PCAdr, sizeof PCAdr);
     if (status != 0) {
         print_wsa_error("socket fd error");
         return (2);
     }
-    printf("Bound socket to localhost port %d\n", PORT);
+    printf("Bound socket to localhost port %d\n", 8000);
 
-    printf("Listening on port %d\n", PORT);
-    status = listen(socket_fd, BACKLOG);
+    printf("Listening on port %d\n", 8000);
+    status = listen(SocketPC, BACKLOG);
     if (status != 0) {
         print_wsa_error("socket fd error");
         return (3);
     }
 
     // on accepte une connexion entrante
-    addr_size = sizeof client_addr;
-    client_fd = accept(socket_fd, (struct sockaddr *)&client_addr, &addr_size);
-    if (client_fd == SOCKET_ERROR) {
+    addr_size = sizeof DSAdr;
+    SocketDS = accept(SocketPC, (struct sockaddr *)&client_addr, &addr_size);
+    if (SocketDS == SOCKET_ERROR) {
         print_wsa_error("socket fd error");
         return (4);
     }
-    printf("Accepted new connection on client socket fd: %d\n", client_fd);
+    printf("Accepted new connection on client socket fd: %d\n", SocketDS);
 
     // on recoit un message via la socket client
     bytes_read = 1;
     while (bytes_read >= 0) {
-        printf("Reading client socket %d\n", client_fd);
-        bytes_read = recv(client_fd, buffer, BUFSIZ, 0);
+        printf("Reading client socket %d\n", SocketDS);
+        bytes_read = recv(SocketDS, buffer, BUFSIZ, 0);
         if (bytes_read == 0) {
-            printf("Client socket %d: closed connection.\n", client_fd);
+            printf("Client socket %d: closed connection.\n", SocketDS);
             break ;
         }
         else if (bytes_read == SOCKET_ERROR) {
@@ -100,25 +96,30 @@ printf("---- SERVER ----\n\n");
             int bytes_sent;
 
             buffer[bytes_read] = '\0';
-            printf("Message received from client socket %d: \"%s\"\n", client_fd, buffer);
+            printf("Message received from client socket %d: \"%s\"\n", SocketDS, buffer);
 
-            bytes_sent = send(client_fd, msg, msg_len, 0);
+            bytes_sent = send(SocketDS, msg, msg_len, 0);
             if (bytes_sent == SOCKET_ERROR) {
                 print_wsa_error("socket fd error");
             }
             else if (bytes_sent == msg_len) {
-                printf("Sent full message to client socket %d: \"%s\"\n", client_fd, msg);
+                printf("Sent full message to client socket %d: \"%s\"\n", SocketDS, msg);
             }
             else {
-                printf("Sent partial message to client socket %d: %d bytes sent.\n", client_fd, bytes_sent);
+                printf("Sent partial message to client socket %d: %d bytes sent.\n", SocketDS, bytes_sent);
             }
         }
     }
 
     printf("Closing client socket\n");
-    closesocket(client_fd);
+    closesocket(SocketDS);
     printf("Closing server socket\n");
-    closesocket(socket_fd);
+    closesocket(SocketPC);
     WSACleanup();
-    return (0);*/
+    return 0;
+
+}
+
+
+
 

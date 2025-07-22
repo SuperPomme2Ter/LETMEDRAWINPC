@@ -96,12 +96,12 @@
 #define SOC_BUFFERSIZE  0x100000
 
 static u32 *SOC_buffer = NULL;
-s32 sock = -1, csock = -1;
+s32 SocketDS = -1, SocketPC = -1;
 
 __attribute__((format(printf,1,2)))
 void failExit(const char *fmt, ...);
 
-const static char test[] = "le client est connecte";
+const static char test[] = "K";
 
 //---------------------------------------------------------------------------------
 void socShutdown() {
@@ -115,11 +115,13 @@ void socShutdown() {
 int main(int argc, char **argv) {
 //---------------------------------------------------------------------------------
     int ret;
-
+    int socketMode=0;
     u32 clientlen;
     struct sockaddr_in client;
     struct sockaddr_in server;
+    struct sockaddr_in PCAdr;
     char temp[1026];
+    int status;
     //static int hits=0;
     //struct sockaddr_in PCServer;
 
@@ -130,8 +132,6 @@ int main(int argc, char **argv) {
     atexit(gfxExit);
 
     consoleInit(GFX_TOP, NULL);
-
-    printf ("\nlibctru sockets demo\n");
 
     // allocate buffer for SOC service
     SOC_buffer = (u32*)memalign(SOC_ALIGN, SOC_BUFFERSIZE);
@@ -152,9 +152,9 @@ int main(int argc, char **argv) {
     // libctru provides BSD sockets so most code from here is standard
     clientlen = sizeof(client);
 
-    sock = socket (AF_INET, SOCK_STREAM, 0);
+    SocketDS= socket (AF_INET, SOCK_STREAM, 0);
 
-    if (sock < 0) {
+    if (SocketDS < 0) {
         failExit("socket: %d %s\n", errno, strerror(errno));
     }
 
@@ -165,17 +165,15 @@ int main(int argc, char **argv) {
     server.sin_port = htons (8000);
     server.sin_addr.s_addr = gethostid();
 
-    printf("3DS IP Adress %d in %s\n", server.sin_port, inet_ntoa(server.sin_addr));
-    printf("Now listening\n");
+    printf("3DS IP Adress %s\n",inet_ntoa(server.sin_addr));
+    printf("3DS Listening\n");
 
-    if ( (ret = bind (sock, (struct sockaddr *) &server, sizeof (server))) ) {
-        close(sock);
+    if ( (ret = bind (SocketDS, (struct sockaddr *) &server, sizeof (server))) ) {
+        close(SocketDS);
         failExit("bind: %d %s\n", errno, strerror(errno));
     }
-    // Set socket non blocking so we can still read input to exit
-    fcntl(sock, F_SETFL, fcntl(sock, F_GETFL, 0) | O_NONBLOCK);
 
-    if ( (ret = listen( sock, 5)) ) {
+    if ( (ret = listen( SocketDS, 5)) ) {
         failExit("listen: %d %s\n", errno, strerror(errno));
     }
 
@@ -185,35 +183,51 @@ int main(int argc, char **argv) {
         gspWaitForVBlank();
         hidScanInput();
 
-        csock = accept (sock, (struct sockaddr *) &client, &clientlen);
+        if (socketMode==0) {
+            SocketPC = accept (SocketDS, (struct sockaddr *) &client, &clientlen);
+            PCAdr = client;
 
-
-
-        if (csock<0) {
-            if(errno != EAGAIN) {
-                failExit("accept: %d %s\n", errno, strerror(errno));
+            if (SocketPC<0) {
+                if(errno != EAGAIN) {
+                    failExit("accept: %d %s\n", errno, strerror(errno));
+                }
             }
-        } else {
-            // set client socket to blocking to simplify sending data back
-            fcntl(csock, F_SETFL, fcntl(csock, F_GETFL, 0) & ~O_NONBLOCK);
-            printf("Connecting port %d from %s\n", client.sin_port, inet_ntoa(client.sin_addr));
-            memset (temp, 0, 1026);
+            else {
 
-            //ret = recv (csock, temp, 1024, 0);
+                printf("Connecting port %d from %s\n", client.sin_port, inet_ntoa(client.sin_addr));
+                printf("Sending test message\n");
 
-            printf("Sending test message\n");
-            send(csock, test, strlen(test),0);
+                send(SocketPC, test, strlen(test),0);
 
-            close (csock);
-            csock = -1;
+                printf("Entering Client Mode\n");
+                close(SocketPC);
+                socketMode=1;
+
+            }
+        }
+        else if (socketMode==1)
+        {
+            status=connect(SocketPC, (struct sockaddr *) &PCAdr, sizeof (PCAdr));
+            if (status != 0) {
+                failExit("connect: %d %s\n", errno, strerror(errno));
+            }
+            else {
+                printf("Connected\n");
+            }
+        }
+        else
+        {
 
         }
-
         u32 kDown = hidKeysDown();
         if (kDown & KEY_START) break;
-    }
 
-    close(sock);
+
+
+
+    }
+    close(SocketPC);
+    close(SocketDS);
 
     return 0;
 }
@@ -222,8 +236,8 @@ int main(int argc, char **argv) {
 void failExit(const char *fmt, ...) {
 //---------------------------------------------------------------------------------
 
-    if(sock>0) close(sock);
-    if(csock>0) close(csock);
+    if(SocketDS>0) close(SocketDS);
+    if(SocketPC>0) close(SocketPC);
 
     va_list ap;
 

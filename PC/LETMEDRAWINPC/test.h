@@ -7,4 +7,4 @@
 
 #endif //TEST_H
 
-int ClientStart(int* socket_fd);
+int ClientStart(int* socket_fd, struct sockaddr_in* DSAdr, char buffer[], int* bytes_read );

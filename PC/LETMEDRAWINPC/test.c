@@ -8,28 +8,27 @@
 #define SERVPORT 8000
 
 
-int ClientStart(int* socket_fd)
+int ClientStart(int* socket_fd, struct sockaddr_in* DSAdr, char buffer[], int* bytes_read )
 {
         WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         printf("WSAStartup failed\n");
-        return 1;
+        return 0;
     }
     printf("---- CLIENT ----\n\n");
-    struct sockaddr_in DSAdr;
     int status;
-    char buffer[BUFSIZ];
-    int bytes_read;
+
+
     int a=1;
     char ServerAdrStr[24];
 
     // on prépare l'adresse et le port auquel on veut se connecter
 
-    memset(&DSAdr, 0, sizeof DSAdr);
+    memset(DSAdr, 0, sizeof DSAdr);
     scanf( "%s", ServerAdrStr);
-    a=inet_pton(AF_INET, ServerAdrStr, &(DSAdr.sin_addr)); //DS adress
-    DSAdr.sin_family = AF_INET; // IPv4
-    DSAdr.sin_port = htons(SERVPORT);
+    a=inet_pton(AF_INET, ServerAdrStr, &(DSAdr->sin_addr)); //DS adress
+    DSAdr->sin_family = AF_INET; // IPv4
+    DSAdr->sin_port = htons(SERVPORT);
     if (a==-1) {
         printf("Hate you\n");
     }
@@ -39,45 +38,41 @@ int ClientStart(int* socket_fd)
         printf("Adresse : %s",ServerAdrStr);
     }
     char aa[24];
-    inet_ntop(AF_INET,&(DSAdr.sin_addr),aa,24);
-
-
-
-
+    inet_ntop(AF_INET,&(DSAdr->sin_addr),aa,24);
 
 
     // on crée la socket et on la connecte au serveur distant
     *socket_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (*socket_fd == SOCKET_ERROR) {
         print_wsa_error("socket fd error");
-        return (2);
+        return (0);
     }
     printf("Created socket fd: %d\n", *socket_fd);
 
-    status = connect(*socket_fd, (const struct sockaddr *)&DSAdr, sizeof DSAdr);
+    status = connect(*socket_fd, (const struct sockaddr *)DSAdr, sizeof *DSAdr);
     if (status != 0) {
         print_wsa_error("socket fd error");
-        return (3);
+        return (0);
     }
     printf("Connected socket to localhost port %d\n", SERVPORT);
 
 
     // on attend de recevoir un message via la socket
     int succeded=0;
-    bytes_read = 1;
-    while (bytes_read >= 0) {
-        bytes_read = recv(*socket_fd, buffer, BUFSIZ, 0);
-        if (bytes_read == 0) {
+    *bytes_read = 1;
+    while (*bytes_read >= 0) {
+        *bytes_read = recv( *socket_fd, buffer, BUFSIZ, 0);
+        if (*bytes_read == 0) {
             printf("Server closed connection.\n");
             break ;
         }
-        else if (bytes_read == SOCKET_ERROR) {
+        else if (*bytes_read == SOCKET_ERROR) {
             print_wsa_error("socket fd error");
             break ;
         }
         else {
             // Si on a bien reçu un message, on va l'imprimer
-            buffer[bytes_read] = '\0';
+            buffer[*bytes_read] = '\0';
             printf("Message received: \"%s\"\n", buffer);
             succeded = 1;
             break ;
@@ -87,6 +82,100 @@ int ClientStart(int* socket_fd)
     return (succeded);
 
 }
+
+
+/*
+printf("---- SERVER ----\n\n");
+    struct sockaddr_in sa;
+    int socket_fd;
+    int client_fd;
+    int tempClientFd;
+    int status;
+    struct sockaddr_storage client_addr;
+    socklen_t addr_size;
+    char buffer[BUFSIZ];
+    int bytes_read;
+
+    // on prépare l'adresse et le port pour la socket de notre serveur
+    memset(&sa, 0, sizeof sa);
+    sa.sin_family = AF_INET; // IPv4
+    sa.sin_addr.s_addr = htonl(INADDR_LOOPBACK); // 127.0.0.1, localhost
+    sa.sin_port = htons(PORT);
+
+
+    // on crée la socket, on a lit et on écoute dessus
+    socket_fd = socket(sa.sin_family, SOCK_STREAM, 0);
+    if (socket_fd == SOCKET_ERROR) {
+        print_wsa_error("socket fd error");
+        return (1);
+    }
+    printf("Created server socket fd: %d\n", socket_fd);
+
+    status = bind(socket_fd, (struct sockaddr *)&sa, sizeof sa);
+    if (status != 0) {
+        print_wsa_error("socket fd error");
+        return (2);
+    }
+    printf("Bound socket to localhost port %d\n", PORT);
+
+    printf("Listening on port %d\n", PORT);
+    status = listen(socket_fd, BACKLOG);
+    if (status != 0) {
+        print_wsa_error("socket fd error");
+        return (3);
+    }
+
+    // on accepte une connexion entrante
+    addr_size = sizeof client_addr;
+    client_fd = accept(socket_fd, (struct sockaddr *)&client_addr, &addr_size);
+    if (client_fd == SOCKET_ERROR) {
+        print_wsa_error("socket fd error");
+        return (4);
+    }
+    printf("Accepted new connection on client socket fd: %d\n", client_fd);
+
+    // on recoit un message via la socket client
+    bytes_read = 1;
+    while (bytes_read >= 0) {
+        printf("Reading client socket %d\n", client_fd);
+        bytes_read = recv(client_fd, buffer, BUFSIZ, 0);
+        if (bytes_read == 0) {
+            printf("Client socket %d: closed connection.\n", client_fd);
+            break ;
+        }
+        else if (bytes_read == SOCKET_ERROR) {
+            print_wsa_error("socket fd error");
+            break ;
+        }
+        else {
+            // Si on a bien reçu un message, on va l'imprimer
+            // puis renvoyer un message au client
+            char *msg = "Got your message.";
+            int msg_len = strlen(msg);
+            int bytes_sent;
+
+            buffer[bytes_read] = '\0';
+            printf("Message received from client socket %d: \"%s\"\n", client_fd, buffer);
+
+            bytes_sent = send(client_fd, msg, msg_len, 0);
+            if (bytes_sent == SOCKET_ERROR) {
+                print_wsa_error("socket fd error");
+            }
+            else if (bytes_sent == msg_len) {
+                printf("Sent full message to client socket %d: \"%s\"\n", client_fd, msg);
+            }
+            else {
+                printf("Sent partial message to client socket %d: %d bytes sent.\n", client_fd, bytes_sent);
+            }
+        }
+    }
+
+    printf("Closing client socket\n");
+    closesocket(client_fd);
+    printf("Closing server socket\n");
+    closesocket(socket_fd);
+    WSACleanup();
+    return (0);*/
 
 
 
