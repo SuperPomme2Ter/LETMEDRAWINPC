@@ -86,19 +86,19 @@ CMakeFiles/LETMEDRAWINPC.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/LETMEDRAWINPC.dir/main.c.s"
 	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/main.c -o CMakeFiles/LETMEDRAWINPC.dir/main.c.s
 
-CMakeFiles/LETMEDRAWINPC.dir/test.c.o: CMakeFiles/LETMEDRAWINPC.dir/flags.make
-CMakeFiles/LETMEDRAWINPC.dir/test.c.o: /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.c
-CMakeFiles/LETMEDRAWINPC.dir/test.c.o: CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/LETMEDRAWINPC.dir/test.c.o"
-	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LETMEDRAWINPC.dir/test.c.o -MF CMakeFiles/LETMEDRAWINPC.dir/test.c.o.d -o CMakeFiles/LETMEDRAWINPC.dir/test.c.o -c /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.c
+CMakeFiles/LETMEDRAWINPC.dir/Client.c.o: CMakeFiles/LETMEDRAWINPC.dir/flags.make
+CMakeFiles/LETMEDRAWINPC.dir/Client.c.o: /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Client.c
+CMakeFiles/LETMEDRAWINPC.dir/Client.c.o: CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/LETMEDRAWINPC.dir/Client.c.o"
+	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LETMEDRAWINPC.dir/Client.c.o -MF CMakeFiles/LETMEDRAWINPC.dir/Client.c.o.d -o CMakeFiles/LETMEDRAWINPC.dir/Client.c.o -c /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Client.c
 
-CMakeFiles/LETMEDRAWINPC.dir/test.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/LETMEDRAWINPC.dir/test.c.i"
-	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.c > CMakeFiles/LETMEDRAWINPC.dir/test.c.i
+CMakeFiles/LETMEDRAWINPC.dir/Client.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/LETMEDRAWINPC.dir/Client.c.i"
+	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Client.c > CMakeFiles/LETMEDRAWINPC.dir/Client.c.i
 
-CMakeFiles/LETMEDRAWINPC.dir/test.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/LETMEDRAWINPC.dir/test.c.s"
-	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.c -o CMakeFiles/LETMEDRAWINPC.dir/test.c.s
+CMakeFiles/LETMEDRAWINPC.dir/Client.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/LETMEDRAWINPC.dir/Client.c.s"
+	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Client.c -o CMakeFiles/LETMEDRAWINPC.dir/Client.c.s
 
 CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o: CMakeFiles/LETMEDRAWINPC.dir/flags.make
 CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o: /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Debug.c
@@ -114,21 +114,37 @@ CMakeFiles/LETMEDRAWINPC.dir/Debug.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/LETMEDRAWINPC.dir/Debug.c.s"
 	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Debug.c -o CMakeFiles/LETMEDRAWINPC.dir/Debug.c.s
 
+CMakeFiles/LETMEDRAWINPC.dir/Server.c.o: CMakeFiles/LETMEDRAWINPC.dir/flags.make
+CMakeFiles/LETMEDRAWINPC.dir/Server.c.o: /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Server.c
+CMakeFiles/LETMEDRAWINPC.dir/Server.c.o: CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/LETMEDRAWINPC.dir/Server.c.o"
+	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/LETMEDRAWINPC.dir/Server.c.o -MF CMakeFiles/LETMEDRAWINPC.dir/Server.c.o.d -o CMakeFiles/LETMEDRAWINPC.dir/Server.c.o -c /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Server.c
+
+CMakeFiles/LETMEDRAWINPC.dir/Server.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/LETMEDRAWINPC.dir/Server.c.i"
+	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Server.c > CMakeFiles/LETMEDRAWINPC.dir/Server.c.i
+
+CMakeFiles/LETMEDRAWINPC.dir/Server.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/LETMEDRAWINPC.dir/Server.c.s"
+	"/c/Program Files/MinGW/bin/gcc.exe" $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Server.c -o CMakeFiles/LETMEDRAWINPC.dir/Server.c.s
+
 # Object files for target LETMEDRAWINPC
 LETMEDRAWINPC_OBJECTS = \
 "CMakeFiles/LETMEDRAWINPC.dir/main.c.o" \
-"CMakeFiles/LETMEDRAWINPC.dir/test.c.o" \
-"CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o"
+"CMakeFiles/LETMEDRAWINPC.dir/Client.c.o" \
+"CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o" \
+"CMakeFiles/LETMEDRAWINPC.dir/Server.c.o"
 
 # External object files for target LETMEDRAWINPC
 LETMEDRAWINPC_EXTERNAL_OBJECTS =
 
 LETMEDRAWINPC.exe: CMakeFiles/LETMEDRAWINPC.dir/main.c.o
-LETMEDRAWINPC.exe: CMakeFiles/LETMEDRAWINPC.dir/test.c.o
+LETMEDRAWINPC.exe: CMakeFiles/LETMEDRAWINPC.dir/Client.c.o
 LETMEDRAWINPC.exe: CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o
+LETMEDRAWINPC.exe: CMakeFiles/LETMEDRAWINPC.dir/Server.c.o
 LETMEDRAWINPC.exe: CMakeFiles/LETMEDRAWINPC.dir/build.make
 LETMEDRAWINPC.exe: CMakeFiles/LETMEDRAWINPC.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable LETMEDRAWINPC.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable LETMEDRAWINPC.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LETMEDRAWINPC.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

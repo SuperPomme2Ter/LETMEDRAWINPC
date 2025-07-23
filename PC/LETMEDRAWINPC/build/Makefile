@@ -136,6 +136,30 @@ LETMEDRAWINPC/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/build
 .PHONY : LETMEDRAWINPC/fast
 
+Client.o: Client.c.o
+.PHONY : Client.o
+
+# target to build an object file
+Client.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Client.c.o
+.PHONY : Client.c.o
+
+Client.i: Client.c.i
+.PHONY : Client.i
+
+# target to preprocess a source file
+Client.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Client.c.i
+.PHONY : Client.c.i
+
+Client.s: Client.c.s
+.PHONY : Client.s
+
+# target to generate assembly for a file
+Client.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Client.c.s
+.PHONY : Client.c.s
+
 Debug.o: Debug.c.o
 .PHONY : Debug.o
 
@@ -159,6 +183,30 @@ Debug.s: Debug.c.s
 Debug.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Debug.c.s
 .PHONY : Debug.c.s
+
+Server.o: Server.c.o
+.PHONY : Server.o
+
+# target to build an object file
+Server.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Server.c.o
+.PHONY : Server.c.o
+
+Server.i: Server.c.i
+.PHONY : Server.i
+
+# target to preprocess a source file
+Server.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Server.c.i
+.PHONY : Server.c.i
+
+Server.s: Server.c.s
+.PHONY : Server.s
+
+# target to generate assembly for a file
+Server.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Server.c.s
+.PHONY : Server.c.s
 
 main.o: main.c.o
 .PHONY : main.o
@@ -184,30 +232,6 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/main.c.s
 .PHONY : main.c.s
 
-test.o: test.c.o
-.PHONY : test.o
-
-# target to build an object file
-test.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/test.c.o
-.PHONY : test.c.o
-
-test.i: test.c.i
-.PHONY : test.i
-
-# target to preprocess a source file
-test.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/test.c.i
-.PHONY : test.c.i
-
-test.s: test.c.s
-.PHONY : test.s
-
-# target to generate assembly for a file
-test.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/test.c.s
-.PHONY : test.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -218,15 +242,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... LETMEDRAWINPC"
+	@echo "... Client.o"
+	@echo "... Client.i"
+	@echo "... Client.s"
 	@echo "... Debug.o"
 	@echo "... Debug.i"
 	@echo "... Debug.s"
+	@echo "... Server.o"
+	@echo "... Server.i"
+	@echo "... Server.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... test.o"
-	@echo "... test.i"
-	@echo "... test.s"
 .PHONY : help
 
 

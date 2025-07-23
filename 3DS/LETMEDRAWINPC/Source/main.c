@@ -96,7 +96,7 @@
 #define SOC_BUFFERSIZE  0x100000
 
 static u32 *SOC_buffer = NULL;
-s32 SocketDS = -1, SocketPC = -1;
+s32 DSServerSocket = -1, PCClientSocket = -1, PCServerSocket;
 
 __attribute__((format(printf,1,2)))
 void failExit(const char *fmt, ...);
@@ -105,23 +105,24 @@ const static char test[] = "K";
 
 //---------------------------------------------------------------------------------
 void socShutdown() {
-//---------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------
     printf("waiting for socExit...\n");
     socExit();
-
 }
 
 //---------------------------------------------------------------------------------
 int main(int argc, char **argv) {
-//---------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------
     int ret;
-    int socketMode=0;
+    int socketMode = 0;
     u32 clientlen;
     struct sockaddr_in client;
     struct sockaddr_in server;
     struct sockaddr_in PCAdr;
     char temp[1026];
     int status;
+    char *PCIP;
+    int IPSize;
     //static int hits=0;
     //struct sockaddr_in PCServer;
 
@@ -134,15 +135,15 @@ int main(int argc, char **argv) {
     consoleInit(GFX_TOP, NULL);
 
     // allocate buffer for SOC service
-    SOC_buffer = (u32*)memalign(SOC_ALIGN, SOC_BUFFERSIZE);
+    SOC_buffer = (u32 *) memalign(SOC_ALIGN, SOC_BUFFERSIZE);
 
-    if(SOC_buffer == NULL) {
+    if (SOC_buffer == NULL) {
         failExit("memalign: failed to allocate\n");
     }
 
     // Now intialise soc:u service
     if ((ret = socInit(SOC_buffer, SOC_BUFFERSIZE)) != 0) {
-        failExit("socInit: 0x%08X\n", (unsigned int)ret);
+        failExit("socInit: 0x%08X\n", (unsigned int) ret);
     }
 
     // register socShutdown to run at exit
@@ -152,92 +153,114 @@ int main(int argc, char **argv) {
     // libctru provides BSD sockets so most code from here is standard
     clientlen = sizeof(client);
 
-    SocketDS= socket (AF_INET, SOCK_STREAM, 0);
 
-    if (SocketDS < 0) {
+    memset(&server, 0, sizeof (server));
+    memset(&client, 0, sizeof (client));
+    memset(&PCAdr, 0, sizeof (PCAdr));
+
+    server.sin_family = AF_INET;
+    server.sin_port = htons(8000);
+    server.sin_addr.s_addr = gethostid();
+
+
+    DSServerSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (DSServerSocket < 0) {
         failExit("socket: %d %s\n", errno, strerror(errno));
     }
 
-    memset (&server, 0, sizeof (server));
-    memset (&client, 0, sizeof (client));
-
-    server.sin_family = AF_INET;
-    server.sin_port = htons (8000);
-    server.sin_addr.s_addr = gethostid();
-
-    printf("3DS IP Adress %s\n",inet_ntoa(server.sin_addr));
-    printf("3DS Listening\n");
-
-    if ( (ret = bind (SocketDS, (struct sockaddr *) &server, sizeof (server))) ) {
-        close(SocketDS);
+    if ((ret = bind(DSServerSocket, (struct sockaddr *) &server, sizeof (server)))) {
+        close(DSServerSocket);
         failExit("bind: %d %s\n", errno, strerror(errno));
     }
 
-    if ( (ret = listen( SocketDS, 5)) ) {
+    if ((ret = listen(DSServerSocket, 5))) {
         failExit("listen: %d %s\n", errno, strerror(errno));
     }
 
-
+    printf("3DS IP Adress %s\n", inet_ntoa(server.sin_addr));
+    printf("3DS Listening\n");
 
     while (aptMainLoop()) {
         gspWaitForVBlank();
         hidScanInput();
 
-        if (socketMode==0) {
-            SocketPC = accept (SocketDS, (struct sockaddr *) &client, &clientlen);
+        if (socketMode == 0) {
+            PCClientSocket = accept(DSServerSocket, (struct sockaddr *) &client, &clientlen);
             PCAdr = client;
 
-            if (SocketPC<0) {
-                if(errno != EAGAIN) {
+
+            if (PCClientSocket < 0) {
+                if (errno != EAGAIN) {
                     failExit("accept: %d %s\n", errno, strerror(errno));
                 }
-            }
-            else {
-
+            } else {
                 printf("Connecting port %d from %s\n", client.sin_port, inet_ntoa(client.sin_addr));
                 printf("Sending test message\n");
 
-                send(SocketPC, test, strlen(test),0);
 
+                send(PCClientSocket, test, strlen(test), 0);
+
+                printf("Getting IP adress length\n");
+
+                recv(PCClientSocket, &IPSize, sizeof(int), 0);
+
+                printf("IP size : %d\n", IPSize);
+
+
+                /*
+                printf("Waiting PC IP...\n");
+
+                recv(PCClientSocket, &PCIP, IPSize, 0);
+
+                printf("PC IP : %s\n", PCIP);*/
+
+
+
+                close(PCClientSocket);
+                close(DSServerSocket);
                 printf("Entering Client Mode\n");
-                close(SocketPC);
-                socketMode=1;
 
+                socketMode = 1;
             }
-        }
-        else if (socketMode==1)
-        {
-            status=connect(SocketPC, (struct sockaddr *) &PCAdr, sizeof (PCAdr));
+        } else if (socketMode == 1) {
+            PCServerSocket = socket(AF_INET, SOCK_STREAM, 0);
+            char aa[24];
+            char bb[24];
+            int aat=0;
+            inet_ntop(AF_INET,&(PCAdr.sin_addr),aa,24);
+            printf("test : %s\n", aa);
+
+            status = connect(PCServerSocket, (struct sockaddr *) &PCAdr, sizeof (PCAdr));
             if (status != 0) {
+                printf("oscour \n");
                 failExit("connect: %d %s\n", errno, strerror(errno));
-            }
-            else {
+            } else {
                 printf("Connected\n");
+                socketMode = 2;
             }
-        }
-        else
-        {
-
+        } else if (socketMode == 2) {
+            printf("YEY\n");
         }
         u32 kDown = hidKeysDown();
         if (kDown & KEY_START) break;
-
-
-
-
     }
-    close(SocketPC);
-    close(SocketDS);
+    if (socketMode == 0) {
+        close(PCClientSocket);
+        close(DSServerSocket);
+    } else {
+        close(PCServerSocket);
+    }
 
     return 0;
 }
 
 //---------------------------------------------------------------------------------
 void failExit(const char *fmt, ...) {
-//---------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------
 
-    if(SocketDS>0) close(SocketDS);
-    if(SocketPC>0) close(SocketPC);
+    if (DSServerSocket > 0) close(DSServerSocket);
+    if (PCClientSocket > 0) close(PCClientSocket);
+    if (PCServerSocket > 0) close(PCServerSocket);
 
     va_list ap;
 
