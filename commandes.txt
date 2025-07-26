@@ -4,3 +4,14 @@ mkdir build // fichier build
 cd build // aller dans build
 cmake .. // generer les fichiers cmake
 cmake --build . // build l'exe
+
+
+CONNEXION 3dslink
+
+3dslink LETMEDRAWINPC.3dsx -a 192.168.1.12 -0 sdmc:/3ds/LETMEDRAWINPC.3dsx1
+
+
+A savoir : 
+
+res de l'écran du bas de la DS : 
+320×240 pixels

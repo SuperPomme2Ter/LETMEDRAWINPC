@@ -35,23 +35,17 @@ int main(void) {
     host_entry = gethostbyname(host);
     IP = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
 
-    // It will convert into IP string
-    printf("Current Host Name: %s\n", host);
-    printf("Host IP: %s\n", IP);
-
-
-
     struct sockaddr_in DSAdr;
 
-
     struct addrinfo *PCAdrInfo;
-    if (!ClientStart(&DSAdr,IP))
+
+    if (!ClientStart(&DSAdr))
     {
         printf("Closing socket\n");
         WSACleanup();
         return (0);
     }
- //   ServerPart();
+    ServerPart(IP);
     WSACleanup();
     return 0;
 

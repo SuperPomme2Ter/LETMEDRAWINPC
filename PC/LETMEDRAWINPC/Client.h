@@ -7,4 +7,4 @@
 
 #endif //TEST_H
 
-int ClientStart(struct sockaddr_in* DSAdr,char * IP);
+int ClientStart(struct sockaddr_in* DSAdr);

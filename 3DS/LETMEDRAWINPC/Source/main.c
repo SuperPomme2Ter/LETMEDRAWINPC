@@ -1,96 +1,24 @@
-// /*
-// 	Touch Screen example made by Aurelio Mannara for libctru
-// 	Please refer to https://github.com/devkitPro/libctru/blob/master/libctru/include/3ds/services/hid.h for more information
-// 	This code was modified for the last time on: 12/13/2014 2:30 UTC+1
-//
-// 	This wouldn't be possible without the amazing work done by:
-// 	-Smealum
-// 	-fincs
-// 	-WinterMute
-// 	-yellows8
-// 	-plutoo
-// 	-mtheall
-// 	-Many others who worked on 3DS and I'm surely forgetting about
-// */
-//
-// #include <3ds.h>
-// #include <stdio.h>
-//
-// struct vector {
-// 	int x;
-// 	int y;
-// };
-//
-// int main(int argc, char **argv)
-// {
-// 	gfxInitDefault();
-//
-// 	//Initialize console on top screen. Using NULL as the second argument tells the console library to use the internal console structure as current one
-// 	consoleInit(GFX_TOP, NULL);
-//
-// 	printf("\x1b[0;0HPress Start to exit.");
-// 	printf("\x1b[1;0HTouch Screen position:");
-// 	struct vector lastScreenPos;
-// 	lastScreenPos.x = 0;
-// 	lastScreenPos.y = 0;
-//
-//
-// 	// Main loop
-// 	while (aptMainLoop())
-// 	{
-// 		//Scan all the inputs. This should be done once for each frame
-// 		hidScanInput();
-//
-// 		//hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
-// 		u32 kDown = hidKeysDown();
-//
-//
-// 		if (kDown & KEY_START) break; // break in order to return to hbmenu
-//
-// 		touchPosition touch;
-// 		struct vector dir;
-// 		dir.x = 0;
-// 		dir.y = 0;
-// 		//Read the touch screen coordinates
-// 		hidTouchRead(&touch);
-// 		dir.x=lastScreenPos.x-touch.px;
-// 		dir.y=lastScreenPos.y-touch.py;
-// 		//Print the touch screen coordinates
-// 		printf("\x1b[2;0H%03d; %03d", touch.px, touch.py);
-// 		printf("\x1b[3;0H%03d; %03d", dir.x, dir.y);
-// 		lastScreenPos.x = touch.px;
-// 		lastScreenPos.y = touch.py;
-//
-//
-// 		// Flush and swap framebuffers
-// 		gfxFlushBuffers();
-// 		gfxSwapBuffers();
-//
-// 		//Wait for VBlank
-// 		gspWaitForVBlank();
-// 	}
-// 	// Exit services
-// 	gfxExit();
-// 	return 0;
-// }
 
+
+#include <errno.h>
+#include <malloc.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <malloc.h>
-#include <errno.h>
-#include <stdarg.h>
 #include <unistd.h>
 
 #include <fcntl.h>
 
 #include <sys/types.h>
 
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
 
 #include <3ds.h>
+
+#include "Controls.h"
 
 #define SOC_ALIGN       0x1000
 #define SOC_BUFFERSIZE  0x100000
@@ -110,23 +38,26 @@ void socShutdown() {
     socExit();
 }
 
+
+
 //---------------------------------------------------------------------------------
 int main(int argc, char **argv) {
+
+
+    GetControlsInput(argc, argv);
+
+    return 0;
+
     //---------------------------------------------------------------------------------
     int ret;
-    int socketMode = 0;
+    int socketMode = -1;
     u32 clientlen;
     struct sockaddr_in client;
     struct sockaddr_in server;
     struct sockaddr_in PCAdr;
-    char temp[1026];
     int status;
-    char *PCIP;
-    int IPSize;
-    //static int hits=0;
-    //struct sockaddr_in PCServer;
 
-    gfxInitDefault();
+
 
     // register gfxExit to be run when app quits
     // this can help simplify error handling
@@ -156,7 +87,6 @@ int main(int argc, char **argv) {
 
     memset(&server, 0, sizeof (server));
     memset(&client, 0, sizeof (client));
-    memset(&PCAdr, 0, sizeof (PCAdr));
 
     server.sin_family = AF_INET;
     server.sin_port = htons(8000);
@@ -184,75 +114,66 @@ int main(int argc, char **argv) {
         gspWaitForVBlank();
         hidScanInput();
 
-        if (socketMode == 0) {
+        if (socketMode==-1) {
             PCClientSocket = accept(DSServerSocket, (struct sockaddr *) &client, &clientlen);
-            PCAdr = client;
-
-
+            memset(&PCAdr, 0, sizeof (PCAdr));
+            PCAdr=client;
             if (PCClientSocket < 0) {
                 if (errno != EAGAIN) {
                     failExit("accept: %d %s\n", errno, strerror(errno));
                 }
             } else {
                 printf("Connecting port %d from %s\n", client.sin_port, inet_ntoa(client.sin_addr));
-                printf("Sending test message\n");
-
-
-                send(PCClientSocket, test, strlen(test), 0);
-
-                printf("Getting IP adress length\n");
-
-                recv(PCClientSocket, &IPSize, sizeof(int), 0);
-
-                printf("IP size : %d\n", IPSize);
-
-
-                /*
-                printf("Waiting PC IP...\n");
-
-                recv(PCClientSocket, &PCIP, IPSize, 0);
-
-                printf("PC IP : %s\n", PCIP);*/
-
-
-
-                close(PCClientSocket);
-                close(DSServerSocket);
-                printf("Entering Client Mode\n");
-
-                socketMode = 1;
             }
-        } else if (socketMode == 1) {
+            printf("Entering Client Mode\n");
+            socketMode = 0;
+            PCAdr.sin_family = AF_INET;
+            PCAdr.sin_port = htons(8000);
+
             PCServerSocket = socket(AF_INET, SOCK_STREAM, 0);
-            char aa[24];
-            char bb[24];
-            int aat=0;
-            inet_ntop(AF_INET,&(PCAdr.sin_addr),aa,24);
-            printf("test : %s\n", aa);
+            fcntl(PCServerSocket, F_SETFL, O_NONBLOCK);
+
+        }
+
+        else if (socketMode == 0) {
+
+
+
 
             status = connect(PCServerSocket, (struct sockaddr *) &PCAdr, sizeof (PCAdr));
             if (status != 0) {
-                printf("oscour \n");
+                printf("Failed to connect \n");
                 failExit("connect: %d %s\n", errno, strerror(errno));
-            } else {
-                printf("Connected\n");
-                socketMode = 2;
             }
+            else {
+                printf("Connected\n");
+                socketMode = 1;
+            }
+
+        } else if (socketMode == 1) {
+
         } else if (socketMode == 2) {
             printf("YEY\n");
         }
         u32 kDown = hidKeysDown();
         if (kDown & KEY_START) break;
     }
-    if (socketMode == 0) {
+    if (socketMode == -1) {
         close(PCClientSocket);
         close(DSServerSocket);
     } else {
         close(PCServerSocket);
     }
+    /*int Amount=500;
+    send(newSocket, &Amount, sizeof(Amount), 0);
+    close(welcomeSocket);
 
+    recv(clientSocket, &Amount, sizeof(Amount), 0);
+    // Amount= ntohl(Amount);
+    printf("Data received: %d\n",Amount));*/
     return 0;
 }
+
 
 //---------------------------------------------------------------------------------
 void failExit(const char *fmt, ...) {

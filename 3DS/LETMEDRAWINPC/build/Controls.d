@@ -1,7 +1,5 @@
-main.o: F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/source/main.c \
- F:/devkitPro/libctru/include/arpa/inet.h \
- F:/devkitPro/libctru/include/netinet/in.h \
- F:/devkitPro/libctru/include/sys/socket.h \
+Controls.o: F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/source/Controls.c \
+ F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/include/Controls.h \
  F:/devkitPro/libctru/include/3ds.h \
  F:/devkitPro/libctru/include/3ds/types.h \
  F:/devkitPro/libctru/include/3ds/result.h \
@@ -60,6 +58,8 @@ main.o: F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/source/main.c \
  F:/devkitPro/libctru/include/3ds/services/pxidev.h \
  F:/devkitPro/libctru/include/3ds/services/pxipm.h \
  F:/devkitPro/libctru/include/3ds/services/soc.h \
+ F:/devkitPro/libctru/include/netinet/in.h \
+ F:/devkitPro/libctru/include/sys/socket.h \
  F:/devkitPro/libctru/include/3ds/services/mic.h \
  F:/devkitPro/libctru/include/3ds/services/mvd.h \
  F:/devkitPro/libctru/include/3ds/services/nfc.h \
@@ -85,11 +85,8 @@ main.o: F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/source/main.c \
  F:/devkitPro/libctru/include/3ds/romfs.h \
  F:/devkitPro/libctru/include/3ds/font.h \
  F:/devkitPro/libctru/include/3ds/gdbhio_dev.h \
- F:/devkitPro/libctru/include/3ds/3dslink.h \
- F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/include/Controls.h
-F:/devkitPro/libctru/include/arpa/inet.h:
-F:/devkitPro/libctru/include/netinet/in.h:
-F:/devkitPro/libctru/include/sys/socket.h:
+ F:/devkitPro/libctru/include/3ds/3dslink.h
+F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/include/Controls.h:
 F:/devkitPro/libctru/include/3ds.h:
 F:/devkitPro/libctru/include/3ds/types.h:
 F:/devkitPro/libctru/include/3ds/result.h:
@@ -148,6 +145,8 @@ F:/devkitPro/libctru/include/3ds/services/ptmsets.h:
 F:/devkitPro/libctru/include/3ds/services/pxidev.h:
 F:/devkitPro/libctru/include/3ds/services/pxipm.h:
 F:/devkitPro/libctru/include/3ds/services/soc.h:
+F:/devkitPro/libctru/include/netinet/in.h:
+F:/devkitPro/libctru/include/sys/socket.h:
 F:/devkitPro/libctru/include/3ds/services/mic.h:
 F:/devkitPro/libctru/include/3ds/services/mvd.h:
 F:/devkitPro/libctru/include/3ds/services/nfc.h:
@@ -174,4 +173,3 @@ F:/devkitPro/libctru/include/3ds/romfs.h:
 F:/devkitPro/libctru/include/3ds/font.h:
 F:/devkitPro/libctru/include/3ds/gdbhio_dev.h:
 F:/devkitPro/libctru/include/3ds/3dslink.h:
-F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/include/Controls.h:

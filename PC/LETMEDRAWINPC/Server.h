@@ -11,4 +11,4 @@
 #include <time.h>
 #include <unistd.h>
 
-int ServerPart();
+int ServerPart(char* PCIP);
