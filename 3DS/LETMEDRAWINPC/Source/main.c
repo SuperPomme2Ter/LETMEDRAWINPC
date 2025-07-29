@@ -29,8 +29,6 @@ s32 DSServerSocket = -1, PCClientSocket = -1, PCServerSocket;
 __attribute__((format(printf,1,2)))
 void failExit(const char *fmt, ...);
 
-const static char test[] = "K";
-
 //---------------------------------------------------------------------------------
 void socShutdown() {
     //---------------------------------------------------------------------------------
@@ -43,11 +41,6 @@ void socShutdown() {
 //---------------------------------------------------------------------------------
 int main(int argc, char **argv) {
 
-
-    GetControlsInput(argc, argv);
-
-    return 0;
-
     //---------------------------------------------------------------------------------
     int ret;
     int socketMode = -1;
@@ -58,7 +51,7 @@ int main(int argc, char **argv) {
     int status;
 
 
-
+    gfxInitDefault();
     // register gfxExit to be run when app quits
     // this can help simplify error handling
     atexit(gfxExit);
@@ -110,9 +103,13 @@ int main(int argc, char **argv) {
     printf("3DS IP Adress %s\n", inet_ntoa(server.sin_addr));
     printf("3DS Listening\n");
 
+    u32 kDown;
+
     while (aptMainLoop()) {
-        gspWaitForVBlank();
+
         hidScanInput();
+        kDown = hidKeysDown();
+        if (kDown & KEY_START) break;
 
         if (socketMode==-1) {
             PCClientSocket = accept(DSServerSocket, (struct sockaddr *) &client, &clientlen);
@@ -148,15 +145,39 @@ int main(int argc, char **argv) {
             else {
                 printf("Connected\n");
                 socketMode = 1;
+
             }
 
         } else if (socketMode == 1) {
 
-        } else if (socketMode == 2) {
-            printf("YEY\n");
+            //hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
+
+
+            touchPosition touch;
+
+            //Read the touch screen coordinates
+            hidTouchRead(&touch);
+
+            //Print the touch screen coordinates
+
+
+            u16 positionToSend[]={
+                touch.px,
+                touch.py
+            };
+            printf("\x1b[8;0H%03d; %03d", positionToSend[0], positionToSend[1]);
+
+            status=send(PCServerSocket, positionToSend, sizeof (positionToSend),0);
+            if (status!=sizeof(positionToSend)) {
+                failExit("send: %d %s\n", errno, strerror(errno));
+            }
+
+
+            // Flush and swap framebuffers
+            gfxFlushBuffers();
+            gfxSwapBuffers();
         }
-        u32 kDown = hidKeysDown();
-        if (kDown & KEY_START) break;
+
     }
     if (socketMode == -1) {
         close(PCClientSocket);
@@ -171,6 +192,7 @@ int main(int argc, char **argv) {
     recv(clientSocket, &Amount, sizeof(Amount), 0);
     // Amount= ntohl(Amount);
     printf("Data received: %d\n",Amount));*/
+
     return 0;
 }
 

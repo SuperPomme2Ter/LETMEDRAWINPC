@@ -30,6 +30,8 @@
     <list default="true" id="350b7801-790f-4668-bcdf-89d8bb1331e4" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/Source/Controls.c" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/include/Controls.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/.idea/LETMEDRAWINPC.iml" beforeDir="false" />
@@ -88,16 +90,14 @@
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/test.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/test.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/commandes.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/.idea/PC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/.idea/PC.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/.idea/editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Client.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Client.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/main.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../commandes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../commandes.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,37 +137,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "CMake Application.LETMEDRAWINPC.executor": "Coverage",
-    "Makefile Target.Makefile.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.west.config.association.type.startup.service": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "F:/LETMEDRAWINPC/3DS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "CppIncludesOrderOptionsId",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CMake Application.LETMEDRAWINPC.executor&quot;: &quot;Coverage&quot;,
+    &quot;Makefile Target.Makefile.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/LETMEDRAWINPC/3DS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CppIncludesOrderOptionsId&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "PLAIN_TEXT"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;PLAIN_TEXT&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\LETMEDRAWINPC" />
@@ -179,12 +179,12 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.LETMEDRAWINPC">
-    <configuration name="LETMEDRAWINPC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LETMEDRAWINPC" TARGET_NAME="LETMEDRAWINPC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LETMEDRAWINPC" RUN_TARGET_NAME="LETMEDRAWINPC">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="LETMEDRAWINPC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LETMEDRAWINPC" TARGET_NAME="LETMEDRAWINPC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LETMEDRAWINPC" RUN_TARGET_NAME="LETMEDRAWINPC">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -223,6 +223,8 @@
       <workItem from="1753455686407" duration="7934000" />
       <workItem from="1753520557317" duration="1739000" />
       <workItem from="1753522327625" duration="7719000" />
+      <workItem from="1753688976455" duration="2920000" />
+      <workItem from="1753792363982" duration="6828000" />
     </task>
     <task id="LOCAL-00001" summary="wut">
       <option name="closed" value="true" />

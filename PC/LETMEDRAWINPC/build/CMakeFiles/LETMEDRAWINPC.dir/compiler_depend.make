@@ -534,6 +534,8 @@ CMakeFiles/LETMEDRAWINPC.dir/Server.c.o: /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Serve
   C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/shaintrin.h \
   C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/smmintrin.h \
   C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdarg.h \
+  C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stddef.h \
+  C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdint.h \
   C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/tbmintrin.h \
   C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/tmmintrin.h \
   C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/vaesintrin.h \
@@ -666,6 +668,8 @@ CMakeFiles/LETMEDRAWINPC.dir/Server.c.o: /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/Serve
   C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/shellapi.h \
   C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/specstrings.h \
   C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdarg.h \
+  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stddef.h \
+  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdint.h \
   C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdio.h \
   C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdlib.h \
   C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stralign.h \
@@ -978,6 +982,10 @@ CMakeFiles/LETMEDRAWINPC.dir/main.c.o: /f/LETMEDRAWINPC/PC/LETMEDRAWINPC/main.c 
 
 F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/main.c:
 
+C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdbool.h:
+
+F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Server.h:
+
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/io.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/ktmtypes.h:
@@ -1094,6 +1102,8 @@ C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/avx512vlbwintri
 
 C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/avx2intrin.h:
 
+C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stddef.h:
+
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_off_t.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/objbase.h:
@@ -1112,9 +1122,15 @@ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/minwindef.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/psdk_inc/_socket_types.h:
 
+C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdint.h:
+
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/psdk_inc/_wsa_errnos.h:
 
 C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/avx512vnnivlintrin.h:
+
+/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/main.c:
+
+C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_stdarg.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/lzexpand.h:
 
@@ -1137,8 +1153,6 @@ C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/vpclmulqdqintri
 C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/avx512cdintrin.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sec_api/stralign_s.h:
-
-C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdbool.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/windows.h:
 
@@ -1376,6 +1390,10 @@ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sdks/_mingw_directx.h:
 
+F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Client.h:
+
+C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sec_api/stdio_s.h:
+
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
 
 C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/bmiintrin.h:
@@ -1434,6 +1452,8 @@ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/winperf.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/winbase.h:
 
+C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdint.h:
+
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/wtypes.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/nb30.h:
@@ -1468,6 +1488,8 @@ F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Debug.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/assert.h:
 
+C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stddef.h:
+
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/corecrt_startup.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_mac.h:
@@ -1481,13 +1503,3 @@ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sys/timeb.h:
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/wincrypt.h:
 
 C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/unistd.h:
-
-F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Server.h:
-
-C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/_mingw_stdarg.h:
-
-/f/LETMEDRAWINPC/PC/LETMEDRAWINPC/main.c:
-
-C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sec_api/stdio_s.h:
-
-F:/LETMEDRAWINPC/PC/LETMEDRAWINPC/Client.h:

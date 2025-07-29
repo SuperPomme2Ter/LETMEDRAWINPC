@@ -250,4 +250,8 @@ CMakeFiles/LETMEDRAWINPC.dir/Server.c.o: \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/corecrt_startup.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/sys/types.h \
  C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/getopt.h \
- C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/pthread_unistd.h
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/pthread_unistd.h \
+ C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stdint.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stdint.h \
+ C:/Program\ Files/MinGW/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stddef.h \
+ C:/Program\ Files/MinGW/x86_64-w64-mingw32/include/stddef.h

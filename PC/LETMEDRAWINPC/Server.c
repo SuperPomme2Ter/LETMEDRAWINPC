@@ -6,19 +6,22 @@
 #include "Debug.h"
 #include "Server.h"
 
+#include <stdint.h>
+
 #define BACKLOG 10
 #define SERVPORT "8000"
 
 
 
-char read_data_from_socket(int socket, fd_set *all_sockets, int fd_max, int server_socket)
+void read_data_from_socket(int socket, fd_set *all_sockets, int fd_max, int server_socket,char* textBuffer)
 {
-    char buffer[BUFSIZ];
+    uint16_t buffer[2];
     int bytes_read;
     int status;
+    uint16_t lastbuffer[2];
 
     memset(&buffer, '\0', sizeof buffer);
-    bytes_read = recv(socket, buffer, BUFSIZ, 0);
+    bytes_read = recv(socket, buffer, sizeof(buffer), 0);
     if (bytes_read <= 0) {
         if (bytes_read == 0) {
             printf("[%d] Client socket closed connection.\n", socket);
@@ -29,7 +32,17 @@ char read_data_from_socket(int socket, fd_set *all_sockets, int fd_max, int serv
         FD_CLR(socket, all_sockets); // Enlève la socket de l'ensemble
         close(socket); // Ferme la socket
     }
-    return buffer;
+    else {
+        // Renvoie le message reçu à toutes les sockets connectées
+        // à part celle du serveur et celle qui l'a envoyée
+        if (buffer[0]!=lastbuffer[0]) {
+            printf("    px: %hu ",buffer[0]);
+            printf(" py: %hu\n",buffer[1]);
+            lastbuffer[0] = buffer[0];
+        }
+
+
+    }
 
 }
 
@@ -144,7 +157,7 @@ int ServerPart(char* PCIP) {
                 // on s'arrête là et on continue la boucle
                 continue ;
             }
-            printf("[%d] Ready for I/O operation\n", i);
+            //printf("[%d] Ready for I/O operation\n", i);
             // La socket est prête à être lue !
             if (DSConnected==0) {
                 if (i == SocketPC) {
@@ -157,7 +170,10 @@ int ServerPart(char* PCIP) {
 
             else {
                 // La socket est une socket client, on va la lire
-                read_data_from_socket(i, &all_sockets, fd_max, SocketPC);
+                read_data_from_socket(i, &all_sockets, fd_max, SocketPC,buffer);
+                //system("cls");
+                //printf("buffer : %s\n", buffer);
+
             }
         }
     }
