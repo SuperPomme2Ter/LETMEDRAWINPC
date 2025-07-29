@@ -10,7 +10,9 @@ add_executable(LETMEDRAWINPC
         Debug.h
         Debug.c
         Server.c
-        Server.h)
+        Server.h
+        Controls.c
+        Controls.h)
 target_link_libraries(LETMEDRAWINPC ws2_32)
 #[[
 include_directories(F:/devkitPro/devkitARM/include)

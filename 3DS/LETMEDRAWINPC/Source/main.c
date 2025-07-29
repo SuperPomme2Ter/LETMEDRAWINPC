@@ -23,6 +23,10 @@
 #define SOC_ALIGN       0x1000
 #define SOC_BUFFERSIZE  0x100000
 
+#define NOTOUCH 999
+
+
+
 static u32 *SOC_buffer = NULL;
 s32 DSServerSocket = -1, PCClientSocket = -1, PCServerSocket;
 
@@ -104,11 +108,13 @@ int main(int argc, char **argv) {
     printf("3DS Listening\n");
 
     u32 kDown;
+    u16 positionToSend[2];
 
     while (aptMainLoop()) {
 
         hidScanInput();
         kDown = hidKeysDown();
+        gspWaitForVBlank();
         if (kDown & KEY_START) break;
 
         if (socketMode==-1) {
@@ -150,21 +156,28 @@ int main(int argc, char **argv) {
 
         } else if (socketMode == 1) {
 
+            positionToSend[0]=NOTOUCH;
+            positionToSend[1]=NOTOUCH;
+            u32 kHeld=hidKeysHeld();
             //hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
+            if (kDown & KEY_TOUCH || kHeld & KEY_TOUCH) {
+
+                touchPosition touch;
+
+                //Read the touch screen coordinates
+                hidTouchRead(&touch);
+
+                positionToSend[0]=touch.px;
+                positionToSend[1]=touch.py;
+            }
 
 
-            touchPosition touch;
-
-            //Read the touch screen coordinates
-            hidTouchRead(&touch);
 
             //Print the touch screen coordinates
 
 
-            u16 positionToSend[]={
-                touch.px,
-                touch.py
-            };
+
+
             printf("\x1b[8;0H%03d; %03d", positionToSend[0], positionToSend[1]);
 
             status=send(PCServerSocket, positionToSend, sizeof (positionToSend),0);

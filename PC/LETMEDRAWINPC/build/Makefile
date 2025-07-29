@@ -160,6 +160,30 @@ Client.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Client.c.s
 .PHONY : Client.c.s
 
+Controls.o: Controls.c.o
+.PHONY : Controls.o
+
+# target to build an object file
+Controls.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Controls.c.o
+.PHONY : Controls.c.o
+
+Controls.i: Controls.c.i
+.PHONY : Controls.i
+
+# target to preprocess a source file
+Controls.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Controls.c.i
+.PHONY : Controls.c.i
+
+Controls.s: Controls.c.s
+.PHONY : Controls.s
+
+# target to generate assembly for a file
+Controls.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/LETMEDRAWINPC.dir/build.make CMakeFiles/LETMEDRAWINPC.dir/Controls.c.s
+.PHONY : Controls.c.s
+
 Debug.o: Debug.c.o
 .PHONY : Debug.o
 
@@ -245,6 +269,9 @@ help:
 	@echo "... Client.o"
 	@echo "... Client.i"
 	@echo "... Client.s"
+	@echo "... Controls.o"
+	@echo "... Controls.i"
+	@echo "... Controls.s"
 	@echo "... Debug.o"
 	@echo "... Debug.i"
 	@echo "... Debug.s"

@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/LETMEDRAWINPC.dir/Client.c.o"
   "CMakeFiles/LETMEDRAWINPC.dir/Client.c.o.d"
+  "CMakeFiles/LETMEDRAWINPC.dir/Controls.c.o"
+  "CMakeFiles/LETMEDRAWINPC.dir/Controls.c.o.d"
   "CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o"
   "CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o.d"
   "CMakeFiles/LETMEDRAWINPC.dir/Server.c.o"

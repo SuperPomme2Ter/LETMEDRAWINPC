@@ -47,9 +47,14 @@ int main(void) {
     }
     ServerPart(IP);
     WSACleanup();
+
+
+
     return 0;
 
 }
+
+
 
 
 

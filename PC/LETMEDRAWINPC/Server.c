@@ -6,19 +6,25 @@
 #include "Debug.h"
 #include "Server.h"
 
+#include <conio.h>
 #include <stdint.h>
+
+#include "Controls.h"
 
 #define BACKLOG 10
 #define SERVPORT "8000"
 
+#define NOTOUCH 999
+#define XTOUCH 320
+#define YTOUCH 240
 
 
-void read_data_from_socket(int socket, fd_set *all_sockets, int fd_max, int server_socket,char* textBuffer)
+
+int read_data_from_socket(int socket, fd_set *all_sockets, int fd_max, int server_socket,short textBuffer[])
 {
     uint16_t buffer[2];
     int bytes_read;
     int status;
-    uint16_t lastbuffer[2];
 
     memset(&buffer, '\0', sizeof buffer);
     bytes_read = recv(socket, buffer, sizeof(buffer), 0);
@@ -31,15 +37,23 @@ void read_data_from_socket(int socket, fd_set *all_sockets, int fd_max, int serv
         }
         FD_CLR(socket, all_sockets); // Enlève la socket de l'ensemble
         close(socket); // Ferme la socket
+        return 0;
     }
     else {
         // Renvoie le message reçu à toutes les sockets connectées
         // à part celle du serveur et celle qui l'a envoyée
-        if (buffer[0]!=lastbuffer[0]) {
-            printf("    px: %hu ",buffer[0]);
-            printf(" py: %hu\n",buffer[1]);
-            lastbuffer[0] = buffer[0];
+        // if (buffer[0]!=lastbuffer[0]) {
+        //     printf("    px: %hu ",buffer[0]);
+        //     printf(" py: %hu\n",buffer[1]);
+        //     lastbuffer[0] = buffer[0];
+        // }
+        if (buffer[0]==NOTOUCH) {
+            return 0;
         }
+
+        textBuffer[0] = -((XTOUCH*0.5)-buffer[0]);
+        textBuffer[1] = -((YTOUCH*0.5)-buffer[1]);
+        return 1;
 
 
     }
@@ -68,7 +82,7 @@ int ServerPart(char* PCIP) {
     printf("---- SERVER ----\n\n");
     int bytes_read;
 
-    char buffer[BUFSIZ];
+    short buffer[2];
     int status;
     struct sockaddr_storage client_addr;
     struct sockaddr_in PCPart;
@@ -105,6 +119,7 @@ int ServerPart(char* PCIP) {
     status = bind(SocketPC, (struct sockaddr *) &PCAdress, sizeof(PCAdress));
     if (status != 0) {
         print_wsa_error("socket fd error");
+        closesocket(SocketPC);
         return (2);
     }
     printf("Bound socket to localhost port %d\n", 8000);
@@ -113,6 +128,7 @@ int ServerPart(char* PCIP) {
     printf("Listening on port %d\n", 8000);
     status = listen(SocketPC, BACKLOG);
     if (status != 0) {
+        closesocket(SocketPC);
         print_wsa_error("socket fd error");
         return (3);
     }
@@ -130,8 +146,13 @@ int ServerPart(char* PCIP) {
         return (1);
     }*/
 
+
+    int lastCursorPos[2]= {0,0};
+    int absoluteCursorPos[2];
+    GetCursorPos(absoluteCursorPos);
+
     int DSConnected = 0;
-    while (1)
+    while (!kbhit())
         {
         read_fds = all_sockets;
         // Timeout de 2 secondes pour select()
@@ -141,6 +162,7 @@ int ServerPart(char* PCIP) {
         // Surveille les sockets prêtes à être lues
         status = select(fd_max + 1, &read_fds, NULL, NULL, &timer);
         if (status == -1) {
+            closesocket(SocketPC);
             print_wsa_error("socket fd error");
             exit(1);
         }
@@ -170,9 +192,19 @@ int ServerPart(char* PCIP) {
 
             else {
                 // La socket est une socket client, on va la lire
-                read_data_from_socket(i, &all_sockets, fd_max, SocketPC,buffer);
+
+                if (read_data_from_socket(i, &all_sockets, fd_max, SocketPC,buffer)) {
+
+                    absoluteCursorPos[0] = buffer[0]+lastCursorPos[0];
+                    absoluteCursorPos[1] = buffer[1]+lastCursorPos[1];
+                    SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1]);
+                }
+                else {
+                    lastCursorPos[0] = absoluteCursorPos[0];
+                    lastCursorPos[1] = absoluteCursorPos[1];
+                }
                 //system("cls");
-                //printf("buffer : %s\n", buffer);
+                printf("x : %hu, y : %hu\n", buffer[0],buffer[1]);
 
             }
         }
