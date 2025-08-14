@@ -28,8 +28,6 @@
     <list default="true" id="350b7801-790f-4668-bcdf-89d8bb1331e4" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/Source/Controls.c" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/include/Controls.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/3DS/LETMEDRAWINPC/.idea/LETMEDRAWINPC.iml" beforeDir="false" />
@@ -88,7 +86,6 @@
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/PC/LETMEDRAWINPC/test.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/commandes.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PC/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PC/.idea/editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PC/LETMEDRAWINPC/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PC/LETMEDRAWINPC/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/3DS/LETMEDRAWINPC/.idea/LETMEDRAWINPC.iml" beforeDir="false" />
@@ -245,6 +242,7 @@
       <workItem from="1752522628668" duration="10000" />
       <workItem from="1752528419496" duration="6000" />
       <workItem from="1753738595660" duration="96000" />
+      <workItem from="1753861795023" duration="20000" />
     </task>
     <task id="LOCAL-00001" summary="wut">
       <option name="closed" value="true" />

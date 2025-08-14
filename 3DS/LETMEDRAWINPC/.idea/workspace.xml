@@ -30,8 +30,7 @@
     <list default="true" id="350b7801-790f-4668-bcdf-89d8bb1331e4" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/Source/Controls.c" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/include/Controls.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Controls.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Controls.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/.idea/LETMEDRAWINPC.iml" beforeDir="false" />
@@ -90,22 +89,9 @@
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/test.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/test.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/commandes.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/progress.marks" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,7 +215,11 @@
       <workItem from="1753688976455" duration="2920000" />
       <workItem from="1753792363982" duration="8123000" />
       <workItem from="1753802927577" duration="1539000" />
-      <workItem from="1753804493240" duration="2272000" />
+      <workItem from="1753804493240" duration="2273000" />
+      <workItem from="1753810805237" duration="5605000" />
+      <workItem from="1753824197522" duration="2712000" />
+      <workItem from="1753862164812" duration="8509000" />
+      <workItem from="1755160229352" duration="23605000" />
     </task>
     <task id="LOCAL-00001" summary="wut">
       <option name="closed" value="true" />
@@ -260,6 +250,11 @@
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Include/Controls.h</url>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/main.c</url>
+          <line>2</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

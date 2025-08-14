@@ -20,43 +20,58 @@
 
 
 
-int read_data_from_socket(int socket, fd_set *all_sockets, int fd_max, int server_socket,short textBuffer[])
+int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
 {
-    uint16_t buffer[2];
+        if (coordinatesRecv[1]==NOTOUCH
+            ||  coordinatesRecv[1]<=0
+            ||  coordinatesRecv[1]>XTOUCH
+            ||  coordinatesRecv[2]<=0
+            ||  coordinatesRecv[2]>YTOUCH) { return 0; }
+
+
+        actualCoordinates[0] =  -((XTOUCH*0.5)-coordinatesRecv[1]);
+        actualCoordinates[1] =  -((YTOUCH*0.5)-coordinatesRecv[2]);
+
+        return 1;
+}
+
+int ReadDSFlags(uint16_t* flagsRecv,uint8_t* actualFlags) {
+
+
+    if (*flagsRecv==*actualFlags || *flagsRecv>=SHRT_MAX) {
+        return 0;
+    }
+    *actualFlags= *flagsRecv;
+    return 1;
+
+}
+
+int ReadDSInputInfo(int DSSocket, fd_set *all_sockets,uint8_t* flagsBuffer,short coordinatesBuffer[]) {
+
+    uint16_t buffer[3];
     int bytes_read;
-    int status;
 
     memset(&buffer, '\0', sizeof buffer);
-    bytes_read = recv(socket, buffer, sizeof(buffer), 0);
+    bytes_read = recv(DSSocket, buffer, sizeof(buffer), 0);
     if (bytes_read <= 0) {
         if (bytes_read == 0) {
-            printf("[%d] Client socket closed connection.\n", socket);
+            printf("[%d] Client socket closed connection.\n", DSSocket);
         }
         else {
             print_wsa_error("socket fd error");
         }
-        FD_CLR(socket, all_sockets); // Enlève la socket de l'ensemble
-        close(socket); // Ferme la socket
+        FD_CLR(DSSocket, all_sockets); // Enlève la socket de l'ensemble
+        close(DSSocket); // Ferme la socket
         return 0;
     }
-    else {
-        // Renvoie le message reçu à toutes les sockets connectées
-        // à part celle du serveur et celle qui l'a envoyée
-        // if (buffer[0]!=lastbuffer[0]) {
-        //     printf("    px: %hu ",buffer[0]);
-        //     printf(" py: %hu\n",buffer[1]);
-        //     lastbuffer[0] = buffer[0];
-        // }
-        if (buffer[0]==NOTOUCH) {
-            return 0;
-        }
-
-        textBuffer[0] = -((XTOUCH*0.5)-buffer[0]);
-        textBuffer[1] = -((YTOUCH*0.5)-buffer[1]);
-        return 1;
-
-
+    ReadDSFlags(&buffer[0], flagsBuffer);
+    if (!ReadDSScreenCoordinates(buffer, coordinatesBuffer)) {
+        coordinatesBuffer[0]= NOTOUCH;
+        coordinatesBuffer[1]= NOTOUCH;
     }
+    return 1;
+
+
 
 }
 
@@ -64,6 +79,7 @@ void accept_new_connection(int server_socket, fd_set *all_sockets, int *fd_max)
 {
     int client_fd;
     int status;
+    printf("J'en peut plus\n");
 
     client_fd = accept(server_socket, NULL, NULL);
     if (client_fd == -1) {
@@ -78,11 +94,25 @@ void accept_new_connection(int server_socket, fd_set *all_sockets, int *fd_max)
 
 }
 
+
+void CloseAll(int fd_max,fd_set *all_sockets, int SocketPC) {
+
+    printf("Closing client socket\n");
+    for (int i = 0; i <= fd_max; i++) {
+        close(i); // Ferme la socket
+        FD_CLR(i, all_sockets); // Enlève la socket de l'ensemble
+    }
+
+    printf("Closing server socket\n");
+    closesocket(SocketPC);
+}
+
 int ServerPart(char* PCIP) {
     printf("---- SERVER ----\n\n");
     int bytes_read;
 
-    short buffer[2];
+    short posBuffer[2]= {0,0};
+    uint8_t flags=0b00000000;
     int status;
     struct sockaddr_storage client_addr;
     struct sockaddr_in PCPart;
@@ -149,9 +179,19 @@ int ServerPart(char* PCIP) {
 
     int lastCursorPos[2]= {0,0};
     int absoluteCursorPos[2];
+
     GetCursorPos(absoluteCursorPos);
 
     int DSConnected = 0;
+    int waitingPos=0;
+
+    INPUT inputs[0];
+    ZeroMemory(inputs, sizeof(inputs));
+    inputs[0].type = INPUT_MOUSE;
+    inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+
+    uint8_t lastFlagsValue=flags;
+
     while (!kbhit())
         {
         read_fds = all_sockets;
@@ -164,6 +204,7 @@ int ServerPart(char* PCIP) {
         if (status == -1) {
             closesocket(SocketPC);
             print_wsa_error("socket fd error");
+            CloseAll(fd_max, &all_sockets, SocketPC);
             exit(1);
         }
         else if (status == 0) {
@@ -181,9 +222,10 @@ int ServerPart(char* PCIP) {
             }
             //printf("[%d] Ready for I/O operation\n", i);
             // La socket est prête à être lue !
-            if (DSConnected==0) {
+            if (!DSConnected) {
                 if (i == SocketPC) {
                     // La socket est notre socket serveur qui écoute le port
+
                     accept_new_connection(SocketPC, &all_sockets, &fd_max);
                     DSConnected = 1;
                     FD_CLR(SocketPC, &all_sockets); // Enlève la socket de l'ensemble
@@ -191,32 +233,43 @@ int ServerPart(char* PCIP) {
             }
 
             else {
-                // La socket est une socket client, on va la lire
 
-                if (read_data_from_socket(i, &all_sockets, fd_max, SocketPC,buffer)) {
 
-                    absoluteCursorPos[0] = buffer[0]+lastCursorPos[0];
-                    absoluteCursorPos[1] = buffer[1]+lastCursorPos[1];
-                    SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1]);
+                ReadDSInputInfo(i, &all_sockets, &flags, posBuffer);
+                // if (FD_ISSET(i,&all_sockets)) {
+                     if ((flags & 0b1000) && posBuffer[0]!=NOTOUCH) {
+
+                         printf("posX %hd\n",posBuffer[1]);
+                         printf("posY %hd\n",posBuffer[0]);
+
+                         absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
+                         absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
+
+                         SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1]);
+                     } else{
+                         lastCursorPos[0] = absoluteCursorPos[0];
+                         lastCursorPos[1] = absoluteCursorPos[1];
+                     }
+                if (flags!=lastFlagsValue) {
+                    // if ((lastFlagsValue & ~0b0001) && (flags & 0b0001)) {
+                    //     inputs[0].type = INPUT_MOUSE;
+                    //     inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+                    //     SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+                    // }
+                    // else if ((flags & 0b0001)) {
+                    //     inputs[0].type = INPUT_MOUSE;
+                    //     inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+                    //     SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+                    // }
+                    lastFlagsValue = flags;
                 }
-                else {
-                    lastCursorPos[0] = absoluteCursorPos[0];
-                    lastCursorPos[1] = absoluteCursorPos[1];
-                }
-                //system("cls");
-                printf("x : %hu, y : %hu\n", buffer[0],buffer[1]);
-
             }
         }
     }
 
 
-    printf("Closing client socket\n");
-    for (int i = 0; i <= fd_max; i++) {
-        close(i); // Ferme la socket
-        FD_CLR(i, &all_sockets); // Enlève la socket de l'ensemble
-    }
-    printf("Closing server socket\n");
-    closesocket(SocketPC);
+    CloseAll(fd_max, &all_sockets, SocketPC);
     return 0;
 }
+
+

@@ -54,6 +54,8 @@ int main(int argc, char **argv) {
     struct sockaddr_in PCAdr;
     int status;
 
+    uint8_t keyFlags=0b00000000;
+
 
     gfxInitDefault();
     // register gfxExit to be run when app quits
@@ -108,33 +110,46 @@ int main(int argc, char **argv) {
     printf("3DS Listening\n");
 
     u32 kDown;
-    u16 positionToSend[2];
+    uint8_t lastFlag=keyFlags;
+    u32 kHeld;
+    u32 kUp;
+    touchPosition touch;
+
+    u16 inputInfo[3]= {
+        keyFlags,
+        0,
+        0
+    };
 
     while (aptMainLoop()) {
 
         hidScanInput();
         kDown = hidKeysDown();
+        kHeld=hidKeysHeld();
+        kUp=hidKeysUp();
         gspWaitForVBlank();
         if (kDown & KEY_START) break;
 
         if (socketMode==-1) {
             PCClientSocket = accept(DSServerSocket, (struct sockaddr *) &client, &clientlen);
-            memset(&PCAdr, 0, sizeof (PCAdr));
-            PCAdr=client;
             if (PCClientSocket < 0) {
                 if (errno != EAGAIN) {
                     failExit("accept: %d %s\n", errno, strerror(errno));
                 }
             } else {
                 printf("Connecting port %d from %s\n", client.sin_port, inet_ntoa(client.sin_addr));
+                memset(&PCAdr, 0, sizeof (PCAdr));
+                PCAdr=client;
             }
-            printf("Entering Client Mode\n");
-            socketMode = 0;
-            PCAdr.sin_family = AF_INET;
-            PCAdr.sin_port = htons(8000);
+                printf("Entering Client Mode\n");
+                socketMode = 0;
+                PCAdr.sin_family = AF_INET;
+                PCAdr.sin_port = htons(8000);
 
-            PCServerSocket = socket(AF_INET, SOCK_STREAM, 0);
-            fcntl(PCServerSocket, F_SETFL, O_NONBLOCK);
+                PCServerSocket = socket(AF_INET, SOCK_STREAM, 0);
+                fcntl(PCServerSocket, F_SETFL, O_NONBLOCK);
+
+
 
         }
 
@@ -151,63 +166,74 @@ int main(int argc, char **argv) {
             else {
                 printf("Connected\n");
                 socketMode = 1;
+                inputInfo[1]=NOTOUCH;
+                inputInfo[2]=NOTOUCH;
 
             }
 
         } else if (socketMode == 1) {
 
-            positionToSend[0]=NOTOUCH;
-            positionToSend[1]=NOTOUCH;
-            u32 kHeld=hidKeysHeld();
+            if (kDown & KEY_A)
+            {
+                keyFlags |= 0b0001;
+            }
+            if (kUp & KEY_A) {
+                keyFlags &= ~0b0001;
+            }
+
+
+
             //hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
-            if (kDown & KEY_TOUCH || kHeld & KEY_TOUCH) {
+            if (kDown & KEY_TOUCH){
+                keyFlags |= 0b1000;
+            }
+            if (kUp & KEY_TOUCH) {
+                inputInfo[1]=NOTOUCH;
+                inputInfo[2]=NOTOUCH;
+                keyFlags &= ~0b1000;
+            }
 
-                touchPosition touch;
 
-                //Read the touch screen coordinates
+                //printf("[%d] Ready for I/O operation\n", i);
+                // La socket est prête à être lue !
+
+            if (keyFlags!=lastFlag) {
+                inputInfo[0]=keyFlags;
+                lastFlag=keyFlags;
+                status=send(PCServerSocket, inputInfo, sizeof (inputInfo),0);
+                if (status!=sizeof(inputInfo)) {
+                    failExit("send: %d %s\n", errno, strerror(errno));
+                }
+            }
+
+        }
+
+            if (kHeld & KEY_TOUCH) {
+
+                    //Read the touch screen coordinates
                 hidTouchRead(&touch);
 
-                positionToSend[0]=touch.px;
-                positionToSend[1]=touch.py;
-            }
+                inputInfo[1]=touch.px;
+                inputInfo[2]=touch.py;
+                    if (keyFlags & 0b1000) {
+                            status=send(PCServerSocket, inputInfo, sizeof (inputInfo),0);
+                            if (status!=sizeof(inputInfo)) {
+                                printf("JE T'EMMERDE\n");
+                                failExit("send: %d %s\n", errno, strerror(errno));
 
-
-
-            //Print the touch screen coordinates
-
-
-
-
-            printf("\x1b[8;0H%03d; %03d", positionToSend[0], positionToSend[1]);
-
-            status=send(PCServerSocket, positionToSend, sizeof (positionToSend),0);
-            if (status!=sizeof(positionToSend)) {
-                failExit("send: %d %s\n", errno, strerror(errno));
-            }
-
-
+                        }
+                    }
+                }
             // Flush and swap framebuffers
             gfxFlushBuffers();
             gfxSwapBuffers();
         }
-
-    }
-    if (socketMode == -1) {
-        close(PCClientSocket);
-        close(DSServerSocket);
-    } else {
-        close(PCServerSocket);
-    }
-    /*int Amount=500;
-    send(newSocket, &Amount, sizeof(Amount), 0);
-    close(welcomeSocket);
-
-    recv(clientSocket, &Amount, sizeof(Amount), 0);
-    // Amount= ntohl(Amount);
-    printf("Data received: %d\n",Amount));*/
-
+    close(PCClientSocket);
+    close(DSServerSocket);
+    close(PCServerSocket);
     return 0;
-}
+
+    }
 
 
 //---------------------------------------------------------------------------------
