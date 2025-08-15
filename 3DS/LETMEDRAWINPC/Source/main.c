@@ -193,11 +193,7 @@ int main(int argc, char **argv) {
                 keyFlags &= ~0b1000;
             }
 
-
-                //printf("[%d] Ready for I/O operation\n", i);
-                // La socket est prête à être lue !
-
-            if (keyFlags!=lastFlag) {
+            if ((keyFlags!=lastFlag) && !(kHeld & KEY_TOUCH)) {
                 inputInfo[0]=keyFlags;
                 lastFlag=keyFlags;
                 status=send(PCServerSocket, inputInfo, sizeof (inputInfo),0);
@@ -205,32 +201,34 @@ int main(int argc, char **argv) {
                     failExit("send: %d %s\n", errno, strerror(errno));
                 }
             }
-
-        }
-
             if (kHeld & KEY_TOUCH) {
 
-                    //Read the touch screen coordinates
+                inputInfo[0]=keyFlags;
+                lastFlag=keyFlags;
+                //Read the touch screen coordinates
                 hidTouchRead(&touch);
 
                 inputInfo[1]=touch.px;
                 inputInfo[2]=touch.py;
-                    if (keyFlags & 0b1000) {
-                            status=send(PCServerSocket, inputInfo, sizeof (inputInfo),0);
-                            if (status!=sizeof(inputInfo)) {
-                                printf("JE T'EMMERDE\n");
-                                failExit("send: %d %s\n", errno, strerror(errno));
+                if (keyFlags & 0b1000) {
+                    status=send(PCServerSocket, inputInfo, sizeof (inputInfo),0);
+                    if (status!=sizeof(inputInfo)) {
+                        printf("JE T'EMMERDE\n");
+                        failExit("send: %d %s\n", errno, strerror(errno));
 
-                        }
                     }
                 }
+            }
+
+        }
+
             // Flush and swap framebuffers
             gfxFlushBuffers();
             gfxSwapBuffers();
         }
-    close(PCClientSocket);
-    close(DSServerSocket);
-    close(PCServerSocket);
+    if (DSServerSocket > 0) close(DSServerSocket);
+    if (PCClientSocket > 0) close(PCClientSocket);
+    if (PCServerSocket > 0) close(PCServerSocket);
     return 0;
 
     }

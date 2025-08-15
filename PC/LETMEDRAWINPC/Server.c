@@ -24,9 +24,9 @@ int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
 {
         if (coordinatesRecv[1]==NOTOUCH
             ||  coordinatesRecv[1]<=0
-            ||  coordinatesRecv[1]>XTOUCH
+            ||  coordinatesRecv[1]>=XTOUCH
             ||  coordinatesRecv[2]<=0
-            ||  coordinatesRecv[2]>YTOUCH) { return 0; }
+            ||  coordinatesRecv[2]>=YTOUCH) { return 0; }
 
 
         actualCoordinates[0] =  -((XTOUCH*0.5)-coordinatesRecv[1]);
@@ -239,28 +239,39 @@ int ServerPart(char* PCIP) {
                 // if (FD_ISSET(i,&all_sockets)) {
                      if ((flags & 0b1000) && posBuffer[0]!=NOTOUCH) {
 
-                         printf("posX %hd\n",posBuffer[1]);
-                         printf("posY %hd\n",posBuffer[0]);
+                          // printf("posX %hd\n",posBuffer[1]);
+                          // printf("posY %hd\n",posBuffer[0]);
 
                          absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
                          absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
 
                          SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1]);
-                     } else{
+                     } else if (lastFlagsValue & 0b1000) {
                          lastCursorPos[0] = absoluteCursorPos[0];
                          lastCursorPos[1] = absoluteCursorPos[1];
                      }
-                if (flags!=lastFlagsValue) {
-                    // if ((lastFlagsValue & ~0b0001) && (flags & 0b0001)) {
-                    //     inputs[0].type = INPUT_MOUSE;
-                    //     inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-                    //     SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-                    // }
-                    // else if ((flags & 0b0001)) {
-                    //     inputs[0].type = INPUT_MOUSE;
-                    //     inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
-                    //     SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-                    // }
+
+                if (flags != lastFlagsValue) {
+                    //printf("Flags %hu\n",flags);
+                    if ((flags & 0b0001)) {
+                        inputs[0].type = INPUT_MOUSE;
+                        inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+                        SendInput(1, &inputs, sizeof(INPUT));
+                        printf("bufferX %hd\n",posBuffer[0]);
+                        printf("bufferY %hd\n",posBuffer[1]);
+                         printf("posX %hd\n",absoluteCursorPos[0]);
+                         printf("posY %hd\n",absoluteCursorPos[1]);
+
+                    }
+                    else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
+                        inputs[0].type = INPUT_MOUSE;
+                        inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+                        SendInput(1, &inputs, sizeof(INPUT));
+                        printf("bufferXA %hd\n",posBuffer[0]);
+                        printf("bufferYA %hd\n",posBuffer[1]);
+                        printf("posXA %hd\n",absoluteCursorPos[0]);
+                        printf("posYA %hd\n",absoluteCursorPos[1]);
+                    }
                     lastFlagsValue = flags;
                 }
             }
