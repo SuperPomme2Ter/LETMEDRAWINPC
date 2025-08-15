@@ -85,8 +85,7 @@ main.o: F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/source/main.c \
  F:/devkitPro/libctru/include/3ds/romfs.h \
  F:/devkitPro/libctru/include/3ds/font.h \
  F:/devkitPro/libctru/include/3ds/gdbhio_dev.h \
- F:/devkitPro/libctru/include/3ds/3dslink.h \
- F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/include/Controls.h
+ F:/devkitPro/libctru/include/3ds/3dslink.h
 F:/devkitPro/libctru/include/arpa/inet.h:
 F:/devkitPro/libctru/include/netinet/in.h:
 F:/devkitPro/libctru/include/sys/socket.h:
@@ -174,4 +173,3 @@ F:/devkitPro/libctru/include/3ds/romfs.h:
 F:/devkitPro/libctru/include/3ds/font.h:
 F:/devkitPro/libctru/include/3ds/gdbhio_dev.h:
 F:/devkitPro/libctru/include/3ds/3dslink.h:
-F:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/include/Controls.h:

@@ -18,7 +18,7 @@
 #define XTOUCH 320
 #define YTOUCH 240
 
-
+// POUR LE SAINT AMOUR DES VECTREX REFACTO ET NETTOIE MOI CE CODE FOU QUE JE SUIS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
 int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
 {
@@ -79,7 +79,7 @@ void accept_new_connection(int server_socket, fd_set *all_sockets, int *fd_max)
 {
     int client_fd;
     int status;
-    printf("J'en peut plus\n");
+    //printf("J'en peut plus\n");
 
     client_fd = accept(server_socket, NULL, NULL);
     if (client_fd == -1) {
@@ -108,7 +108,7 @@ void CloseAll(int fd_max,fd_set *all_sockets, int SocketPC) {
 }
 
 int ServerPart(char* PCIP) {
-    printf("---- SERVER ----\n\n");
+    printf("Entering server mode\n\n");
     int bytes_read;
 
     short posBuffer[2]= {0,0};
@@ -168,14 +168,6 @@ int ServerPart(char* PCIP) {
     fd_max = SocketPC; // Le descripteur le plus grand est forcément celui de notre seule socket
     printf("[Server] Set up select fd sets\n");
 
-    // on accepte une connexion entrante
-    /*ClientAdrSize = sizeof (client_addr);
-    int SocketDS = socket(AF_INET, SOCK_STREAM, 0);
-    if (SocketDS == SOCKET_ERROR) {
-        print_wsa_error("socket fd error");
-        return (1);
-    }*/
-
 
     int lastCursorPos[2]= {0,0};
     int absoluteCursorPos[2];
@@ -209,7 +201,7 @@ int ServerPart(char* PCIP) {
         }
         else if (status == 0) {
             // Aucun descipteur de fichier de socket n'est prêt pour la lecture
-            printf("[Server] Waiting...\n");
+            //printf("[Server] Waiting...\n");
             continue;
         }
 
@@ -228,6 +220,7 @@ int ServerPart(char* PCIP) {
 
                     accept_new_connection(SocketPC, &all_sockets, &fd_max);
                     DSConnected = 1;
+                    printf("You can now use your 3DS as a controller\n");
                     FD_CLR(SocketPC, &all_sockets); // Enlève la socket de l'ensemble
                 }
             }
@@ -257,20 +250,20 @@ int ServerPart(char* PCIP) {
                         inputs[0].type = INPUT_MOUSE;
                         inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
                         SendInput(1, &inputs, sizeof(INPUT));
-                        printf("bufferX %hd\n",posBuffer[0]);
-                        printf("bufferY %hd\n",posBuffer[1]);
-                         printf("posX %hd\n",absoluteCursorPos[0]);
-                         printf("posY %hd\n",absoluteCursorPos[1]);
+                        // printf("bufferX %hd\n",posBuffer[0]);
+                        // printf("bufferY %hd\n",posBuffer[1]);
+                        // printf("posX %hd\n",absoluteCursorPos[0]);
+                        // printf("posY %hd\n",absoluteCursorPos[1]);
 
                     }
                     else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
                         inputs[0].type = INPUT_MOUSE;
                         inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
                         SendInput(1, &inputs, sizeof(INPUT));
-                        printf("bufferXA %hd\n",posBuffer[0]);
-                        printf("bufferYA %hd\n",posBuffer[1]);
-                        printf("posXA %hd\n",absoluteCursorPos[0]);
-                        printf("posYA %hd\n",absoluteCursorPos[1]);
+                        // printf("bufferXA %hd\n",posBuffer[0]);
+                        // printf("bufferYA %hd\n",posBuffer[1]);
+                        // printf("posXA %hd\n",absoluteCursorPos[0]);
+                        // printf("posYA %hd\n",absoluteCursorPos[1]);
                     }
                     lastFlagsValue = flags;
                 }

@@ -4,9 +4,7 @@ project(LETMEDRAWINPC C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(LETMEDRAWINPC
-        Include/Controls.h
         Source/main.c
-        Source/Controls.c
         )
 include_directories(Include)
 include_directories(F:/devkitPro/devkitARM/include)

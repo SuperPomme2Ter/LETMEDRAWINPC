@@ -9,7 +9,7 @@
 #define SERVPORT 8000
 
 int ClientStart(struct sockaddr_in *DSAdr) {
-    printf("---- CLIENT ----\n\n");
+    printf("ENTER 3DS IP ADRESS\n\n");
     int status;
 
 
@@ -55,22 +55,6 @@ int ClientStart(struct sockaddr_in *DSAdr) {
     }
     printf("Connected socket to localhost port %d\n", SERVPORT);
 
-
-    // on attend de recevoir un message via la socket
-
-
-
-
-
-        /*status=send(socket_fd, IP, strlen(IP) , 0);
-        if (status == SOCKET_ERROR) {
-            print_wsa_error("socket fd error");
-            return 0 ;
-        }
-        else {
-            printf("Client socket %d: reçu IP\n", socket_fd);
-            msgSuccess++;
-        }*/
 
 
 

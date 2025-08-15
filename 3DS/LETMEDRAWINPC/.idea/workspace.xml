@@ -88,9 +88,9 @@
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/test.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/test.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/commandes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +220,7 @@
       <workItem from="1753862164812" duration="8509000" />
       <workItem from="1755160229352" duration="23606000" />
       <workItem from="1755195270261" duration="1194000" />
-      <workItem from="1755259868864" duration="3598000" />
+      <workItem from="1755259868864" duration="6567000" />
     </task>
     <task id="LOCAL-00001" summary="wut">
       <option name="closed" value="true" />

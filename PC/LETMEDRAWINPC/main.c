@@ -9,10 +9,9 @@
 
 
 
-// le port de notre serveur
- // nombre max de demandes de connexion
 
 
+// POUR LE SAINT AMOUR DES VECTREX REFACTO ET NETTOIE MOI CE CODE FOU QUE JE SUIS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
 int main(void) {
 
@@ -26,18 +25,19 @@ int main(void) {
     char host[256];
     char *IP;
     struct hostent *host_entry;
+
     int hostname;
 
     // it will find the host name of current machine
     hostname = gethostname(host, sizeof(host));
 
-    // it will find the host information
     host_entry = gethostbyname(host);
     IP = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
 
     struct sockaddr_in DSAdr;
 
     struct addrinfo *PCAdrInfo;
+
 
     if (!ClientStart(&DSAdr))
     {

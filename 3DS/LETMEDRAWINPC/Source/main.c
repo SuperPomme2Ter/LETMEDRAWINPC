@@ -18,7 +18,6 @@
 
 #include <3ds.h>
 
-#include "Controls.h"
 
 #define SOC_ALIGN       0x1000
 #define SOC_BUFFERSIZE  0x100000
@@ -121,6 +120,9 @@ int main(int argc, char **argv) {
         0
     };
 
+    fcntl(PCClientSocket, F_SETFL, fcntl(PCClientSocket, F_GETFL, 0) | O_NONBLOCK);
+    fcntl(DSServerSocket, F_SETFL, fcntl(DSServerSocket, F_GETFL, 0) | O_NONBLOCK);
+
     while (aptMainLoop()) {
 
         hidScanInput();
@@ -135,6 +137,8 @@ int main(int argc, char **argv) {
             if (PCClientSocket < 0) {
                 if (errno != EAGAIN) {
                     failExit("accept: %d %s\n", errno, strerror(errno));
+                }else {
+                    continue;
                 }
             } else {
                 printf("Connecting port %d from %s\n", client.sin_port, inet_ntoa(client.sin_addr));
@@ -164,7 +168,8 @@ int main(int argc, char **argv) {
                 failExit("connect: %d %s\n", errno, strerror(errno));
             }
             else {
-                printf("Connected\n");
+                printf("Connected\n\n");
+                printf("Remember : the touchscreen work as your mouse and the A button simulate a left click\n");
                 socketMode = 1;
                 inputInfo[1]=NOTOUCH;
                 inputInfo[2]=NOTOUCH;
