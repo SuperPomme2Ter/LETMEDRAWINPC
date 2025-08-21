@@ -9,6 +9,7 @@
 #define SERVPORT 8000
 
 int ClientStart(struct sockaddr_in *DSAdr) {
+    printf("REMEMBER TO LAUNCH THE APP IN YOUR CONSOLE BEFORE ENTERING THE IP ADRESS !\n\n");
     printf("ENTER 3DS IP ADRESS\n\n");
     int status;
 

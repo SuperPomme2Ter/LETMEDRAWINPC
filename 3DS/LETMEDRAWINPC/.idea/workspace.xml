@@ -28,8 +28,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="350b7801-790f-4668-bcdf-89d8bb1331e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/Controls.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/include/Controls.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/.idea/LETMEDRAWINPC.iml" beforeDir="false" />
@@ -90,7 +88,9 @@
       <change beforePath="$PROJECT_DIR$/commandes.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Client.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Client.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +220,8 @@
       <workItem from="1753862164812" duration="8509000" />
       <workItem from="1755160229352" duration="23606000" />
       <workItem from="1755195270261" duration="1194000" />
-      <workItem from="1755259868864" duration="6567000" />
+      <workItem from="1755259868864" duration="8719000" />
+      <workItem from="1755782922513" duration="15790000" />
     </task>
     <task id="LOCAL-00001" summary="wut">
       <option name="closed" value="true" />
@@ -244,21 +245,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="wut" />
     <option name="LAST_COMMIT_MESSAGE" value="wut" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Include/Controls.h</url>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/main.c</url>
-          <line>2</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

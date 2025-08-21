@@ -31,6 +31,7 @@ s32 DSServerSocket = -1, PCClientSocket = -1, PCServerSocket;
 
 __attribute__((format(printf,1,2)))
 void failExit(const char *fmt, ...);
+void PrintWarning(const char *fmt, ...);
 
 //---------------------------------------------------------------------------------
 void socShutdown() {
@@ -145,7 +146,7 @@ int main(int argc, char **argv) {
                 memset(&PCAdr, 0, sizeof (PCAdr));
                 PCAdr=client;
             }
-                printf("Entering Client Mode\n");
+                printf("Entering Client Mode\n\n");
                 socketMode = 0;
                 PCAdr.sin_family = AF_INET;
                 PCAdr.sin_port = htons(8000);
@@ -163,18 +164,23 @@ int main(int argc, char **argv) {
 
 
             status = connect(PCServerSocket, (struct sockaddr *) &PCAdr, sizeof (PCAdr));
-            if (status != 0) {
-                printf("Failed to connect \n");
-                failExit("connect: %d %s\n", errno, strerror(errno));
+            if ((status != 0) && (errno != EINPROGRESS)) {
+                    printf("Failed to connect \n");
+                    failExit("connect: %d %s\n", errno, strerror(errno));
             }
             else {
-                printf("Connected\n\n");
-                printf("Remember : the touchscreen work as your mouse and the A button simulate a left click\n");
-                socketMode = 1;
-                inputInfo[1]=NOTOUCH;
-                inputInfo[2]=NOTOUCH;
+                if (errno == EINPROGRESS) {
+                    PrintWarning("connection in progress\n\n");
 
+                }
+                    printf("Connected\n\n");
+                    printf("Touchscreen work as your mouse\nA button simulate a left click\n");
+                    socketMode = 1;
+                    inputInfo[1]=NOTOUCH;
+                    inputInfo[2]=NOTOUCH;
             }
+
+
 
         } else if (socketMode == 1) {
 
@@ -263,4 +269,19 @@ void failExit(const char *fmt, ...) {
         u32 kDown = hidKeysDown();
         if (kDown & KEY_B) exit(0);
     }
+}
+
+void PrintWarning(const char *fmt, ...) {
+
+    char buffer[1024];
+    snprintf(buffer, sizeof(buffer), "Warning : %s", fmt);
+
+    va_list ap;
+
+    printf(CONSOLE_YELLOW);
+    va_start(ap, buffer);
+    vprintf(buffer, ap);
+    va_end(ap);
+    printf(CONSOLE_RESET);
+    printf("\n");
 }
