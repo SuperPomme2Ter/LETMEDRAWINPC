@@ -6,6 +6,8 @@
 #include "Debug.h"
 #include "Client.h"
 #include "Server.h"
+#include <windows.h>
+#include "cJSON.h"
 
 
 
@@ -16,46 +18,41 @@
 int main(void) {
 
 
-    WSADATA wsaData;
-    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        printf("WSAStartup failed\n");
-        return 0;
-    }
+     WSADATA wsaData;
+     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+         printf("WSAStartup failed\n");
+         return 0;
+     }
 
-    char host[256];
-    char *IP;
-    struct hostent *host_entry;
+     char host[256];
+     char *IP;
+     struct hostent *host_entry;
 
-    int hostname;
+     int hostname;
 
-    // it will find the host name of current machine
-    hostname = gethostname(host, sizeof(host));
+     // it will find the host name of current machine
+     hostname = gethostname(host, sizeof(host));
 
-    host_entry = gethostbyname(host);
-    IP = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
+     host_entry = gethostbyname(host);
+     IP = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
 
-    struct sockaddr_in DSAdr;
+     struct sockaddr_in DSAdr;
 
-    struct addrinfo *PCAdrInfo;
-
-
-    if (!ClientStart(&DSAdr))
-    {
-        printf("Closing socket\n");
-        WSACleanup();
-        return (0);
-    }
-    ServerPart(IP);
-    WSACleanup();
+     struct addrinfo *PCAdrInfo;
 
 
-
-    return 0;
-
-}
+     if (!ClientStart(&DSAdr))
+     {
+         printf("Closing socket\n");
+         WSACleanup();
+         return (0);
+     }
+     ServerPart(IP);
+     WSACleanup();
 
 
 
+     return 0;
 
-
+ }
 

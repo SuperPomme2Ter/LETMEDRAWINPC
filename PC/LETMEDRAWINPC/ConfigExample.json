@@ -1,0 +1,42 @@
+{
+  "Screen sensitivity" : 1,
+  "A": [
+    "NONE"
+  ],
+  "B" : [
+    "ctrl",
+    "z"
+  ],
+  "X" : [
+    "Mclick"
+  ],
+  "Y" : [
+    "Enter"
+  ],
+  "L" : [
+    "Lclick"
+  ],
+  "R" : [
+    "Rclick"
+  ],
+  "UP" : [
+    "UpArrow",
+    "Enter"
+  ],
+  "Down" : [
+    "DownArrow",
+    "suppr"
+  ],
+  "Left" : [
+    "LeftArrow",
+    "alt"
+  ],
+  "Right" : [
+    "RightArrow"
+  ],
+  "SELECT" : [
+    "ctrl",
+    "k",
+    "c"
+  ]
+}

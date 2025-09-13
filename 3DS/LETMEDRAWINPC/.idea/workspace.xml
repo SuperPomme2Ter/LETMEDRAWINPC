@@ -5,7 +5,9 @@
   </component>
   <component name="BackendCodeEditorMiscSettings">
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue" value="CppIncludesOrderOptions" type="string" />
+    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
   </component>
   <component name="CMakePresetLoader">{
   &quot;useNewFormat&quot;: true
@@ -28,6 +30,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="350b7801-790f-4668-bcdf-89d8bb1331e4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/ConfigExample.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Configuration.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/cJSON.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/cJSON.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/3DS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/3DS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3DS/LETMEDRAWINPC/.idea/LETMEDRAWINPC.iml" beforeDir="false" />
@@ -86,11 +99,71 @@
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/test.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PC/LETMEDRAWINPC/test.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/commandes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/.idea/PC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/.idea/PC.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/PC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/PC.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Client.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Controls.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Controls.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Controls.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Controls.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Debug.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Debug.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Debug.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Debug.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Client.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Client.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/Server.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/4.0.2/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/4.0.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/4.0.2/CMakeRCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/4.0.2/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/4.0.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/4.0.2/CompilerIdC/a.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/InstallScripts.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Client.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Client.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Controls.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Controls.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Debug.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/Server.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/compiler_depend.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/main.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/main.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/test.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/LETMEDRAWINPC.dir/test.c.o.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/Makefile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/Makefile2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/CMakeFiles/progress.marks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/LETMEDRAWINPC.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/build/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../PC/LETMEDRAWINPC/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../commandes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../commandes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../test.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../test.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,6 +211,7 @@
     &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
@@ -172,6 +246,11 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.LETMEDRAWINPC">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LETMEDRAWINPC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LETMEDRAWINPC" TARGET_NAME="LETMEDRAWINPC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LETMEDRAWINPC" RUN_TARGET_NAME="LETMEDRAWINPC">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -222,6 +301,8 @@
       <workItem from="1755195270261" duration="1194000" />
       <workItem from="1755259868864" duration="8719000" />
       <workItem from="1755782922513" duration="15790000" />
+      <workItem from="1757587992851" duration="728000" />
+      <workItem from="1757772485315" duration="941000" />
     </task>
     <task id="LOCAL-00001" summary="wut">
       <option name="closed" value="true" />
