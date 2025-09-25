@@ -1,0 +1,23 @@
+- REFACTO COTE PC ET COTE 3DS
+
+- FIX IMPOSSIBILITÉ DE CONNECTER LA 3DS AU SERVEUR PC
+
+- Crée détection de tout les Inputs de la 3DS et les relier aux flags correspondant
+
+- Crée système de lecture de la configuration de touche dans le Json
+
+- Assigner la configuration des touches à leur inputs correspondants (avec macro)
+
+- faire en sorte que chaque input soit géré et appelé correctement niveau PC (appel des Inputs via la struct Inputs)
+
+- gérer les changements d'Inputs en prenant en compte le KEYDOWN et le KEYUP
+
+	-> amène à la lecture des flags correspondants côté PC en appelant le bon Input au bon moment
+	-> amène à la bonne modification des flags (3DS) avant de les envoyer vers le PC
+
+- gérer un système de sensibilité de déplacement du curseur par rapport au mouvement du stylet sur l'écran 
+	-> crée Coeff multiplicateur des coordonnées de l'écran 3DS
+	-> faire en sorte que les coordonnées et la sensibilité s'adapte à la taille de l'écran du PC utilisé
+
+- fonction pour obtenir le nombre de bitshifting fait sur un masque binaire
+    -> renvoi le nombre de fois (int ou short) un bitshifting a été effectué sur le masque

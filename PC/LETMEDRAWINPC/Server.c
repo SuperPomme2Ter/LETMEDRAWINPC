@@ -26,13 +26,13 @@
 void CloseAll(int SocketDS, int SocketPC) {
 
     printf("Closing client socket\n");
-    if (SocketDS > 0) closesocket(SocketDS);
+    if (SocketDS != 0) closesocket(SocketDS);
 
 
     printf("Closing server socket\n");
-    if (SocketPC > 0) closesocket(SocketPC);
+    if (SocketPC != 0) closesocket(SocketPC);
 }
-
+__attribute__ ((hot))
 int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
 {
         if (coordinatesRecv[1]==NOTOUCH
@@ -47,8 +47,8 @@ int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
 
         return 1;
 }
-
-int ReadDSFlags(uint16_t* flagsRecv,uint8_t* actualFlags) {
+__attribute__ ((hot))
+int ReadDSFlags(uint16_t* flagsRecv,uint16_t* actualFlags) {
 
 
     if (*flagsRecv==*actualFlags || *flagsRecv>=SHRT_MAX) {
@@ -59,7 +59,8 @@ int ReadDSFlags(uint16_t* flagsRecv,uint8_t* actualFlags) {
 
 }
 
-int ReadDSInputInfo(int DSSocket,uint8_t* flagsBuffer,short coordinatesBuffer[]) {
+__attribute__ ((hot))
+int ReadDSInputInfo (int DSSocket,uint16_t* flagsBuffer,short coordinatesBuffer[]) {
 
     uint16_t buffer[3];
     int bytes_read;
@@ -85,22 +86,20 @@ int ReadDSInputInfo(int DSSocket,uint8_t* flagsBuffer,short coordinatesBuffer[])
         coordinatesBuffer[1]= NOTOUCH;
     }
     return 1;
-
-
-
 }
+;
 
 
 
 
-int ServerPart(char* PCIP) {
+int ServerPart(uint32_t *PCIP) {
     printf("Entering server mode\n\n");
     int bytes_read;
 
     short posBuffer[2]= {0,0};
-    uint8_t flags=0b00000000;
+    uint16_t flags=0;
     int status;
-    struct sockaddr_in DSAdress;
+    //struct sockaddr_in DSAdress;
 
     struct sockaddr_in PCPart;
     socklen_t ClientAdrSize;
@@ -109,6 +108,8 @@ int ServerPart(char* PCIP) {
 
     struct sockaddr_in PCAdress;
 
+    int SocketDS;
+
     //
     // fd_set all_sockets; // Ensemble de toutes les sockets du serveur
     // fd_set read_fds;    // Ensemble temporaire pour select()
@@ -116,36 +117,47 @@ int ServerPart(char* PCIP) {
     // struct timeval timer;
 
 
-    int  DSAdrLength = sizeof(DSAdress);
+
 
     // on prépare l'adresse et le port pour la socket de notre serveur
-    memset(&PCPart, 0, sizeof PCPart);
-    memset(&DSAdress, 0, sizeof (DSAdress));
+
+    struct sockaddr_in DSAdr;
+
+    //memset(&DSAdr, 0, sizeof(DSAdr));
+    //memset(&PCPart, 0, sizeof (PCPart));
+    //memset(SocketDS, 0, sizeof (SocketDS));
     memset(&PCAdress, 0, sizeof (PCAdress));
 
 
-
-
-    int SocketDS=-1;
+    SocketDS=socket(AF_INET, SOCK_STREAM, 0);
+    if (SocketDS == SOCKET_ERROR) {
+        print_wsa_error("socket fd error");
+        closesocket(SocketDS);
+        return (1);
+    }
 
     ioctlsocket(SocketDS, FIONBIO, &nonblock);
 
-    // on crée la socket, on a lit et on écoute dessus
+
     int SocketPC = socket(AF_INET, SOCK_STREAM, 0);
 
-    ioctlsocket(SocketPC, FIONBIO, &nonblock);
+    //ioctlsocket(SocketPC, FIONBIO, &nonblock);
 
     if (SocketPC == SOCKET_ERROR) {
         print_wsa_error("socket fd error");
         CloseAll(SocketDS, SocketPC);
         return (1);
     }
+
+
     printf("Created server socket fd: %d\n", SocketPC);
     char aa[24];
 
     PCAdress.sin_family = AF_INET;
-    PCAdress.sin_port = htons(8000);
-    inet_pton(AF_INET,PCIP,&(PCAdress.sin_addr));
+    PCAdress.sin_addr.s_addr = *PCIP;
+    PCAdress.sin_port = htons(4242);
+
+
 
     status = bind(SocketPC, (struct sockaddr *) &PCAdress, sizeof(PCAdress));
     if (status != 0) {
@@ -153,10 +165,10 @@ int ServerPart(char* PCIP) {
         CloseAll(SocketDS, SocketPC);
         return (2);
     }
-    printf("Bound socket to localhost port %d\n", 8000);
+    printf("Bound socket to localhost port %d\n", PCAdress.sin_port);
 
 
-    printf("Listening on port %d\n", 8000);
+    printf("Listening on port %d\n", PCAdress.sin_port);
     status = listen(SocketPC, BACKLOG);
     if (status != 0) {
 
@@ -164,6 +176,7 @@ int ServerPart(char* PCIP) {
         CloseAll(SocketDS, SocketPC);
         return (3);
     }
+
     // FD_ZERO(&all_sockets);
     // FD_ZERO(&read_fds);
     // FD_SET(SocketPC, &all_sockets); // Ajout de la socket principale à l'ensemble
@@ -184,27 +197,45 @@ int ServerPart(char* PCIP) {
     inputs[0].type = INPUT_MOUSE;
     inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
 
-    uint8_t lastFlagsValue=flags;
+    INT32 DSAdrLength = sizeof DSAdr;
+
+    uint16_t lastFlagsValue=flags;
+
+    struct pollfd poll_fd[1];
+
+    poll_fd[0].fd = SocketPC;
+    poll_fd[0].events = POLLIN | POLLOUT;
+
+
+
 
     while (!kbhit())
         {
             if (!DSConnected) {
-                SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdress, &DSAdrLength);
-                if (SocketDS < 0) {
-                    if (WSAGetLastError() != WSAEWOULDBLOCK) {
+                status = WSAPoll(poll_fd, 1, 1000);
+                if (status<0) {
+                    print_wsa_error("Poll error");
+                }if (status==0) {
+                    printf("waiting\n");
+                }
+                if (((status) > 0)) {
+                    SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
+                    if (SocketDS < 0) {
+
                         print_wsa_error("socket fd error");
                         CloseAll(SocketDS, SocketPC);
-                    }else {
-                        continue;
+                        return (1);
+
                     }
-                }else {
                     DSConnected = 1;
                     printf("You can now use your 3DS as a controller\n");
+
                 }
             }
             else {
 
                 status=ReadDSInputInfo(SocketDS, &flags, posBuffer);
+                printf("\rFlags :  %d", flags);
                 if (status) {
                     // if (FD_ISSET(i,&all_sockets)) {
                     if ((flags & 0b1000) && posBuffer[0]!=NOTOUCH) {

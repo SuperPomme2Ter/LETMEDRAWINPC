@@ -1,4 +1,5 @@
 main.o: C:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/source/main.c \
+ C:/DevKitPro/libctru/include/poll.h \
  C:/DevKitPro/libctru/include/arpa/inet.h \
  C:/DevKitPro/libctru/include/netinet/in.h \
  C:/DevKitPro/libctru/include/sys/socket.h \
@@ -85,7 +86,9 @@ main.o: C:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/source/main.c \
  C:/DevKitPro/libctru/include/3ds/romfs.h \
  C:/DevKitPro/libctru/include/3ds/font.h \
  C:/DevKitPro/libctru/include/3ds/gdbhio_dev.h \
- C:/DevKitPro/libctru/include/3ds/3dslink.h
+ C:/DevKitPro/libctru/include/3ds/3dslink.h \
+ C:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/include/FlagStructData.h
+C:/DevKitPro/libctru/include/poll.h:
 C:/DevKitPro/libctru/include/arpa/inet.h:
 C:/DevKitPro/libctru/include/netinet/in.h:
 C:/DevKitPro/libctru/include/sys/socket.h:
@@ -173,3 +176,4 @@ C:/DevKitPro/libctru/include/3ds/romfs.h:
 C:/DevKitPro/libctru/include/3ds/font.h:
 C:/DevKitPro/libctru/include/3ds/gdbhio_dev.h:
 C:/DevKitPro/libctru/include/3ds/3dslink.h:
+C:/LETMEDRAWINPC/3DS/LETMEDRAWINPC/include/FlagStructData.h:
