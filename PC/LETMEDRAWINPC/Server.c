@@ -19,6 +19,18 @@
 #define YTOUCH 240
 
 
+#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
+#define BYTE_TO_BINARY(byte)  \
+((byte) & 0x80 ? '1' : '0'), \
+((byte) & 0x40 ? '1' : '0'), \
+((byte) & 0x20 ? '1' : '0'), \
+((byte) & 0x10 ? '1' : '0'), \
+((byte) & 0x08 ? '1' : '0'), \
+((byte) & 0x04 ? '1' : '0'), \
+((byte) & 0x02 ? '1' : '0'), \
+((byte) & 0x01 ? '1' : '0')
+
+
 // POUR LE SAINT AMOUR DES VECTREX REFACTO ET NETTOIE MOI CE CODE FOU QUE JE SUIS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
 
@@ -35,6 +47,7 @@ void CloseAll(int SocketDS, int SocketPC) {
 __attribute__ ((hot))
 int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
 {
+        printf("AAAAAAAA\n");
         if (coordinatesRecv[1]==NOTOUCH
             ||  coordinatesRecv[1]<=0
             ||  coordinatesRecv[1]>=XTOUCH
@@ -235,13 +248,17 @@ int ServerPart(uint32_t *PCIP) {
             else {
 
                 status=ReadDSInputInfo(SocketDS, &flags, posBuffer);
-                printf("\rFlags :  %d", flags);
+
+                printf("flags: "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
+  BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(flags));
+                printf("%i",posBuffer[0]);
                 if (status) {
                     // if (FD_ISSET(i,&all_sockets)) {
-                    if ((flags & 0b1000) && posBuffer[0]!=NOTOUCH) {
+                    if ((flags & 0b100000000000) && posBuffer[0]!=NOTOUCH) {
 
                         // printf("posX %hd\n",posBuffer[1]);
                         // printf("posY %hd\n",posBuffer[0]);
+                        printf("jaaaj\n");
 
                         absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
                         absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
@@ -255,19 +272,21 @@ int ServerPart(uint32_t *PCIP) {
                     if (flags != lastFlagsValue) {
                         //printf("Flags %hu\n",flags);
                         if ((flags & 0b0001)) {
-                            inputs[0].type = INPUT_MOUSE;
-                            inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-                            SendInput(1, &inputs, sizeof(INPUT));
+                            // inputs[0].type = INPUT_MOUSE;
+                            // inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+                            // SendInput(1, &inputs, sizeof(INPUT));
                             // printf("bufferX %hd\n",posBuffer[0]);
                             // printf("bufferY %hd\n",posBuffer[1]);
                             // printf("posX %hd\n",absoluteCursorPos[0]);
                             // printf("posY %hd\n",absoluteCursorPos[1]);
+                            printf("A \n");
 
                         }
                         else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
-                            inputs[0].type = INPUT_MOUSE;
-                            inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
-                            SendInput(1, &inputs, sizeof(INPUT));
+                            // inputs[0].type = INPUT_MOUSE;
+                            // inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+                            // SendInput(1, &inputs, sizeof(INPUT));
+                            printf("a pu A \n");
                             // printf("bufferXA %hd\n",posBuffer[0]);
                             // printf("bufferYA %hd\n",posBuffer[1]);
                             // printf("posXA %hd\n",absoluteCursorPos[0]);

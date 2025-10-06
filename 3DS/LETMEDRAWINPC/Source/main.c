@@ -225,10 +225,12 @@ int main(int argc, char **argv) {
 
             keyFlags |= ConvertToAppFlag(kDown);
             keyFlags &= ~ConvertToAppFlag(kUp);
+            //printf("flags : %i aaa: %i\n",keyFlags,ABUTTON);
 
-            if (!(keyFlags & TOUCHSCREEN)) {
+            if ((keyFlags & ~TOUCHSCREEN)) {
                 inputInfo[1] = NOTOUCH;
                 inputInfo[2] = NOTOUCH;
+                printf("Hey \n");
                 if ((keyFlags != lastFlag)) {
                     inputInfo[0] = keyFlags;
                     lastFlag = keyFlags;

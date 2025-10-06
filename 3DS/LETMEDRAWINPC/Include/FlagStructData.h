@@ -13,18 +13,18 @@
 
 
 
-#define ABUTTON BIT(1)
-#define BBUTTON BIT(2)
-#define XBUTTON BIT(3)
-#define YBUTTON BIT(4)
-#define LBUTTON BIT(5)
-#define RBUTTON BIT(6)
-#define UPBUTTON BIT(7)
-#define DOWNBUTTON BIT(8)
-#define LEFTBUTTON BIT(9)
-#define RIGHTBUTTON BIT(10)
-#define SELECTBUTTON BIT(11)
-#define TOUCHSCREEN BIT(12)
+#define ABUTTON BIT(0)
+#define BBUTTON BIT(1)
+#define SELECTBUTTON BIT(2)
+#define LEFTBUTTON BIT(3)
+#define RIGHTBUTTON BIT(4)
+#define UPBUTTON BIT(5)
+#define DOWNBUTTON BIT(6)
+#define RBUTTON BIT(7)
+#define LBUTTON BIT(8)
+#define XBUTTON BIT(9)
+#define YBUTTON BIT(10)
+#define TOUCHSCREEN BIT(11)
 
 
 

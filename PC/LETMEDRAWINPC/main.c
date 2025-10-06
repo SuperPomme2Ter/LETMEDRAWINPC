@@ -83,12 +83,12 @@ int main(void) {
      hostname = gethostname(host, sizeof host);
 
      host_entry = gethostbyname(host);
-    uint32_t  *IP= (uint32_t *) host_entry->h_addr_list[0];
+     uint32_t  *IP= (uint32_t *) host_entry->h_addr_list[0];
 
 
      struct sockaddr_in DSAdr;
 
-    memset(&DSAdr, 0, sizeof(DSAdr));
+     memset(&DSAdr, 0, sizeof(DSAdr));
 
 
 
