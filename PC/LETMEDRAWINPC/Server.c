@@ -229,7 +229,7 @@ int ServerPart(uint32_t *PCIP) {
     int DSConnected = 0;
     int waitingPos=0;
 
-    INPUT inputs[0];
+    INPUT inputs[1];
     ZeroMemory(inputs, sizeof(inputs));
     inputs[0].type = INPUT_MOUSE;
     inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
@@ -270,10 +270,10 @@ int ServerPart(uint32_t *PCIP) {
                 status=ReadDSInputInfo(&SocketDS, &SocketPC, &flags, posBuffer);
 
                 if (status==1) {
-                    printf("flags : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
-   BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(flags));
-                    printf("lastflagsvalue : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
-   BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(lastFlagsValue));
+   //                  printf("flags : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
+   // BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(flags));
+   //                  printf("lastflagsvalue : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
+   // BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(lastFlagsValue));
 
                     //printf("posbuffer : %i\n",posBuffer[0]);
                     // if (FD_ISSET(i,&all_sockets)) {
@@ -287,36 +287,40 @@ int ServerPart(uint32_t *PCIP) {
 
                         SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1]);
                     } else if (lastFlagsValue & 0b100000000000) {
-                        printf("aaa\n");
+                        //printf("aaa\n");
                         lastCursorPos[0] = absoluteCursorPos[0];
                         lastCursorPos[1] = absoluteCursorPos[1];
                     }
 
                     if (flags != lastFlagsValue) {
                         //printf("Flags %hu\n",flags);
-                        // if ((flags & 0b0001)) {
-                        //     //inputs[0].type = INPUT_MOUSE;
-                        //     //inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-                        //     //SendInput(1, &inputs, sizeof(INPUT));
-                        //     // printf("bufferX %hd\n",posBuffer[0]);
-                        //     // printf("bufferY %hd\n",posBuffer[1]);
-                        //     // printf("posX %hd\n",absoluteCursorPos[0]);
-                        //     // printf("posY %hd\n",absoluteCursorPos[1]);
-                        //     printf("A \n");
-                        //
-                        // }
-                        // else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
-                        //     //inputs[0].type = INPUT_MOUSE;
-                        //     //inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
-                        //     //SendInput(1, &inputs, sizeof(INPUT));
-                        //     // printf("bufferXA %hd\n",posBuffer[0]);
-                        //     // printf("bufferYA %hd\n",posBuffer[1]);
-                        //     // printf("posXA %hd\n",absoluteCursorPos[0]);
-                        //     // printf("posYA %hd\n",absoluteCursorPos[1]);
-                        //     printf("B \n");
-                        // }
+                        if ((flags & 0b0001)) {
+                            inputs[0].type = INPUT_MOUSE;
+                            inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+                            SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
+                             // printf("bufferX %hd\n",posBuffer[0]);
+                             // printf("bufferY %hd\n",posBuffer[1]);
+                             // printf("posX %hd\n",absoluteCursorPos[0]);
+                             // printf("posY %hd\n",absoluteCursorPos[1]);
+                           // printf("A \n");
+
+                        }
+                        else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
+                            inputs[0].type = INPUT_MOUSE;
+                            inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+
+                            int a=SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
+                            if (a!=ARRAYSIZE(inputs)) {
+                                printf("aaaaa");
+                            }
+                             // printf("bufferXA %hd\n",posBuffer[0]);
+                             // printf("bufferYA %hd\n",posBuffer[1]);
+                             // printf("posXA %hd\n",absoluteCursorPos[0]);
+                             // printf("posYA %hd\n",absoluteCursorPos[1]);
+                            //printf("B \n");
+                        }
                         lastFlagsValue = flags;
-                        printf("C \n");
+                        //printf("C \n");
                     }
                 }
                 else if (status<0) {

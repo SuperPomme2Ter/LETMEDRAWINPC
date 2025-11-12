@@ -135,7 +135,7 @@ int main(int argc, char **argv) {
     //printf("aaaa %d\n", ConvertToAppFlag(0b11111111111111111111111111111111));
 
     u32 kDown;
-    uint8_t lastFlag = keyFlags;
+    uint16_t lastFlag = keyFlags;
     u32 kHeld;
     u32 kUp;
     touchPosition touch;
@@ -228,12 +228,12 @@ int main(int argc, char **argv) {
 
 
 
-            if (keyFlags & ~TOUCHSCREEN) {
+            if (!(keyFlags & TOUCHSCREEN)) {
                 inputInfo[1] = NOTOUCH;
                 inputInfo[2] = NOTOUCH;
-                printf("flags : %i \n",keyFlags);
                 if ((keyFlags != lastFlag)) {
                     inputInfo[0] = keyFlags;
+                    lastFlag = keyFlags;
                     status = send(PCServerSocket, inputInfo, sizeof (inputInfo), 0);
                     if (status != sizeof(inputInfo)) {
                         failExit("send: %d %s\n", errno, strerror(errno));
@@ -243,19 +243,19 @@ int main(int argc, char **argv) {
             else {
                 inputInfo[0] = keyFlags;
 
-                if ((lastFlag & TOUCHSCREEN) && (keyFlags==0)) {
-                    inputInfo[1] = NOTOUCH;
-                    inputInfo[2] = NOTOUCH;
-                    lastFlag = keyFlags;
-                    status = send(PCServerSocket, inputInfo, sizeof (inputInfo), 0);
-                    if (status != sizeof(inputInfo)) {
-
-                        failExit("send: %d %s\n", errno, strerror(errno));
-                    }
-                    printf("fais chier\n");
-                    continue;
-                }
-
+                // if ((lastFlag & TOUCHSCREEN) && (keyFlags==0)) {
+                //     inputInfo[1] = NOTOUCH;
+                //     inputInfo[2] = NOTOUCH;
+                //     lastFlag = keyFlags;
+                //     status = send(PCServerSocket, inputInfo, sizeof (inputInfo), 0);
+                //     if (status != sizeof(inputInfo)) {
+                //
+                //         failExit("send: %d %s\n", errno, strerror(errno));
+                //     }
+                //     printf("fais chier\n");
+                //     continue;
+                // }
+                lastFlag = keyFlags;
 
                 //Read the touch screen coordinates
                 hidTouchRead(&touch);
@@ -263,7 +263,6 @@ int main(int argc, char **argv) {
                 inputInfo[1] = touch.px;
                 inputInfo[2] = touch.py;
                 if (keyFlags & TOUCHSCREEN) {
-
                     status = send(PCServerSocket, inputInfo, sizeof (inputInfo), 0);
                     if (status != sizeof(inputInfo)) {
                         printf("JE T'EMMERDE\n");
@@ -272,11 +271,11 @@ int main(int argc, char **argv) {
                 }
 
             }
-            if ((keyFlags != lastFlag)) {
-                lastFlag = keyFlags;
-                printf("flags : %i \n",keyFlags);
-                printf("lastFlag : %i \n",lastFlag);
-            }
+            // if ((keyFlags != lastFlag)) {
+            //     lastFlag = keyFlags;
+            //     printf("flags : %i \n",keyFlags);
+            //     printf("lastFlag : %i \n",lastFlag);
+            // }
 
             //
             // if (kHeld & KEY_TOUCH) {
