@@ -7,9 +7,12 @@ add_executable(LETMEDRAWINPC
         Source/main.c
         Source/FlagStructData.c
         Include/FlagStructData.h
+        Source/FlagStructData.c
 
 )
 include_directories(Include)
 include_directories(C:/devkitPro/devkitARM/include)
 include_directories(C:/devkitPro/libctru/include)
 include_directories(C:/devkitPro/devkitARM/arm-none-eabi/include)
+
+

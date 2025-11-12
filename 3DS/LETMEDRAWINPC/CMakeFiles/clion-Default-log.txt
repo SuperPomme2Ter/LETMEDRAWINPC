@@ -1,0 +1,4 @@
+Cannot generate into C:\LETMEDRAWINPC\3DS\LETMEDRAWINPC
+It is already used for project \c\LETMEDRAWINPC\3ds\LETMEDRAWINPC
+
+Please either delete it manually or select another generation directory

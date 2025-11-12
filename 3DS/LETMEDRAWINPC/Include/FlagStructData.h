@@ -26,14 +26,15 @@
 #define YBUTTON BIT(10)
 #define TOUCHSCREEN BIT(11)
 
+/*  MASK LISIBLE
+  0b 0000 0000 0001 0000 0000 1111 1111 0111 */
+extern const u_int32_t mask3DSToPC;
+u_int16_t ConvertToAppFlag(u_int32_t mask3DS);
 
 
 #endif //LETMEDRAWINPC_FLAGSTRUCTDATA_H
 
 
 
-/*  MASK LISIBLE
-  0b 0000 0000 0001 0000 0000 1111 1111 0111 */
-extern const u_int32_t mask3DSToPC;
-u_int16_t ConvertToAppFlag(u_int32_t mask3DS);
+
 

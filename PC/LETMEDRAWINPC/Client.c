@@ -11,7 +11,7 @@
 
 int ClientStart() {
     printf("REMEMBER TO LAUNCH THE APP IN YOUR CONSOLE BEFORE ENTERING THE IP ADRESS !\n\n");
-    printf("ENTER 3DS IP ADRESS\n\n");
+    //printf("ENTER 3DS IP ADRESS\n\n");
     int status;
 
 
@@ -47,6 +47,7 @@ int ClientStart() {
     int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_fd == SOCKET_ERROR) {
         print_wsa_error("socket fd error");
+        shutdown(socket_fd,SD_BOTH);
         closesocket(socket_fd);
         return (0);
     }
@@ -56,6 +57,7 @@ int ClientStart() {
     status = connect(socket_fd, (const struct sockaddr *) &DSAdr, sizeof DSAdr);
     if (status != 0) {
         print_wsa_error("socket fd error");
+        shutdown(socket_fd,SD_BOTH);
         closesocket(socket_fd);
         return (0);
     }

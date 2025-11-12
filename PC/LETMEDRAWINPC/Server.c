@@ -35,19 +35,29 @@
 
 
 
-void CloseAll(int SocketDS, int SocketPC) {
+void CloseAll(int* SocketDS, int* SocketPC) {
 
     printf("Closing client socket\n");
-    if (SocketDS != 0) closesocket(SocketDS);
+    if (SocketDS != 0) closesocket(*SocketDS);
 
 
     printf("Closing server socket\n");
-    if (SocketPC != 0) closesocket(SocketPC);
+    if (SocketPC != 0) closesocket(*SocketPC);
+
 }
+
+
+int IsInProgressOrBlockingStatus() {
+    if (WSAGetLastError()==WSAEWOULDBLOCK || WSAGetLastError()==WSAEINPROGRESS) {
+        return 1;
+    }
+    return 0;
+
+}
+
 __attribute__ ((hot))
 int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
 {
-        printf("AAAAAAAA\n");
         if (coordinatesRecv[1]==NOTOUCH
             ||  coordinatesRecv[1]<=0
             ||  coordinatesRecv[1]>=XTOUCH
@@ -55,52 +65,68 @@ int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
             ||  coordinatesRecv[2]>=YTOUCH) { return 0; }
 
 
-        actualCoordinates[0] =  -((XTOUCH*0.5)-coordinatesRecv[1]);
-        actualCoordinates[1] =  -((YTOUCH*0.5)-coordinatesRecv[2]);
+        actualCoordinates[0] = (short)-((XTOUCH*0.5)-coordinatesRecv[1]);
+        actualCoordinates[1] = (short)-((YTOUCH*0.5)-coordinatesRecv[2]);
 
         return 1;
 }
 __attribute__ ((hot))
-int ReadDSFlags(uint16_t* flagsRecv,uint16_t* actualFlags) {
+int ReadDSFlags(const uint16_t* flagsRecv,uint16_t* actualFlags) {
 
 
     if (*flagsRecv==*actualFlags || *flagsRecv>=SHRT_MAX) {
+
         return 0;
     }
     *actualFlags= *flagsRecv;
+
+
     return 1;
 
 }
 
 __attribute__ ((hot))
-int ReadDSInputInfo (int DSSocket,uint16_t* flagsBuffer,short coordinatesBuffer[]) {
+int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coordinatesBuffer[]) {
+
 
     uint16_t buffer[3];
-    int bytes_read;
+    int bytes_read=0;
 
-    memset(&buffer, '\0', sizeof buffer);
-    bytes_read = recv(DSSocket, buffer, sizeof(buffer), 0);
-    if (bytes_read <= 0) {
-        if (WSAGetLastError()!=WSAEWOULDBLOCK) {
+    memset(buffer, 0, sizeof (buffer));
 
-            if (bytes_read == 0) {
-                printf("[%d] Client socket closed connection.\n", DSSocket);
-            }
-            else {
-                print_wsa_error("socket fd error");
-            }
-            return -1;
+    bytes_read = recv(*DSSocket, buffer, sizeof(buffer), 0);
+
+    if (bytes_read<0){
+        if (IsInProgressOrBlockingStatus()) {
+            return 0;
         }
-        return 0;
+        print_wsa_error("socket fd error");
+        printf("AAAAAAAAAAAAA");
+        CloseAll(DSSocket,PCSocket);
+        return -1;
     }
+    if (bytes_read == 0) {
+        printf("[%d] Client socket closed connection.\n", *DSSocket);
+        print_wsa_error("socket fd error");
+        CloseAll(DSSocket,PCSocket);
+        return -1;
+    }
+
+
     ReadDSFlags(&buffer[0], flagsBuffer);
+
+
+
     if (!ReadDSScreenCoordinates(buffer, coordinatesBuffer)) {
         coordinatesBuffer[0]= NOTOUCH;
         coordinatesBuffer[1]= NOTOUCH;
+
+        return 1;
     }
     return 1;
+
 }
-;
+
 
 
 
@@ -149,16 +175,14 @@ int ServerPart(uint32_t *PCIP) {
         return (1);
     }
 
-    ioctlsocket(SocketDS, FIONBIO, &nonblock);
+
 
 
     int SocketPC = socket(AF_INET, SOCK_STREAM, 0);
 
-    //ioctlsocket(SocketPC, FIONBIO, &nonblock);
-
     if (SocketPC == SOCKET_ERROR) {
         print_wsa_error("socket fd error");
-        CloseAll(SocketDS, SocketPC);
+        CloseAll(&SocketDS, &SocketPC);
         return (1);
     }
 
@@ -175,7 +199,7 @@ int ServerPart(uint32_t *PCIP) {
     status = bind(SocketPC, (struct sockaddr *) &PCAdress, sizeof(PCAdress));
     if (status != 0) {
         print_wsa_error("socket fd error");
-        CloseAll(SocketDS, SocketPC);
+        CloseAll(&SocketDS, &SocketPC);
         return (2);
     }
     printf("Bound socket to localhost port %d\n", PCAdress.sin_port);
@@ -186,7 +210,7 @@ int ServerPart(uint32_t *PCIP) {
     if (status != 0) {
 
         print_wsa_error("socket fd error");
-        CloseAll(SocketDS, SocketPC);
+        CloseAll(&SocketDS, &SocketPC);
         return (3);
     }
 
@@ -210,14 +234,14 @@ int ServerPart(uint32_t *PCIP) {
     inputs[0].type = INPUT_MOUSE;
     inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
 
-    INT32 DSAdrLength = sizeof DSAdr;
+    INT32 DSAdrLength = sizeof (DSAdr);
 
     uint16_t lastFlagsValue=flags;
 
-    struct pollfd poll_fd[1];
-
-    poll_fd[0].fd = SocketPC;
-    poll_fd[0].events = POLLIN | POLLOUT;
+    // struct pollfd poll_fd[1];
+    //
+    // poll_fd[0].fd = SocketPC;
+    // poll_fd[0].events = POLLIN | POLLOUT;
 
 
 
@@ -225,83 +249,85 @@ int ServerPart(uint32_t *PCIP) {
     while (!kbhit())
         {
             if (!DSConnected) {
-                status = WSAPoll(poll_fd, 1, 1000);
-                if (status<0) {
-                    print_wsa_error("Poll error");
-                }if (status==0) {
-                    printf("waiting\n");
-                }
-                if (((status) > 0)) {
-                    SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
+                //status = WSAPoll(poll_fd, 1, 1000);
+
+                SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
+                if (!IsInProgressOrBlockingStatus()) {
                     if (SocketDS < 0) {
-
                         print_wsa_error("socket fd error");
-                        CloseAll(SocketDS, SocketPC);
+                        CloseAll(&SocketDS, &SocketPC);
                         return (1);
-
                     }
+                    ioctlsocket(SocketDS, FIONBIO, &nonblock);
+                    ioctlsocket(SocketPC, FIONBIO, &nonblock);
+
                     DSConnected = 1;
                     printf("You can now use your 3DS as a controller\n");
-
                 }
             }
             else {
+                //printf("flags\n");
+                status=ReadDSInputInfo(&SocketDS, &SocketPC, &flags, posBuffer);
 
-                status=ReadDSInputInfo(SocketDS, &flags, posBuffer);
+                if (status==1) {
+                    printf("flags : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
+   BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(flags));
+                    printf("lastflagsvalue : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
+   BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(lastFlagsValue));
 
-                printf("flags: "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
-  BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(flags));
-                printf("%i",posBuffer[0]);
-                if (status) {
+                    //printf("posbuffer : %i\n",posBuffer[0]);
                     // if (FD_ISSET(i,&all_sockets)) {
                     if ((flags & 0b100000000000) && posBuffer[0]!=NOTOUCH) {
 
                         // printf("posX %hd\n",posBuffer[1]);
                         // printf("posY %hd\n",posBuffer[0]);
-                        printf("jaaaj\n");
 
                         absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
                         absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
 
                         SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1]);
-                    } else if (lastFlagsValue & 0b1000) {
+                    } else if (lastFlagsValue & 0b100000000000) {
+                        printf("aaa\n");
                         lastCursorPos[0] = absoluteCursorPos[0];
                         lastCursorPos[1] = absoluteCursorPos[1];
                     }
 
                     if (flags != lastFlagsValue) {
                         //printf("Flags %hu\n",flags);
-                        if ((flags & 0b0001)) {
-                            // inputs[0].type = INPUT_MOUSE;
-                            // inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-                            // SendInput(1, &inputs, sizeof(INPUT));
-                            // printf("bufferX %hd\n",posBuffer[0]);
-                            // printf("bufferY %hd\n",posBuffer[1]);
-                            // printf("posX %hd\n",absoluteCursorPos[0]);
-                            // printf("posY %hd\n",absoluteCursorPos[1]);
-                            printf("A \n");
-
-                        }
-                        else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
-                            // inputs[0].type = INPUT_MOUSE;
-                            // inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
-                            // SendInput(1, &inputs, sizeof(INPUT));
-                            printf("a pu A \n");
-                            // printf("bufferXA %hd\n",posBuffer[0]);
-                            // printf("bufferYA %hd\n",posBuffer[1]);
-                            // printf("posXA %hd\n",absoluteCursorPos[0]);
-                            // printf("posYA %hd\n",absoluteCursorPos[1]);
-                        }
+                        // if ((flags & 0b0001)) {
+                        //     //inputs[0].type = INPUT_MOUSE;
+                        //     //inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+                        //     //SendInput(1, &inputs, sizeof(INPUT));
+                        //     // printf("bufferX %hd\n",posBuffer[0]);
+                        //     // printf("bufferY %hd\n",posBuffer[1]);
+                        //     // printf("posX %hd\n",absoluteCursorPos[0]);
+                        //     // printf("posY %hd\n",absoluteCursorPos[1]);
+                        //     printf("A \n");
+                        //
+                        // }
+                        // else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
+                        //     //inputs[0].type = INPUT_MOUSE;
+                        //     //inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+                        //     //SendInput(1, &inputs, sizeof(INPUT));
+                        //     // printf("bufferXA %hd\n",posBuffer[0]);
+                        //     // printf("bufferYA %hd\n",posBuffer[1]);
+                        //     // printf("posXA %hd\n",absoluteCursorPos[0]);
+                        //     // printf("posYA %hd\n",absoluteCursorPos[1]);
+                        //     printf("B \n");
+                        // }
                         lastFlagsValue = flags;
+                        printf("C \n");
                     }
-                }else if (status<0) {
+                }
+                else if (status<0) {
                     break;
                 }
+
             }
 
     }
 
-    CloseAll(SocketDS, SocketPC);
+    CloseAll(&SocketDS, &SocketPC);
     return 0;
 }
 
