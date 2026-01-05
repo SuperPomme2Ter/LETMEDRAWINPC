@@ -1,6 +1,6 @@
 - REFACTO COTE PC ET COTE 3DS
 
-- FIX IMPOSSIBILITÉ DE CONNECTER LA 3DS AU SERVEUR PC
+- FIX IMPOSSIBILITÉ DE CONNECTER LA 3DS AU SERVEUR PC (RÉGLÉ)
 
 - Crée détection de tout les Inputs de la 3DS et les relier aux flags correspondant
 

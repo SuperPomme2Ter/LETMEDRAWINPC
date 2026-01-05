@@ -1,13 +1,12 @@
 //
 // Created by rapha on 14/07/2025.
 //
-#ifndef SHARED_H
-#define SHARED_H
 #pragma once
 
-
+#include <stdint.h>
+#include <time.h>
 #include <winsock2.h>
 
-void print_wsa_error(const char *msg);
+void Print_wsa_error(const char *msg);
 
-#endif
+void GetCPUClockTimeTaken(clock_t* t, uint8_t refreshTime);

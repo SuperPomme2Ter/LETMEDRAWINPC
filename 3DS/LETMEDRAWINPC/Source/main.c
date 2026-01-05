@@ -26,9 +26,6 @@
 
 #define NOTOUCH 999
 
-// flags for inputs from 3DS to send to PC
-// explicit conversion to reduce the size of the data to send, int is 4bytes, short is 2
-
 
 short GetBitshiftingOccurence(u_int16_t bitmask);
 
@@ -51,10 +48,15 @@ void socShutdown() {
     socExit();
 }
 
+void GetCPUClockTimeTaken(clock_t* t, u8 refreshTime) {
 
+    clock_t tmp=clock()-*t;
+    if (refreshTime) {
+        *t=clock();
+    }
+    printf("number of Clock cycle since last refresh : %ld (%f seconds)\n\n",tmp, ((float)tmp) / CLOCKS_PER_SEC);
 
-
-
+}
 
 //---------------------------------------------------------------------------------
 int main(int argc, char **argv) {
@@ -151,12 +153,9 @@ int main(int argc, char **argv) {
 
     // client.sin_family = AF_INET;
     // client.sin_port = htons(4242);
-
-    struct pollfd poll_fds[1];
-
-
-
+    clock_t t;
     while (aptMainLoop()) {
+
         hidScanInput();
         kDown = hidKeysDown();
         kHeld = hidKeysHeld();
@@ -214,7 +213,7 @@ int main(int argc, char **argv) {
                         socketMode = 1;
                         inputInfo[1] = NOTOUCH;
                         inputInfo[2] = NOTOUCH;
-                        printf("%i",1 & ~TOUCHSCREEN);
+                        //printf("%i",1 & ~TOUCHSCREEN);
                     //}
 
                 }
@@ -268,6 +267,7 @@ int main(int argc, char **argv) {
                         printf("JE T'EMMERDE\n");
                         failExit("send: %d %s\n", errno, strerror(errno));
                     }
+                    //GetCPUClockTimeTaken(&t,1);
                 }
 
             }

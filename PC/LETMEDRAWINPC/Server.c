@@ -46,7 +46,7 @@ void CloseAll(int* SocketDS, int* SocketPC) {
 
 }
 
-
+__attribute__ ((hot))
 int IsInProgressOrBlockingStatus() {
     if (WSAGetLastError()==WSAEWOULDBLOCK || WSAGetLastError()==WSAEINPROGRESS) {
         return 1;
@@ -70,6 +70,7 @@ int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
 
         return 1;
 }
+
 __attribute__ ((hot))
 int ReadDSFlags(const uint16_t* flagsRecv,uint16_t* actualFlags) {
 
@@ -89,29 +90,31 @@ __attribute__ ((hot))
 int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coordinatesBuffer[]) {
 
 
+
     uint16_t buffer[3];
     int bytes_read=0;
 
-    memset(buffer, 0, sizeof (buffer));
+    memset(buffer, 0, sizeof buffer);
 
     bytes_read = recv(*DSSocket, buffer, sizeof(buffer), 0);
+
+
 
     if (bytes_read<0){
         if (IsInProgressOrBlockingStatus()) {
             return 0;
         }
-        print_wsa_error("socket fd error");
+        Print_wsa_error("socket fd error");
         printf("AAAAAAAAAAAAA");
         CloseAll(DSSocket,PCSocket);
         return -1;
     }
     if (bytes_read == 0) {
         printf("[%d] Client socket closed connection.\n", *DSSocket);
-        print_wsa_error("socket fd error");
+        Print_wsa_error("socket fd error");
         CloseAll(DSSocket,PCSocket);
         return -1;
     }
-
 
     ReadDSFlags(&buffer[0], flagsBuffer);
 
@@ -132,6 +135,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 
 
 int ServerPart(uint32_t *PCIP) {
+    //clock_t t;
     printf("Entering server mode\n\n");
     int bytes_read;
 
@@ -169,23 +173,33 @@ int ServerPart(uint32_t *PCIP) {
 
 
     SocketDS=socket(AF_INET, SOCK_STREAM, 0);
+
     if (SocketDS == SOCKET_ERROR) {
-        print_wsa_error("socket fd error");
+        Print_wsa_error("socket fd error");
         closesocket(SocketDS);
         return (1);
     }
 
-
-
-
     int SocketPC = socket(AF_INET, SOCK_STREAM, 0);
 
     if (SocketPC == SOCKET_ERROR) {
-        print_wsa_error("socket fd error");
+        Print_wsa_error("socket fd error");
         CloseAll(&SocketDS, &SocketPC);
         return (1);
     }
 
+    // DWORD y =1;
+    // status = setsockopt(SocketDS,
+    //                     IPPROTO_TCP,
+    //                     TCP_NODELAY,
+    //                     (char*) &y,
+    //                     sizeof(DWORD));
+    //
+    // if (status!=0) {
+    //     Print_wsa_error("socket fd error");
+    //     CloseAll(&SocketDS, &SocketPC);
+    //     return (2);
+    // }
 
     printf("Created server socket fd: %d\n", SocketPC);
     char aa[24];
@@ -198,7 +212,7 @@ int ServerPart(uint32_t *PCIP) {
 
     status = bind(SocketPC, (struct sockaddr *) &PCAdress, sizeof(PCAdress));
     if (status != 0) {
-        print_wsa_error("socket fd error");
+        Print_wsa_error("socket fd error");
         CloseAll(&SocketDS, &SocketPC);
         return (2);
     }
@@ -209,15 +223,10 @@ int ServerPart(uint32_t *PCIP) {
     status = listen(SocketPC, BACKLOG);
     if (status != 0) {
 
-        print_wsa_error("socket fd error");
+        Print_wsa_error("socket fd error");
         CloseAll(&SocketDS, &SocketPC);
         return (3);
     }
-
-    // FD_ZERO(&all_sockets);
-    // FD_ZERO(&read_fds);
-    // FD_SET(SocketPC, &all_sockets); // Ajout de la socket principale à l'ensemble
-    // fd_max = SocketPC; // Le descripteur le plus grand est forcément celui de notre seule socket
     printf("[Server] Set up select fd sets\n");
 
 
@@ -243,18 +252,17 @@ int ServerPart(uint32_t *PCIP) {
     // poll_fd[0].fd = SocketPC;
     // poll_fd[0].events = POLLIN | POLLOUT;
 
-
-
-
+    clock_t t=clock();
     while (!kbhit())
         {
+
             if (!DSConnected) {
                 //status = WSAPoll(poll_fd, 1, 1000);
 
                 SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
                 if (!IsInProgressOrBlockingStatus()) {
                     if (SocketDS < 0) {
-                        print_wsa_error("socket fd error");
+                        Print_wsa_error("socket fd error");
                         CloseAll(&SocketDS, &SocketPC);
                         return (1);
                     }
@@ -266,10 +274,14 @@ int ServerPart(uint32_t *PCIP) {
                 }
             }
             else {
+                GetCPUClockTimeTaken(&t,1);
                 //printf("flags\n");
                 status=ReadDSInputInfo(&SocketDS, &SocketPC, &flags, posBuffer);
 
+
+
                 if (status==1) {
+
    //                  printf("flags : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
    // BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(flags));
    //                  printf("lastflagsvalue : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
@@ -286,6 +298,7 @@ int ServerPart(uint32_t *PCIP) {
                         absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
 
                         SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1]);
+                        GetCPUClockTimeTaken(&t,1);
                     } else if (lastFlagsValue & 0b100000000000) {
                         //printf("aaa\n");
                         lastCursorPos[0] = absoluteCursorPos[0];
@@ -294,33 +307,33 @@ int ServerPart(uint32_t *PCIP) {
 
                     if (flags != lastFlagsValue) {
                         //printf("Flags %hu\n",flags);
-                        if ((flags & 0b0001)) {
-                            inputs[0].type = INPUT_MOUSE;
-                            inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-                            SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
-                             // printf("bufferX %hd\n",posBuffer[0]);
-                             // printf("bufferY %hd\n",posBuffer[1]);
-                             // printf("posX %hd\n",absoluteCursorPos[0]);
-                             // printf("posY %hd\n",absoluteCursorPos[1]);
-                           // printf("A \n");
+                         if ((flags & 0b0001)) {
+                             inputs[0].type = INPUT_MOUSE;
+                             inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+                             SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
+                              // printf("bufferX %hd\n",posBuffer[0]);
+                              // printf("bufferY %hd\n",posBuffer[1]);
+                              // printf("posX %hd\n",absoluteCursorPos[0]);
+                              // printf("posY %hd\n",absoluteCursorPos[1]);
+                            // printf("A \n");
 
-                        }
-                        else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
-                            inputs[0].type = INPUT_MOUSE;
-                            inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+                         }
+                         else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
+                             inputs[0].type = INPUT_MOUSE;
+                             inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
 
-                            int a=SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
-                            if (a!=ARRAYSIZE(inputs)) {
-                                printf("aaaaa");
-                            }
-                             // printf("bufferXA %hd\n",posBuffer[0]);
-                             // printf("bufferYA %hd\n",posBuffer[1]);
-                             // printf("posXA %hd\n",absoluteCursorPos[0]);
-                             // printf("posYA %hd\n",absoluteCursorPos[1]);
-                            //printf("B \n");
-                        }
+                             int a=SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
+                             if (a!=ARRAYSIZE(inputs)) {
+                                 printf("aaaaa");
+                             }
+                              // printf("bufferXA %hd\n",posBuffer[0]);
+                              // printf("bufferYA %hd\n",posBuffer[1]);
+                              // printf("posXA %hd\n",absoluteCursorPos[0]);
+                              // printf("posYA %hd\n",absoluteCursorPos[1]);
+                             //printf("B \n");
+                         }
                         lastFlagsValue = flags;
-                        //printf("C \n");
+                         //printf("C \n");
                     }
                 }
                 else if (status<0) {
@@ -328,7 +341,8 @@ int ServerPart(uint32_t *PCIP) {
                 }
 
             }
-
+        //printf("%ld",t);
+        //GetCPUClockTimeTaken(t);
     }
 
     CloseAll(&SocketDS, &SocketPC);
