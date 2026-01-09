@@ -26,7 +26,7 @@ int ClientStart() {
     memset(&DSAdr, 0, sizeof(DSAdr));
 
     scanf("%s", ServerAdrStr);
-    a = inet_pton(AF_INET, ServerAdrStr, &(DSAdr.sin_addr)); //DS adresse
+    a = inet_pton(AF_INET, ServerAdrStr, &(DSAdr.sin_addr)); //DS address
 
     DSAdr.sin_family = AF_INET; // IPv4
     DSAdr.sin_port = htons(4242);

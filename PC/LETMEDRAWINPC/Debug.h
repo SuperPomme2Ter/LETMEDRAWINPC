@@ -10,3 +10,5 @@
 void Print_wsa_error(const char *msg);
 
 void GetCPUClockTimeTaken(clock_t* t, uint8_t refreshTime);
+
+void GetNumberOfLoopTimeTaken(unsigned int* loopTime, uint8_t refreshTime);

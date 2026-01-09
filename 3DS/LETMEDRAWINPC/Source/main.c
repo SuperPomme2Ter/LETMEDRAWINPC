@@ -5,25 +5,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <poll.h>
-
-
 #include <fcntl.h>
-
-
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-
 #include <3ds.h>
 #include "FlagStructData.h"
 
-
-
-
 #define SOC_ALIGN       0x1000
 #define SOC_BUFFERSIZE  0x100000
-
 #define NOTOUCH 999
 
 
@@ -32,7 +22,7 @@ short GetBitshiftingOccurence(u_int16_t bitmask);
 u_int16_t From3DSFlagsToAppFlags(u_int16_t flags3ds);
 
 
-static u32 *SOC_buffer = NULL;
+static u_int32_t *SOC_buffer = NULL;
 s32 DSServerSocket = -1, PCClientSocket = -1, PCServerSocket=-1;
 
 __attribute__((format(printf,1,2)))
@@ -48,7 +38,7 @@ void socShutdown() {
     socExit();
 }
 
-void GetCPUClockTimeTaken(clock_t* t, u8 refreshTime) {
+void GetCPUClockTimeTaken(clock_t* t, u_int8_t refreshTime) {
 
     clock_t tmp=clock()-*t;
     if (refreshTime) {
@@ -61,26 +51,31 @@ void GetCPUClockTimeTaken(clock_t* t, u8 refreshTime) {
 //---------------------------------------------------------------------------------
 int main(int argc, char **argv) {
 
-
-
-
-
-
     //---------------------------------------------------------------------------------
-    int ret;
+
     int socketMode = -1;
-    u32 clientlen;
+    int status;
+
     struct sockaddr_in client;
     struct sockaddr_in server;
     struct sockaddr_in PCAdr;
-    int status;
 
-    uint16_t keyFlags = 0b000000000000;
+    u_int32_t clientlen;
+    u_int32_t kDown;
+    u_int32_t kHeld;
+    u_int32_t kUp;
 
+    u_int16_t keyFlags = 0b000000000000;
+    u_int16_t lastFlag = keyFlags;
+    u_int16_t inputInfo[3] = {
+        keyFlags,
+        0,
+        0
+    };
+
+    touchPosition touch;
 
     gfxInitDefault();
-    // register gfxExit to be run when app quits
-    // this can help simplify error handling
     atexit(gfxExit);
 
     consoleInit(GFX_TOP, NULL);
@@ -93,6 +88,7 @@ int main(int argc, char **argv) {
     }
 
     // Now intialise soc:u service
+    int ret;
     if ((ret = socInit(SOC_buffer, SOC_BUFFERSIZE)) != 0) {
         failExit("socInit: 0x%08X\n", (unsigned int) ret);
     }
@@ -100,8 +96,6 @@ int main(int argc, char **argv) {
     // register socShutdown to run at exit
     // atexit functions execute in reverse order so this runs before gfxExit
     atexit(socShutdown);
-
-    // libctru provides BSD sockets so most code from here is standard
     clientlen = sizeof(client);
 
 
@@ -114,7 +108,6 @@ int main(int argc, char **argv) {
     server.sin_addr.s_addr = gethostid();
 
 
-
     DSServerSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (DSServerSocket < 0) {
         failExit("socket: %d %s\n", errno, strerror(errno));
@@ -122,38 +115,20 @@ int main(int argc, char **argv) {
 
 
     if ((bind(DSServerSocket, (struct sockaddr *) &server, sizeof (server)))<0) {
-        close(DSServerSocket);
+        //close(DSServerSocket);
         failExit("bind: %d %s\n", errno, strerror(errno));
     }
 
     if ((listen(DSServerSocket, 5))<0) {
         failExit("listen: %d %s\n", errno, strerror(errno));
     }
-
     printf("3DS IP Adress %s\n", inet_ntoa(server.sin_addr));
     printf("3DS Listening\n");
 
 
-    //printf("aaaa %d\n", ConvertToAppFlag(0b11111111111111111111111111111111));
-
-    u32 kDown;
-    uint16_t lastFlag = keyFlags;
-    u32 kHeld;
-    u32 kUp;
-    touchPosition touch;
-
-    u16 inputInfo[3] = {
-        keyFlags,
-        0,
-        0
-    };
-
     fcntl(PCClientSocket, F_SETFL, fcntl(PCClientSocket, F_GETFL, 0) | O_NONBLOCK);
     fcntl(DSServerSocket, F_SETFL, fcntl(DSServerSocket, F_GETFL, 0) | O_NONBLOCK);
 
-    // client.sin_family = AF_INET;
-    // client.sin_port = htons(4242);
-    clock_t t;
     while (aptMainLoop()) {
 
         hidScanInput();
@@ -217,14 +192,10 @@ int main(int argc, char **argv) {
                     //}
 
                 }
-
-
         } else if (socketMode == 1) {
 
             keyFlags |= ConvertToAppFlag(kDown);
             keyFlags &= ~ConvertToAppFlag(kUp);
-
-
 
 
             if (!(keyFlags & TOUCHSCREEN)) {
@@ -242,18 +213,6 @@ int main(int argc, char **argv) {
             else {
                 inputInfo[0] = keyFlags;
 
-                // if ((lastFlag & TOUCHSCREEN) && (keyFlags==0)) {
-                //     inputInfo[1] = NOTOUCH;
-                //     inputInfo[2] = NOTOUCH;
-                //     lastFlag = keyFlags;
-                //     status = send(PCServerSocket, inputInfo, sizeof (inputInfo), 0);
-                //     if (status != sizeof(inputInfo)) {
-                //
-                //         failExit("send: %d %s\n", errno, strerror(errno));
-                //     }
-                //     printf("fais chier\n");
-                //     continue;
-                // }
                 lastFlag = keyFlags;
 
                 //Read the touch screen coordinates
@@ -267,20 +226,10 @@ int main(int argc, char **argv) {
                         printf("JE T'EMMERDE\n");
                         failExit("send: %d %s\n", errno, strerror(errno));
                     }
-                    //GetCPUClockTimeTaken(&t,1);
                 }
 
             }
-            // if ((keyFlags != lastFlag)) {
-            //     lastFlag = keyFlags;
-            //     printf("flags : %i \n",keyFlags);
-            //     printf("lastFlag : %i \n",lastFlag);
-            // }
 
-            //
-            // if (kHeld & KEY_TOUCH) {
-            //
-            // }
         }
 
         // Flush and swap framebuffers

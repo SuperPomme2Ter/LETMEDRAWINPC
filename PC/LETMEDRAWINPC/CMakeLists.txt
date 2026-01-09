@@ -13,8 +13,7 @@ add_executable(LETMEDRAWINPC
         Server.h
         Controls.c
         Controls.h
-        cJSON.c
-        cJSON.h)
+)
 target_link_libraries(LETMEDRAWINPC ws2_32)
 #[[
 include_directories(F:/devkitPro/devkitARM/include)

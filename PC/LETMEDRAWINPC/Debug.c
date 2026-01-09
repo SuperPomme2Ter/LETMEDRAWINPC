@@ -27,8 +27,23 @@ void GetCPUClockTimeTaken(clock_t* t, uint8_t refreshTime) {
     if (refreshTime) {
         *t=clock();
     }
-    if (tmp>5) {
-        printf("number of Clock cycle since last refresh : %ld (%f seconds)\n\n",tmp, ((float)tmp) / CLOCKS_PER_SEC);
+    printf("number of Clock cycle since last refresh : %ld (%f seconds)\n\n",tmp, ((float)tmp) / CLOCKS_PER_SEC);
+
+    if (tmp>40) {
+        printf("clock cycles superior to 40\n");
+        Sleep(tmp);
     }
+}
+
+void GetNumberOfLoopTimeTaken(unsigned int* loopTime, uint8_t refreshTime) {
+
+
+
+            printf("number of loop cycle since last refresh : %d \n\n",*loopTime);
+
+    if (refreshTime) {
+        *loopTime=0;
+    }
+
 
 }

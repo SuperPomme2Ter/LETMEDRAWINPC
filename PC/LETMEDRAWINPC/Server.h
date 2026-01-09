@@ -14,4 +14,4 @@
 #include <time.h>
 #include <unistd.h>
 
-int ServerPart(uint32_t *PCIP);
+int ServerPart(const uint32_t *PCIP);

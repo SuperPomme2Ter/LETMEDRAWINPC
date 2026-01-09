@@ -2,7 +2,6 @@
 // Created by SuperPomme2Ter on 21/09/2025.
 //
 
-#pragma once
 
 #include "FlagStructData.h"
 

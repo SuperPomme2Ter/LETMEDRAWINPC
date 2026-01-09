@@ -19,18 +19,6 @@
 #define YTOUCH 240
 
 
-#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
-#define BYTE_TO_BINARY(byte)  \
-((byte) & 0x80 ? '1' : '0'), \
-((byte) & 0x40 ? '1' : '0'), \
-((byte) & 0x20 ? '1' : '0'), \
-((byte) & 0x10 ? '1' : '0'), \
-((byte) & 0x08 ? '1' : '0'), \
-((byte) & 0x04 ? '1' : '0'), \
-((byte) & 0x02 ? '1' : '0'), \
-((byte) & 0x01 ? '1' : '0')
-
-
 // POUR LE SAINT AMOUR DES VECTREX REFACTO ET NETTOIE MOI CE CODE FOU QUE JE SUIS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
 
@@ -56,7 +44,7 @@ int IsInProgressOrBlockingStatus() {
 }
 
 __attribute__ ((hot))
-int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
+int ReadDSScreenCoordinates(const uint16_t coordinatesRecv[3],short actualCoordinates[2])
 {
         if (coordinatesRecv[1]==NOTOUCH
             ||  coordinatesRecv[1]<=0
@@ -64,9 +52,8 @@ int ReadDSScreenCoordinates(uint16_t* coordinatesRecv,short actualCoordinates[])
             ||  coordinatesRecv[2]<=0
             ||  coordinatesRecv[2]>=YTOUCH) { return 0; }
 
-
-        actualCoordinates[0] = (short)-((XTOUCH*0.5)-coordinatesRecv[1]);
-        actualCoordinates[1] = (short)-((YTOUCH*0.5)-coordinatesRecv[2]);
+        actualCoordinates[0] = (short)-((XTOUCH*0.5)- coordinatesRecv[1]);
+        actualCoordinates[1] = (short)-((YTOUCH*0.5)- coordinatesRecv[2]);
 
         return 1;
 }
@@ -85,9 +72,25 @@ int ReadDSFlags(const uint16_t* flagsRecv,uint16_t* actualFlags) {
     return 1;
 
 }
+//
+// short GetBitshiftingOccurence(uint16_t bitmask) {
+//     short occurence=1;
+//     uint16_t testingMask=1;
+//     for (short i = 0; i < 16; i++) {
+//         testingMask <<= 1;
+//         occurence ++;
+//         if (bitmask & testingMask) {
+//             return occurence;
+//         }
+//     }
+//     if (occurence >= 16) {
+//         return -1;
+//     }
+//
+// }
 
 __attribute__ ((hot))
-int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coordinatesBuffer[]) {
+int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coordinatesBuffer[2]) {
 
 
 
@@ -97,7 +100,6 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
     memset(buffer, 0, sizeof buffer);
 
     bytes_read = recv(*DSSocket, buffer, sizeof(buffer), 0);
-
 
 
     if (bytes_read<0){
@@ -115,12 +117,16 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
         CloseAll(DSSocket,PCSocket);
         return -1;
     }
-
+    if (bytes_read != sizeof(buffer)) {
+        printf("not everything was recv\n");
+        return 0;
+    }
+    //GetNumberOfLoopTimeTaken(t,1);
     ReadDSFlags(&buffer[0], flagsBuffer);
 
 
 
-    if (!ReadDSScreenCoordinates(buffer, coordinatesBuffer)) {
+    if (!ReadDSScreenCoordinates(&buffer, coordinatesBuffer)) {
         coordinatesBuffer[0]= NOTOUCH;
         coordinatesBuffer[1]= NOTOUCH;
 
@@ -131,21 +137,12 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 }
 
 
+int ServerPart(const uint32_t *PCIP) {
 
-
-
-int ServerPart(uint32_t *PCIP) {
-    //clock_t t;
     printf("Entering server mode\n\n");
-    int bytes_read;
-
     short posBuffer[2]= {0,0};
     uint16_t flags=0;
     int status;
-    //struct sockaddr_in DSAdress;
-
-    struct sockaddr_in PCPart;
-    socklen_t ClientAdrSize;
 
     u_long nonblock = 1;
 
@@ -153,22 +150,8 @@ int ServerPart(uint32_t *PCIP) {
 
     int SocketDS;
 
-    //
-    // fd_set all_sockets; // Ensemble de toutes les sockets du serveur
-    // fd_set read_fds;    // Ensemble temporaire pour select()
-    // int fd_max;         // Descripteur de la plus grande socket
-    // struct timeval timer;
-
-
-
-
-    // on prépare l'adresse et le port pour la socket de notre serveur
-
     struct sockaddr_in DSAdr;
 
-    //memset(&DSAdr, 0, sizeof(DSAdr));
-    //memset(&PCPart, 0, sizeof (PCPart));
-    //memset(SocketDS, 0, sizeof (SocketDS));
     memset(&PCAdress, 0, sizeof (PCAdress));
 
 
@@ -188,21 +171,7 @@ int ServerPart(uint32_t *PCIP) {
         return (1);
     }
 
-    // DWORD y =1;
-    // status = setsockopt(SocketDS,
-    //                     IPPROTO_TCP,
-    //                     TCP_NODELAY,
-    //                     (char*) &y,
-    //                     sizeof(DWORD));
-    //
-    // if (status!=0) {
-    //     Print_wsa_error("socket fd error");
-    //     CloseAll(&SocketDS, &SocketPC);
-    //     return (2);
-    // }
-
     printf("Created server socket fd: %d\n", SocketPC);
-    char aa[24];
 
     PCAdress.sin_family = AF_INET;
     PCAdress.sin_addr.s_addr = *PCIP;
@@ -236,7 +205,6 @@ int ServerPart(uint32_t *PCIP) {
     GetCursorPos(absoluteCursorPos);
 
     int DSConnected = 0;
-    int waitingPos=0;
 
     INPUT inputs[1];
     ZeroMemory(inputs, sizeof(inputs));
@@ -246,18 +214,10 @@ int ServerPart(uint32_t *PCIP) {
     INT32 DSAdrLength = sizeof (DSAdr);
 
     uint16_t lastFlagsValue=flags;
-
-    // struct pollfd poll_fd[1];
-    //
-    // poll_fd[0].fd = SocketPC;
-    // poll_fd[0].events = POLLIN | POLLOUT;
-
-    clock_t t=clock();
     while (!kbhit())
         {
 
             if (!DSConnected) {
-                //status = WSAPoll(poll_fd, 1, 1000);
 
                 SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
                 if (!IsInProgressOrBlockingStatus()) {
@@ -274,51 +234,37 @@ int ServerPart(uint32_t *PCIP) {
                 }
             }
             else {
-                GetCPUClockTimeTaken(&t,1);
-                //printf("flags\n");
                 status=ReadDSInputInfo(&SocketDS, &SocketPC, &flags, posBuffer);
-
-
 
                 if (status==1) {
 
-   //                  printf("flags : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
-   // BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(flags));
-   //                  printf("lastflagsvalue : "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN"\n",
-   // BYTE_TO_BINARY(flags>>8), BYTE_TO_BINARY(lastFlagsValue));
-
-                    //printf("posbuffer : %i\n",posBuffer[0]);
-                    // if (FD_ISSET(i,&all_sockets)) {
                     if ((flags & 0b100000000000) && posBuffer[0]!=NOTOUCH) {
-
-                        // printf("posX %hd\n",posBuffer[1]);
-                        // printf("posY %hd\n",posBuffer[0]);
 
                         absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
                         absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
 
-                        SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1]);
-                        GetCPUClockTimeTaken(&t,1);
-                    } else if (lastFlagsValue & 0b100000000000) {
-                        //printf("aaa\n");
+                        if (!SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1])) {
+                            printf("set cursor fail\n");
+
+                        }
+                        // else {
+                        //     printf("Nope\n");
+                        // }
+                    }
+                    else if (lastFlagsValue & 0b100000000000) {
+
                         lastCursorPos[0] = absoluteCursorPos[0];
                         lastCursorPos[1] = absoluteCursorPos[1];
                     }
 
                     if (flags != lastFlagsValue) {
-                        //printf("Flags %hu\n",flags);
+
                          if ((flags & 0b0001)) {
                              inputs[0].type = INPUT_MOUSE;
                              inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
                              SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
-                              // printf("bufferX %hd\n",posBuffer[0]);
-                              // printf("bufferY %hd\n",posBuffer[1]);
-                              // printf("posX %hd\n",absoluteCursorPos[0]);
-                              // printf("posY %hd\n",absoluteCursorPos[1]);
-                            // printf("A \n");
 
-                         }
-                         else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
+                         } else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
                              inputs[0].type = INPUT_MOUSE;
                              inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
 
@@ -326,14 +272,8 @@ int ServerPart(uint32_t *PCIP) {
                              if (a!=ARRAYSIZE(inputs)) {
                                  printf("aaaaa");
                              }
-                              // printf("bufferXA %hd\n",posBuffer[0]);
-                              // printf("bufferYA %hd\n",posBuffer[1]);
-                              // printf("posXA %hd\n",absoluteCursorPos[0]);
-                              // printf("posYA %hd\n",absoluteCursorPos[1]);
-                             //printf("B \n");
                          }
                         lastFlagsValue = flags;
-                         //printf("C \n");
                     }
                 }
                 else if (status<0) {
@@ -341,12 +281,8 @@ int ServerPart(uint32_t *PCIP) {
                 }
 
             }
-        //printf("%ld",t);
-        //GetCPUClockTimeTaken(t);
     }
 
     CloseAll(&SocketDS, &SocketPC);
     return 0;
 }
-
-
