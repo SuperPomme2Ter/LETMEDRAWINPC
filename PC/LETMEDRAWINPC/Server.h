@@ -5,13 +5,10 @@
 #pragma once
 
 
-#ifndef SERVER_H
-#define SERVER_H
+
 #include <stdint.h>
+#include "Controls.h"
+#include "Debug.h"
 
-#endif //SERVER_H
 
-#include <time.h>
-#include <unistd.h>
-
-int ServerPart(const uint32_t *PCIP);
+int ServerPart(const uint32_t *PCIP, INPUT* inputs[11][2]);

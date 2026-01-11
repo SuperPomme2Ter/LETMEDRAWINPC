@@ -9,10 +9,11 @@ add_executable(LETMEDRAWINPC
         Client.h
         Debug.h
         Debug.c
-        Server.c
-        Server.h
         Controls.c
         Controls.h
+        Server.c
+        Server.h
+
 )
 target_link_libraries(LETMEDRAWINPC ws2_32)
 #[[

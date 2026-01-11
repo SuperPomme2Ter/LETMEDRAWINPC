@@ -3,13 +3,13 @@
 //
 #include <stdio.h>
 #include <ws2tcpip.h>
-#include "Debug.h"
+
 #include "Server.h"
 
 #include <conio.h>
 #include <stdint.h>
 
-#include "Controls.h"
+
 
 #define BACKLOG 10
 #define SERVPORT "8000"
@@ -72,22 +72,6 @@ int ReadDSFlags(const uint16_t* flagsRecv,uint16_t* actualFlags) {
     return 1;
 
 }
-//
-// short GetBitshiftingOccurence(uint16_t bitmask) {
-//     short occurence=1;
-//     uint16_t testingMask=1;
-//     for (short i = 0; i < 16; i++) {
-//         testingMask <<= 1;
-//         occurence ++;
-//         if (bitmask & testingMask) {
-//             return occurence;
-//         }
-//     }
-//     if (occurence >= 16) {
-//         return -1;
-//     }
-//
-// }
 
 __attribute__ ((hot))
 int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coordinatesBuffer[2]) {
@@ -137,7 +121,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 }
 
 
-int ServerPart(const uint32_t *PCIP) {
+int ServerPart(const uint32_t *PCIP, INPUT* inputs[11][2]) {
 
     printf("Entering server mode\n\n");
     short posBuffer[2]= {0,0};
@@ -206,81 +190,60 @@ int ServerPart(const uint32_t *PCIP) {
 
     int DSConnected = 0;
 
-    INPUT inputs[1];
-    ZeroMemory(inputs, sizeof(inputs));
-    inputs[0].type = INPUT_MOUSE;
-    inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-
     INT32 DSAdrLength = sizeof (DSAdr);
-
     uint16_t lastFlagsValue=flags;
     while (!kbhit())
-        {
+    {
 
-            if (!DSConnected) {
+        if (!DSConnected) {
 
-                SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
-                if (!IsInProgressOrBlockingStatus()) {
-                    if (SocketDS < 0) {
-                        Print_wsa_error("socket fd error");
-                        CloseAll(&SocketDS, &SocketPC);
-                        return (1);
+            SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
+            if (!IsInProgressOrBlockingStatus()) {
+                if (SocketDS < 0) {
+                    Print_wsa_error("socket fd error");
+                    CloseAll(&SocketDS, &SocketPC);
+                    return (1);
+                }
+                ioctlsocket(SocketDS, FIONBIO, &nonblock);
+                ioctlsocket(SocketPC, FIONBIO, &nonblock);
+
+                DSConnected = 1;
+                printf("You can now use your 3DS as a controller\n");
+            }
+        }
+        else {
+            status=ReadDSInputInfo(&SocketDS, &SocketPC, &flags, posBuffer);
+
+            if (status==1) {
+
+                if (GetFLag(flags,TOUCHSCREEN) && posBuffer[0]!=NOTOUCH) {
+
+                    absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
+                    absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
+
+                    if (!SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1])) {
+                        printf("set cursor fail\n");
+
                     }
-                    ioctlsocket(SocketDS, FIONBIO, &nonblock);
-                    ioctlsocket(SocketPC, FIONBIO, &nonblock);
+                    // else {
+                    //     printf("Nope\n");
+                    // }
+                }
+                else if (lastFlagsValue & 1<<TOUCHSCREEN) {
 
-                    DSConnected = 1;
-                    printf("You can now use your 3DS as a controller\n");
+                    lastCursorPos[0] = absoluteCursorPos[0];
+                    lastCursorPos[1] = absoluteCursorPos[1];
+                }
+
+                if (flags != lastFlagsValue) {
+                    ReadFlags(flags,lastFlagsValue, inputs);
+                    lastFlagsValue = flags;
                 }
             }
-            else {
-                status=ReadDSInputInfo(&SocketDS, &SocketPC, &flags, posBuffer);
-
-                if (status==1) {
-
-                    if ((flags & 0b100000000000) && posBuffer[0]!=NOTOUCH) {
-
-                        absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
-                        absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
-
-                        if (!SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1])) {
-                            printf("set cursor fail\n");
-
-                        }
-                        // else {
-                        //     printf("Nope\n");
-                        // }
-                    }
-                    else if (lastFlagsValue & 0b100000000000) {
-
-                        lastCursorPos[0] = absoluteCursorPos[0];
-                        lastCursorPos[1] = absoluteCursorPos[1];
-                    }
-
-                    if (flags != lastFlagsValue) {
-
-                         if ((flags & 0b0001)) {
-                             inputs[0].type = INPUT_MOUSE;
-                             inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-                             SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
-
-                         } else if ((!(flags & 0b0001)) && (lastFlagsValue & 0b0001)) {
-                             inputs[0].type = INPUT_MOUSE;
-                             inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTUP;
-
-                             int a=SendInput(ARRAYSIZE(inputs), &inputs, sizeof(INPUT));
-                             if (a!=ARRAYSIZE(inputs)) {
-                                 printf("aaaaa");
-                             }
-                         }
-                        lastFlagsValue = flags;
-                    }
-                }
-                else if (status<0) {
-                    break;
-                }
-
+            else if (status<0) {
+                break;
             }
+        }
     }
 
     CloseAll(&SocketDS, &SocketPC);
