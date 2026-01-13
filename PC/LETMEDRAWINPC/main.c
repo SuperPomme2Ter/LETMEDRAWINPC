@@ -41,31 +41,64 @@
 //     }
 // }
 
-void CreateInputs(INPUT*(* a)[11][2],int* inputSize,int* inputKeys, const int isKeyUp, const int VK[]) {
-    if (isKeyUp) {
-        *a[index][1]=malloc(sizeof(INPUT)*size);
-        if (*a[index][1]==NULL) {
-            printf("Memory allocation failed\n");
-            exit(1);
+void CreateInputs(INPUT*(* a)[11][2],const int* inputSize) {
+
+    for(int i=0;i<11;i++) {
+        for(int j=0;j<2;j++) {
+            *a[i][j]=malloc(sizeof(INPUT)*inputSize[i]);
+            if(*a[i][j]==NULL) {
+                for(int k=0;k<i;k++) {
+                    for(int l=0;l<2;l++) {
+                        free(*a[k][l]);
+                    }
+                }
+                printf("Memory allocation failed\n");
+                exit(1);
+            }
         }
     }
+
+    // if (isKeyUp) {
+    //     *a[index][1]=malloc(sizeof(INPUT)*size);
+    //     if (*a[index][1]==NULL) {
+    //         printf("Memory allocation failed\n");
+    //         exit(1);
+    //     }
+    // }
 }
-void CreateInput(int n, ...) {
+void CreateInputKeyboard(INPUT*(*inputs)[2] , int size, ...) {
     va_list args;
-    va_start(args, n);
+    va_start(args, size);
 
-    INPUT* b=va_arg(args, INPUT*);
 
-    for (int i=1; i<n; i++) {
-        b->
+    for (int i=1; i<size; i++) {
+
+        inputs[0][i]->type = INPUT_KEYBOARD;
+        inputs[0][i]->ki.wVk=va_arg(args, int);
+        inputs[1][i]->type = INPUT_KEYBOARD;
+        inputs[1][i]->ki.wVk=va_arg(args, int);
+        inputs[1][i]->ki.dwFlags=KEYEVENTF_KEYUP;
     }
+}
+void CreateInputMouse(INPUT*(*inputs)[2], int size, ...) {
+
+    va_list args;
+    va_start(args, size);
+
+    for (int i=1; i<size; i++) {
+
+        inputs[0][i]->type = INPUT_MOUSE;
+        inputs[0][i]->mi.dwFlags=va_arg(args, int);
+        inputs[1][i]->type = INPUT_MOUSE;
+        inputs[1][i]->mi.dwFlags=va_arg(args, int);
+    }
+
 }
 
 
 // POUR LE SAINT AMOUR DES VECTREX REFACTO ET NETTOIE MOI CE CODE FOU QUE JE SUIS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
 int main(void) {
-
 
     INPUT* inputs[11][2];
     const int inputSize[11]={
@@ -82,25 +115,20 @@ int main(void) {
         1
     };
 
-    int inputKeys[11][]={
-        {VK_SPACE},
-        {VK_CONTROL,0x5A}, /*Z (POURQUOI IL N'Y A PAS DE MACRO POUR LES CHIFFRES ET LES LETTRES ???)*/
-        {VK_SHIFT},
-        {VK_CONTROL},
-        {MOUSEEVENTF_LEFTDOWN},
-        {MOUSEEVENTF_RIGHTDOWN},
-        {VK_UP},
-        {VK_DOWN},
-        {VK_LEFT},
-        {VK_RIGHT},
-        {VK_RETURN},
-    };
+    CreateInputs(&inputs,inputSize);
+    CreateInputKeyboard(&inputs[0],inputSize[0],VK_SPACE);
+    CreateInputKeyboard(&inputs[1],inputSize[1],VK_CONTROL,'Z');
+    CreateInputKeyboard(&inputs[2],inputSize[2],VK_SHIFT);
+    CreateInputKeyboard(&inputs[3],inputSize[3],VK_CONTROL);
+    CreateInputMouse(&inputs[4],inputSize[4],MOUSEEVENTF_LEFTDOWN,MOUSEEVENTF_LEFTUP);
+    CreateInputMouse(&inputs[5],inputSize[5],MOUSEEVENTF_RIGHTDOWN,MOUSEEVENTF_RIGHTUP);
+    CreateInputKeyboard(&inputs[6],inputSize[6],VK_UP);
+    CreateInputKeyboard(&inputs[7],inputSize[7],VK_DOWN);
+    CreateInputKeyboard(&inputs[8],inputSize[8],VK_LEFT);
+    CreateInputKeyboard(&inputs[9],inputSize[9],VK_RIGHT);
+    CreateInputKeyboard(&inputs[10],inputSize[10],VK_RETURN);
 
-
-
-
-
-
+    
     // INPUT inputAON[1];
     // //ZeroMemory(inputAON, sizeof(inputAON));
     // {
@@ -325,6 +353,12 @@ int main(void) {
      }
      ServerPart(IP,inputs);
      WSACleanup();
+
+    for(int i=0;i<11;i++) {
+        for(int j=0;j<2;j++) {
+            free(inputs[i][j]);
+        }
+    }
 
 
 
