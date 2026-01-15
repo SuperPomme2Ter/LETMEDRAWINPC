@@ -9,15 +9,15 @@
 
 #define ABUTTON 0
 #define BBUTTON 1
-#define XBUTTON 2
-#define YBUTTON 3
-#define LBUTTON 4
-#define RBUTTON 5
-#define UPBUTTON 6
-#define DOWNBUTTON 7
-#define LEFTBUTTON 8
-#define RIGHTBUTTON 9
-#define SELECTBUTTON 10
+#define SELECTBUTTON 2
+#define RIGHTBUTTON 3
+#define LEFTBUTTON 4
+#define UPBUTTON 5
+#define DOWNBUTTON 6
+#define RBUTTON 7
+#define LBUTTON 8
+#define XBUTTON 9
+#define YBUTTON 10
 #define TOUCHSCREEN 11
 
 int GenerateInput(INPUT* inputToSend,int size);

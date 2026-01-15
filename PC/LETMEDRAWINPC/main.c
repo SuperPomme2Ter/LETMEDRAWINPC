@@ -35,7 +35,6 @@ void CreateInputs(INPUT*(* a)[11][2],const int* inputSize) {
             }
             for (int k = 0; k < inputSize[i]; k++) {
                 (*a)[i][j][k].type = 0;
-                // autres champs sont déjà à 0 grâce à calloc
             }
         }
     }
@@ -96,8 +95,8 @@ int CreateInputMouse(INPUT*(*inputs)[2], int size, ...) {
         (*inputs)[0][idx].type = INPUT_MOUSE;
         (*inputs)[0][idx].mi.dwFlags = (DWORD)flag_down;
 
-        (*inputs)[1][idx+1].type = INPUT_MOUSE;
-        (*inputs)[1][idx+1].mi.dwFlags = (DWORD)flag_up;
+        (*inputs)[1][idx].type = INPUT_MOUSE;
+        (*inputs)[1][idx].mi.dwFlags = (DWORD)flag_up;
     }
 
     va_end(args);
@@ -110,10 +109,9 @@ int CreateInputMouse(INPUT*(*inputs)[2], int size, ...) {
 // POUR LE SAINT AMOUR DES VECTREX REFACTO ET NETTOIE MOI CE CODE FOU QUE JE SUIS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
 int main(void) {
-
-    INPUT* inputs[11][2];
-    memset(&inputs,0,sizeof(inputs));
-    const int inputSize[11]={
+    INPUT *inputs[11][2];
+    memset(&inputs, 0, sizeof(inputs));
+    const int inputSize[11] = {
         1,
         2,
         1,
@@ -127,117 +125,131 @@ int main(void) {
         1
     };
 
-    CreateInputs(&inputs,inputSize);
-    CreateInputKeyboard(&inputs[0],inputSize[0],VK_SPACE);
-    CreateInputKeyboard(&inputs[1],inputSize[1],VK_CONTROL,'Z');
-    CreateInputKeyboard(&inputs[2],inputSize[2],VK_SHIFT);
-    CreateInputKeyboard(&inputs[3],inputSize[3],VK_CONTROL);
+    // #define ABUTTON 0
+    // #define BBUTTON 1
+    // #define XBUTTON 2
+    // #define YBUTTON 3
+    // #define LBUTTON 4
+    // #define RBUTTON 5
+    // #define UPBUTTON 6
+    // #define DOWNBUTTON 7
+    // #define LEFTBUTTON 8
+    // #define RIGHTBUTTON 9
+    // #define SELECTBUTTON 10
+    // #define TOUCHSCREEN 11
 
-    if (CreateInputMouse(&inputs[4],inputSize[4],MOUSEEVENTF_LEFTDOWN,MOUSEEVENTF_LEFTUP)<0) {
+
+    CreateInputs(&inputs, inputSize);
+    CreateInputKeyboard(&inputs[ABUTTON], inputSize[0],VK_SPACE);
+    CreateInputKeyboard(&inputs[BBUTTON], inputSize[1],VK_CONTROL, 'Z');
+    CreateInputKeyboard(&inputs[XBUTTON], inputSize[2],VK_SHIFT);
+    CreateInputKeyboard(&inputs[YBUTTON], inputSize[3],VK_CONTROL);
+
+    if (CreateInputMouse(&inputs[LBUTTON], inputSize[4],MOUSEEVENTF_LEFTDOWN,MOUSEEVENTF_LEFTUP) < 0) {
         printf("CreateInputMouse failed\n");
 
-        for (int i=0; i<4; i++) {
-            const unsigned int a=SendInput(inputSize[i], inputs[i][1], sizeof(INPUT));
-            if (a!=inputSize[i]) {
+        for (int i = 0; i < 4; i++) {
+            const unsigned int a = SendInput(inputSize[i], inputs[i][1], sizeof(INPUT));
+            if (a != inputSize[i]) {
                 printf("input error\n");
             }
-            printf("releasing input %d\n",i);
+            printf("releasing input %d\n", i);
         }
-        for(int i=0;i<5;i++) {
-            for(int j=0;j<2;j++) {
-                printf("input freed %d\n",i);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                printf("input freed %d\n", i);
                 free(inputs[i][j]);
             }
         }
     }
 
-    if (CreateInputMouse(&inputs[5],inputSize[5],MOUSEEVENTF_RIGHTDOWN,MOUSEEVENTF_RIGHTUP)<0) {
+    if (CreateInputMouse(&inputs[RBUTTON], inputSize[5],MOUSEEVENTF_RIGHTDOWN,MOUSEEVENTF_RIGHTUP) < 0) {
         printf("CreateInputMouse failed\n");
 
-        for (int i=0; i<5; i++) {
-            const unsigned int a=SendInput(inputSize[i], inputs[i][1], sizeof(INPUT));
-            if (a!=inputSize[i]) {
+        for (int i = 0; i < 5; i++) {
+            const unsigned int a = SendInput(inputSize[i], inputs[i][1], sizeof(INPUT));
+            if (a != inputSize[i]) {
                 printf("input error\n");
             }
-            printf("releasing input %d\n",i);
+            printf("releasing input %d\n", i);
         }
-        for(int i=0;i<5;i++) {
-            for(int j=0;j<2;j++) {
-                printf("input freed %d\n",i);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                printf("input freed %d\n", i);
                 free(inputs[i][j]);
             }
         }
-
     }
-    CreateInputKeyboard(&inputs[6],inputSize[6],VK_UP);
-    CreateInputKeyboard(&inputs[7],inputSize[7],VK_DOWN);
-    CreateInputKeyboard(&inputs[8],inputSize[8],VK_LEFT);
-    CreateInputKeyboard(&inputs[9],inputSize[9],VK_RIGHT);
-    CreateInputKeyboard(&inputs[10],inputSize[10],VK_RETURN);
 
+    CreateInputKeyboard(&inputs[UPBUTTON], inputSize[6],VK_UP);
+    CreateInputKeyboard(&inputs[DOWNBUTTON], inputSize[7],VK_DOWN);
+    CreateInputKeyboard(&inputs[LEFTBUTTON], inputSize[8],VK_LEFT);
+    CreateInputKeyboard(&inputs[RIGHTBUTTON], inputSize[9],VK_RIGHT);
+    CreateInputKeyboard(&inputs[SELECTBUTTON], inputSize[10],VK_RETURN);
 
+    // printf("%d\n",inputs[LBUTTON][0]->mi.dwFlags);
+    // printf("%d\n",inputs[LBUTTON][1]->mi.dwFlags);
 
 
     // INPUT inputs[1];
+
+
     // ZeroMemory(inputs, sizeof(inputs));
     // inputs[0].type = INPUT_MOUSE;
     // inputs[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
 
 
+    WSADATA wsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        printf("WSAStartup failed\n");
+        return 0;
+    }
 
 
-     WSADATA wsaData;
-     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-         printf("WSAStartup failed\n");
-         return 0;
-     }
+    char host[256];
+
+    struct hostent *host_entry;
+
+    memset(&host, 0, sizeof(host));
 
 
+    host_entry = gethostbyname(host);
+    uint32_t *IP = (uint32_t *) host_entry->h_addr_list[
+        0];
 
 
-
-     char host[256];
-
-     struct hostent* host_entry;
-
-     memset(&host,0,sizeof(host));
-
-     host_entry = gethostbyname(host);
-     uint32_t  *IP= (uint32_t *) host_entry->h_addr_list[0];
-
-     struct sockaddr_in DSAdr;
-
-     memset(&DSAdr, 0, sizeof(DSAdr));
+    struct sockaddr_in DSAdr;
 
 
+    memset(&DSAdr, 0, sizeof(DSAdr));
 
 
-     struct addrinfo *PCAdrInfo;
+    struct addrinfo *PCAdrInfo;
 
 
-     if (!ClientStart())
-     {
-         printf("Closing socket\n");
-         WSACleanup();
-         return (0);
-     }
-     ServerPart(IP,&inputs,inputSize);
-     WSACleanup();
+    if (!ClientStart()) {
+        printf("Closing socket\n");
+        WSACleanup();
+
+        return (0);
+    }
+    ServerPart(IP, &inputs, inputSize);
+    WSACleanup();
 
 
-    for (int i=0; i<11; i++) {
-        const unsigned int a=SendInput(inputSize[i], inputs[i][1], sizeof(INPUT));
-        if (a!=inputSize[i]) {
+    for (int i = 0; i < 11; i++) {
+        const unsigned int a = SendInput(inputSize[i], inputs[i][1], sizeof(INPUT));
+        if (a != inputSize[i]) {
             printf("input error\n");
         }
-        printf("releasing input %d\n",i);
+        printf("releasing input %d\n", i);
     }
-    for(int i=0;i<11;i++) {
-        for(int j=0;j<2;j++) {
-            printf("input freed %d\n",i);
+    for (int i = 0; i < 11; i++) {
+        for (int j = 0; j < 2; j++) {
+            printf("inp"
+                   "ut freed %d\n", i);
             free(inputs[i][j]);
         }
     }
     return 0;
-
 }
