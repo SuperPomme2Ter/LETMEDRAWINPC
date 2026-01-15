@@ -11,4 +11,4 @@
 #include "Debug.h"
 
 
-int ServerPart(const uint32_t *PCIP, INPUT* inputs[11][2]);
+int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[11]);

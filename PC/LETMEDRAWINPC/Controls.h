@@ -20,13 +20,13 @@
 #define SELECTBUTTON 10
 #define TOUCHSCREEN 11
 
-int GenerateInput(INPUT inputToSend[]);
+int GenerateInput(INPUT* inputToSend,int size);
 
 int GetFLag(uint16_t flags, int index);
 
-void ReadFlags(uint16_t flags,uint16_t lastFlagsValue,INPUT* inputToSend[11][2]);
-
+void ReadFlags(uint16_t flags,uint16_t lastFlagsValue,INPUT*(*inputToSend)[11][2], int inputsSize[11]);
 
 short GetBitShiftingOccurence16Bits(uint16_t bitmask);
+
 
 

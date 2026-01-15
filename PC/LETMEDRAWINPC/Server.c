@@ -121,7 +121,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 }
 
 
-int ServerPart(const uint32_t *PCIP, INPUT* inputs[11][2]) {
+int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[11]) {
 
     printf("Entering server mode\n\n");
     short posBuffer[2]= {0,0};
@@ -236,7 +236,7 @@ int ServerPart(const uint32_t *PCIP, INPUT* inputs[11][2]) {
                 }
 
                 if (flags != lastFlagsValue) {
-                    ReadFlags(flags,lastFlagsValue, inputs);
+                    ReadFlags(flags,lastFlagsValue, inputs,inputSize);
                     lastFlagsValue = flags;
                 }
             }

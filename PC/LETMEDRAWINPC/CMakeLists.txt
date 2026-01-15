@@ -13,8 +13,6 @@ add_executable(LETMEDRAWINPC
         Controls.h
         Server.c
         Server.h
-        InputInfo.c
-        InputInfo.h
 
 )
 target_link_libraries(LETMEDRAWINPC ws2_32)
