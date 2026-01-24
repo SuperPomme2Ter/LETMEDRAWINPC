@@ -121,7 +121,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 }
 
 
-int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[11]) {
+int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12]) {
 
     printf("Entering server mode\n\n");
     short posBuffer[2]= {0,0};
@@ -221,9 +221,12 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[11])
                     absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
                     absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
 
-                    if (!SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1])) {
-                        printf("set cursor fail\n");
-
+                    // if (!SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1])) {
+                    //     printf("set cursor fail\n");
+                    //
+                    // }
+                    if (GenerateMouseMvmtInput((*inputs)[11][0],posBuffer[0],posBuffer[1])<0) {
+                        printf("cursor movement failed\n");
                     }
                     // else {
                     //     printf("Nope\n");

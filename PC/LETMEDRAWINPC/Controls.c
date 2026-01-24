@@ -20,10 +20,20 @@ int GenerateInput(INPUT* inputToSend, int size) {
 
 }
 
+int GenerateMouseMvmtInput(INPUT* inputToSend,int coordX, int coordY) {
+    inputToSend[0].mi.dx=coordX;
+    inputToSend[0].mi.dy=coordY;
+    if (GenerateInput(inputToSend,1)<0) {
+        return -1;
+    }
+    return 0;
+
+}
 
 
 
-void ReadFlags(uint16_t flags,uint16_t lastFlagsValue,INPUT*(*inputToSend)[11][2],int inputsSize[11]) {
+
+void ReadFlags(uint16_t flags,uint16_t lastFlagsValue,INPUT*(*inputToSend)[12][2],int inputsSize[12]) {
 
     for (int i=0;i<11;i++) {
         if (GetFLag(flags,i)) {

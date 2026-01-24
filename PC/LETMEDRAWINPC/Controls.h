@@ -22,9 +22,11 @@
 
 int GenerateInput(INPUT* inputToSend,int size);
 
+int GenerateMouseMvmtInput(INPUT* inputToSend,int coordX, int coordY);
+
 int GetFLag(uint16_t flags, int index);
 
-void ReadFlags(uint16_t flags,uint16_t lastFlagsValue,INPUT*(*inputToSend)[11][2], int inputsSize[11]);
+void ReadFlags(uint16_t flags,uint16_t lastFlagsValue,INPUT*(*inputToSend)[12][2], int inputsSize[12]);
 
 short GetBitShiftingOccurence16Bits(uint16_t bitmask);
 

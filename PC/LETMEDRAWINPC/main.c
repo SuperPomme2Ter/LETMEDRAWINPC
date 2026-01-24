@@ -9,9 +9,9 @@
 #include <windows.h>
 
 
-void CreateInputs(INPUT*(* a)[11][2],const int* inputSize) {
+void CreateInputs(INPUT*(* a)[12][2],const int* inputSize) {
 
-    for(int i=0;i<11;i++) {
+    for(int i=0;i<12;i++) {
 
         for(int j=0;j<2;j++) {
 
@@ -109,15 +109,16 @@ int CreateInputMouse(INPUT*(*inputs)[2], int size, ...) {
 // POUR LE SAINT AMOUR DES VECTREX REFACTO ET NETTOIE MOI CE CODE FOU QUE JE SUIS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
 int main(void) {
-    INPUT *inputs[11][2];
+    INPUT *inputs[12][2];
     memset(&inputs, 0, sizeof(inputs));
-    const int inputSize[11] = {
+    const int inputSize[12] = {
         1,
         2,
         1,
         1,
         2,
         2,
+        1,
         1,
         1,
         1,
@@ -187,6 +188,44 @@ int main(void) {
     CreateInputKeyboard(&inputs[RIGHTBUTTON], inputSize[9],VK_RIGHT);
     CreateInputKeyboard(&inputs[SELECTBUTTON], inputSize[10],VK_RETURN);
 
+
+    // void CreateInputKeyboard(INPUT*(*inputs)[2] , int size, ...) {
+    //     va_list args;
+    //     va_start(args, size);
+    //
+    //     for (int idx = 0; idx < size; idx++) {
+    //         int vk = va_arg(args, int);
+    //
+    //
+    //         // inputs[0][idx]->type = INPUT_KEYBOARD;
+    //         // inputs[0][idx]->ki.wVk=va_arg(args, int);
+    //         // inputs[1][idx]->type = INPUT_KEYBOARD;
+    //         // inputs[1][idx]->ki.wVk=va_arg(args, int);
+    //         // inputs[1][idx]->ki.dwFlags=KEYEVENTF_KEYUP;
+    //
+    //         (*inputs)[0][idx].type = INPUT_KEYBOARD;
+    //         (*inputs)[0][idx].ki.wVk = (WORD)vk;
+    //         (*inputs)[0][idx].ki.dwFlags = 0;
+    //
+    //         (*inputs)[1][idx].type = INPUT_KEYBOARD;
+    //         (*inputs)[1][idx].ki.wVk = (WORD)vk;
+    //         (*inputs)[1][idx].ki.dwFlags = KEYEVENTF_KEYUP;
+    //     }
+    //
+    //     va_end(args);
+    // }
+
+    inputs[TOUCHSCREEN][0]->type=INPUT_MOUSE;
+    inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
+    inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
+    // INPUT input;
+    // input.type = INPUT_MOUSE;
+    // input.mi.mouseData = 0;
+    // input.mi.dx = x * (65536 / GetSystemMetrics(SM_CXSCREEN)); //x being coord in pixels
+    // input.mi.dy =  y * (65536 / GetSystemMetrics(SM_CYSCREEN)); //y being coord in pixels
+    // input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE;
+    // SendInput(1, &input, sizeof(input));
+
     // printf("%d\n",inputs[LBUTTON][0]->mi.dwFlags);
     // printf("%d\n",inputs[LBUTTON][1]->mi.dwFlags);
 
@@ -244,10 +283,9 @@ int main(void) {
         }
         printf("releasing input %d\n", i);
     }
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 12; i++) {
         for (int j = 0; j < 2; j++) {
-            printf("inp"
-                   "ut freed %d\n", i);
+            printf("input freed %d\n", i);
             free(inputs[i][j]);
         }
     }
