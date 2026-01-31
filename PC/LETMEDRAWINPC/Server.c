@@ -26,17 +26,28 @@
 void CloseAll(int* SocketDS, int* SocketPC) {
 
     printf("Closing client socket\n");
-    if (SocketDS != 0) closesocket(*SocketDS);
+    if (SocketDS != 0 && *SocketDS != -1) {
+        printf("Closing client socket\n");
+        closesocket(*SocketDS);
+        *SocketDS = -1;
+    }
+
 
 
     printf("Closing server socket\n");
-    if (SocketPC != 0) closesocket(*SocketPC);
+    if (SocketPC != 0 && *SocketPC != -1) {
+        printf("Closing server socket\n");
+        closesocket(*SocketPC);
+        *SocketPC = -1;
+    }
 
 }
 
 __attribute__ ((hot))
 int IsInProgressOrBlockingStatus() {
-    if (WSAGetLastError()==WSAEWOULDBLOCK || WSAGetLastError()==WSAEINPROGRESS) {
+    int err = WSAGetLastError();
+    if (err == WSAEWOULDBLOCK || err == WSAEINPROGRESS) {
+
         return 1;
     }
     return 0;
@@ -121,7 +132,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 }
 
 
-int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12]) {
+int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[12]) {
 
     printf("Entering server mode\n\n");
     short posBuffer[2]= {0,0};
@@ -132,26 +143,26 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12])
 
     struct sockaddr_in PCAdress;
 
-    int SocketDS;
+    int SocketDS=-1;
 
     struct sockaddr_in DSAdr;
 
     memset(&PCAdress, 0, sizeof (PCAdress));
 
 
-    SocketDS=socket(AF_INET, SOCK_STREAM, 0);
+    /*SocketDS=socket(AF_INET, SOCK_STREAM, 0);
 
     if (SocketDS == SOCKET_ERROR) {
         Print_wsa_error("socket fd error");
         closesocket(SocketDS);
         return (1);
-    }
+    }*/
 
     int SocketPC = socket(AF_INET, SOCK_STREAM, 0);
 
     if (SocketPC == SOCKET_ERROR) {
         Print_wsa_error("socket fd error");
-        CloseAll(&SocketDS, &SocketPC);
+        closesocket(SocketPC);
         return (1);
     }
 
@@ -166,7 +177,7 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12])
     status = bind(SocketPC, (struct sockaddr *) &PCAdress, sizeof(PCAdress));
     if (status != 0) {
         Print_wsa_error("socket fd error");
-        CloseAll(&SocketDS, &SocketPC);
+        closesocket(SocketPC);
         return (2);
     }
     printf("Bound socket to localhost port %d\n", PCAdress.sin_port);
@@ -177,39 +188,42 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12])
     if (status != 0) {
 
         Print_wsa_error("socket fd error");
-        CloseAll(&SocketDS, &SocketPC);
+        closesocket(SocketPC);
         return (3);
     }
     printf("[Server] Set up select fd sets\n");
+    ioctlsocket(SocketPC, FIONBIO, &nonblock);
 
 
     int lastCursorPos[2]= {0,0};
     int absoluteCursorPos[2];
 
-    GetCursorPos(absoluteCursorPos);
+    //GetCursorPos(absoluteCursorPos);
 
     int DSConnected = 0;
 
     INT32 DSAdrLength = sizeof (DSAdr);
     uint16_t lastFlagsValue=flags;
+
     while (!kbhit())
     {
 
         if (!DSConnected) {
 
             SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
+
             if (!IsInProgressOrBlockingStatus()) {
                 if (SocketDS < 0) {
                     Print_wsa_error("socket fd error");
                     CloseAll(&SocketDS, &SocketPC);
                     return (1);
                 }
-                ioctlsocket(SocketDS, FIONBIO, &nonblock);
-                ioctlsocket(SocketPC, FIONBIO, &nonblock);
-
                 DSConnected = 1;
                 printf("You can now use your 3DS as a controller\n");
+                ioctlsocket(SocketDS, FIONBIO, &nonblock);
+
             }
+
         }
         else {
             status=ReadDSInputInfo(&SocketDS, &SocketPC, &flags, posBuffer);
@@ -232,7 +246,7 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12])
                     //     printf("Nope\n");
                     // }
                 }
-                else if (lastFlagsValue & 1<<TOUCHSCREEN) {
+                else if (GetFLag(lastFlagsValue,TOUCHSCREEN)) {
 
                     lastCursorPos[0] = absoluteCursorPos[0];
                     lastCursorPos[1] = absoluteCursorPos[1];

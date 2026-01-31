@@ -9,7 +9,7 @@
 #include <windows.h>
 
 
-void CreateInputs(INPUT*(* a)[12][2],const int* inputSize) {
+void CreateInputs(INPUT*(* a)[11][2],const int* inputSize) {
 
     for(int i=0;i<12;i++) {
 
@@ -109,16 +109,15 @@ int CreateInputMouse(INPUT*(*inputs)[2], int size, ...) {
 // POUR LE SAINT AMOUR DES VECTREX REFACTO ET NETTOIE MOI CE CODE FOU QUE JE SUIS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
 int main(void) {
-    INPUT *inputs[12][2];
+    INPUT *inputs[11][2];
     memset(&inputs, 0, sizeof(inputs));
-    const int inputSize[12] = {
+    const int inputSize[11] = {
         1,
         2,
         1,
         1,
         2,
         2,
-        1,
         1,
         1,
         1,
@@ -215,12 +214,12 @@ int main(void) {
     //     va_end(args);
     // }
 
-    inputs[TOUCHSCREEN][0]->type=INPUT_MOUSE;
-    inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
-    inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
+    //inputs[TOUCHSCREEN][0]->type=INPUT_MOUSE;
+    //inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
+    //inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
     // INPUT input;
     // input.type = INPUT_MOUSE;
-    // input.mi.mouseData = 0;
+    //inputs[TOUCHSCREEN][0]->mi.mouseData = 0;
     // input.mi.dx = x * (65536 / GetSystemMetrics(SM_CXSCREEN)); //x being coord in pixels
     // input.mi.dy =  y * (65536 / GetSystemMetrics(SM_CYSCREEN)); //y being coord in pixels
     // input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE;
