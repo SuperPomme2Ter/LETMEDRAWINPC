@@ -216,14 +216,15 @@ int main(void) {
     // }
 
     inputs[TOUCHSCREEN][0]->type=INPUT_MOUSE;
-    inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
-    inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
+    //inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
+    //inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_MOVE;
+    inputs[TOUCHSCREEN][0]->mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE;
     // INPUT input;
     // input.type = INPUT_MOUSE;
     inputs[TOUCHSCREEN][0]->mi.mouseData = 0;
     // input.mi.dx = x * (65536 / GetSystemMetrics(SM_CXSCREEN)); //x being coord in pixels
     // input.mi.dy =  y * (65536 / GetSystemMetrics(SM_CYSCREEN)); //y being coord in pixels
-    // input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE;
+    
     // SendInput(1, &input, sizeof(input));
 
     // printf("%d\n",inputs[LBUTTON][0]->mi.dwFlags);

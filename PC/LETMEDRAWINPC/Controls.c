@@ -21,8 +21,8 @@ int GenerateInput(INPUT* inputToSend, int size) {
 }
 
 int GenerateMouseMvmtInput(INPUT* inputToSend,int coordX, int coordY) {
-    inputToSend[0].mi.dx=coordX;
-    inputToSend[0].mi.dy=coordY;
+    inputToSend[0].mi.dx=coordX*(65536 / GetSystemMetrics(SM_CXSCREEN));
+    inputToSend[0].mi.dy=coordY*(65536 / GetSystemMetrics(SM_CYSCREEN));
     if (GenerateInput(inputToSend,1)<0) {
         return -1;
     }

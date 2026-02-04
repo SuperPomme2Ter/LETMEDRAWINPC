@@ -245,7 +245,7 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12])
                     //     printf("set cursor fail\n");
                     //
                     // }
-                    if (GenerateMouseMvmtInput((*inputs)[11][0],posBuffer[0],posBuffer[1])<0) {
+                    if (GenerateMouseMvmtInput((*inputs)[11][0],absoluteCursorPos[0],absoluteCursorPos[1])<0) {
                         printf("cursor movement failed\n");
                     }
                     // else {
