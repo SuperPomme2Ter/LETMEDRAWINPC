@@ -1,6 +1,4 @@
-//
-// Created by rapha on 23/07/2025.
-//
+
 #include <stdio.h>
 #include <ws2tcpip.h>
 
@@ -24,20 +22,21 @@
 
 
 void CloseAll(int* SocketDS, int* SocketPC) {
-
-    printf("Closing client socket\n");
-    if (SocketDS != 0 && *SocketDS != -1) {
+    
+    if (*SocketDS != 0 && *SocketDS != -1) {
         printf("Closing client socket\n");
         closesocket(*SocketDS);
+        shutdown(*SocketDS,2);
+        
         *SocketDS = -1;
     }
 
 
-
-    printf("Closing server socket\n");
-    if (SocketPC != 0 && *SocketPC != -1) {
+    
+    if (*SocketPC != 0 && *SocketPC != -1) {
         printf("Closing server socket\n");
         closesocket(*SocketPC);
+        shutdown(*SocketPC,2);
         *SocketPC = -1;
     }
 
@@ -55,7 +54,7 @@ int IsInProgressOrBlockingStatus() {
 }
 
 __attribute__ ((hot))
-int ReadDSScreenCoordinates(const uint16_t coordinatesRecv[3],short actualCoordinates[2])
+int ReadDSScreenCoordinates(uint16_t coordinatesRecv[3],short actualCoordinates[2])
 {
         if (coordinatesRecv[1]==NOTOUCH
             ||  coordinatesRecv[1]<=0
@@ -87,6 +86,7 @@ int ReadDSFlags(const uint16_t* flagsRecv,uint16_t* actualFlags) {
 __attribute__ ((hot))
 int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coordinatesBuffer[2]) {
 
+    
 
 
     uint16_t buffer[3];
@@ -94,7 +94,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 
     memset(buffer, 0, sizeof buffer);
 
-    bytes_read = recv(*DSSocket, buffer, sizeof(buffer), 0);
+    bytes_read = recv(*DSSocket, (char*)buffer, sizeof(buffer), 0);
 
 
     if (bytes_read<0){
@@ -121,7 +121,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 
 
 
-    if (!ReadDSScreenCoordinates(&buffer, coordinatesBuffer)) {
+    if (!ReadDSScreenCoordinates(buffer, coordinatesBuffer)) {
         coordinatesBuffer[0]= NOTOUCH;
         coordinatesBuffer[1]= NOTOUCH;
 
@@ -132,7 +132,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 }
 
 
-int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[12]) {
+int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12]) {
 
     printf("Entering server mode\n\n");
     short posBuffer[2]= {0,0};
@@ -146,30 +146,33 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[12])
     int SocketDS=-1;
 
     struct sockaddr_in DSAdr;
+    //DSAdr.sin_port=htons(4242);
 
     memset(&PCAdress, 0, sizeof (PCAdress));
 
 
-    /*SocketDS=socket(AF_INET, SOCK_STREAM, 0);
-
-    if (SocketDS == SOCKET_ERROR) {
-        Print_wsa_error("socket fd error");
-        closesocket(SocketDS);
-        return (1);
-    }*/
+    // SocketDS=socket(AF_INET, SOCK_STREAM, 0);
+    //
+    // if (SocketDS == SOCKET_ERROR) {
+    //     Print_wsa_error("socket fd error");
+    //     closesocket(SocketDS);
+    //     return (1);
+    // }
 
     int SocketPC = socket(AF_INET, SOCK_STREAM, 0);
+    
 
     if (SocketPC == SOCKET_ERROR) {
         Print_wsa_error("socket fd error");
         closesocket(SocketPC);
+        shutdown(SocketPC, 2);
         return (1);
     }
 
     printf("Created server socket fd: %d\n", SocketPC);
 
     PCAdress.sin_family = AF_INET;
-    PCAdress.sin_addr.s_addr = *PCIP;
+    PCAdress.sin_addr.s_addr = INADDR_ANY;
     PCAdress.sin_port = htons(4242);
 
 
@@ -178,17 +181,19 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[12])
     if (status != 0) {
         Print_wsa_error("socket fd error");
         closesocket(SocketPC);
+        shutdown(SocketPC, 2);
         return (2);
     }
     printf("Bound socket to localhost port %d\n", PCAdress.sin_port);
 
 
     printf("Listening on port %d\n", PCAdress.sin_port);
-    status = listen(SocketPC, BACKLOG);
+    status = listen(SocketPC, 1);
     if (status != 0) {
 
         Print_wsa_error("socket fd error");
         closesocket(SocketPC);
+        shutdown(SocketPC, 2);
         return (3);
     }
     printf("[Server] Set up select fd sets\n");
@@ -208,7 +213,7 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[12])
     while (!kbhit())
     {
 
-        if (!DSConnected) {
+        if (DSConnected==0) {
 
             SocketDS = accept(SocketPC, (struct sockaddr *) &DSAdr, &DSAdrLength);
 
@@ -218,10 +223,11 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[11][2], int inputSize[12])
                     CloseAll(&SocketDS, &SocketPC);
                     return (1);
                 }
+                ioctlsocket(SocketDS, FIONBIO, &nonblock);
+                ioctlsocket(SocketPC, FIONBIO, &nonblock);
+
                 DSConnected = 1;
                 printf("You can now use your 3DS as a controller\n");
-                ioctlsocket(SocketDS, FIONBIO, &nonblock);
-
             }
 
         }

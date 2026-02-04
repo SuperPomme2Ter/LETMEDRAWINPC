@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
     printf("3DS Listening\n");
 
 
-    fcntl(PCClientSocket, F_SETFL, fcntl(PCClientSocket, F_GETFL, 0) | O_NONBLOCK);
+    //fcntl(PCClientSocket, F_SETFL, fcntl(PCClientSocket, F_GETFL, 0) | O_NONBLOCK);
     fcntl(DSServerSocket, F_SETFL, fcntl(DSServerSocket, F_GETFL, 0) | O_NONBLOCK);
 
     while (aptMainLoop()) {
@@ -155,18 +155,19 @@ int main(int argc, char **argv) {
                 PCAdr = client;
                 PCAdr.sin_family = AF_INET;
                 PCAdr.sin_port = htons(4242);
-
                 shutdown(PCClientSocket,SHUT_RDWR);
                 close(PCClientSocket);
                 shutdown(DSServerSocket,SHUT_RDWR);
                 close(DSServerSocket);
+
+                
             }
             printf("Entering Client Mode\n\n");
             socketMode = 0;
             PCAdr.sin_family = AF_INET;
-            PCAdr.sin_port = htons(4242);
             PCServerSocket = socket(AF_INET, SOCK_STREAM, 0);
             fcntl(PCServerSocket, F_SETFL, O_NONBLOCK);
+            
         }
         else if (socketMode == 0) {
 
@@ -196,7 +197,6 @@ int main(int argc, char **argv) {
 
             keyFlags |= ConvertToAppFlag(kDown);
             keyFlags &= ~ConvertToAppFlag(kUp);
-
 
             if (!(keyFlags & TOUCHSCREEN)) {
                 inputInfo[1] = NOTOUCH;
@@ -237,8 +237,11 @@ int main(int argc, char **argv) {
         gfxSwapBuffers();
     }
     close(DSServerSocket);
+    shutdown(DSServerSocket,SHUT_RDWR);
     close(PCClientSocket);
+    shutdown(PCClientSocket,SHUT_RDWR);
     close(PCServerSocket);
+    shutdown(PCServerSocket,SHUT_RDWR);
     return 0;
 }
 
