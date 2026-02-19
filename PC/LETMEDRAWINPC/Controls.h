@@ -20,6 +20,7 @@
 #define YBUTTON 10
 #define TOUCHSCREEN 11
 
+
 int GenerateInput(INPUT* inputToSend,int size);
 
 int GenerateMouseMvmtInput(INPUT* inputToSend,int coordX, int coordY);

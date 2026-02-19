@@ -3,6 +3,7 @@ project(LETMEDRAWINPC C)
 
 set(CMAKE_C_STANDARD 11)
 
+
 add_executable(LETMEDRAWINPC
         main.c
         Client.c
@@ -16,6 +17,10 @@ add_executable(LETMEDRAWINPC
 
 )
 target_link_libraries(LETMEDRAWINPC ws2_32)
+target_link_libraries(LETMEDRAWINPC libcomctl32.a)
+
+
+
 #[[
 include_directories(F:/devkitPro/devkitARM/include)
 include_directories(F:/devkitPro/libctru/include)
