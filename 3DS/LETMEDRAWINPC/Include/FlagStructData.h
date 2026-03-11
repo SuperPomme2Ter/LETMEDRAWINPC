@@ -28,6 +28,11 @@ extern const u_int32_t mask3DSToPC;
 
 
 
+/**
+ * 
+ * @param mask3DS Raw 3DS inputs, the flags returned from the hidKeyDown/Up etc
+ * @return Flags usable for sending to PC, removed of all the unused inputs flags of the 3DS
+ */
 u_int16_t ConvertToAppFlag(u_int32_t mask3DS);
 
 

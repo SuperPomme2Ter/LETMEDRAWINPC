@@ -110,6 +110,7 @@ int main(int argc, char **argv) {
         kDown = hidKeysDown();
         kUp = hidKeysUp();
         gspWaitForVBlank();
+        
         if (kDown & KEY_START) break;
 
         if (socketMode == -1) {
@@ -170,6 +171,7 @@ int main(int argc, char **argv) {
             keyFlags |= ConvertToAppFlag(kDown);
             keyFlags &= ~ConvertToAppFlag(kUp);
 
+            //Send data only when a flag change
             if (!(keyFlags & TOUCHSCREEN)) {
                 inputInfo[1] = NOTOUCH;
                 inputInfo[2] = NOTOUCH;
@@ -182,6 +184,7 @@ int main(int argc, char **argv) {
                     }
                 }
             }
+            // Send data every frame when the touchscreen is used
             else {
                 inputInfo[0] = keyFlags;
 
