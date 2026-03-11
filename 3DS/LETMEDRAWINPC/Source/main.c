@@ -17,7 +17,6 @@
 #define NOTOUCH 999
 
 
-short GetBitshiftingOccurence(u_int16_t bitmask);
 
 u_int16_t From3DSFlagsToAppFlags(u_int16_t flags3ds);
 
@@ -28,25 +27,17 @@ s32 DSServerSocket = -1, PCClientSocket = -1, PCServerSocket=-1;
 __attribute__((format(printf,1,2)))
 void failExit(const char *fmt, ...);
 
+__attribute__((cold))
 void PrintWarning(const char *fmt, ...);
 
 //---------------------------------------------------------------------------------
-
+__attribute__((cold))
 void socShutdown() {
     //---------------------------------------------------------------------------------
     printf("waiting for socExit...\n");
     socExit();
 }
 
-void GetCPUClockTimeTaken(clock_t* t, u_int8_t refreshTime) {
-
-    clock_t tmp=clock()-*t;
-    if (refreshTime) {
-        *t=clock();
-    }
-    printf("number of Clock cycle since last refresh : %ld (%f seconds)\n\n",tmp, ((float)tmp) / CLOCKS_PER_SEC);
-
-}
 
 //---------------------------------------------------------------------------------
 int main(int argc, char **argv) {
@@ -62,7 +53,6 @@ int main(int argc, char **argv) {
 
     u_int32_t clientlen;
     u_int32_t kDown;
-    u_int32_t kHeld;
     u_int32_t kUp;
 
     u_int16_t keyFlags = 0b000000000000;
@@ -133,7 +123,6 @@ int main(int argc, char **argv) {
 
         hidScanInput();
         kDown = hidKeysDown();
-        kHeld = hidKeysHeld();
         kUp = hidKeysUp();
         gspWaitForVBlank();
         if (kDown & KEY_START) break;
@@ -245,21 +234,7 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-short GetBitshiftingOccurence(u_int16_t bitmask) {
-    short occurence=1;
-    u_int16_t testingMask=1;
-    for (short i = 0; i < 16; i++) {
-        testingMask <<= 1;
-        occurence ++;
-        if (bitmask & testingMask) {
-            return occurence;
-        }
-    }
-    if (occurence >= 16) {
-        return -1;
-    }
 
-}
 
 //---------------------------------------------------------------------------------
 void failExit(const char *fmt, ...) {

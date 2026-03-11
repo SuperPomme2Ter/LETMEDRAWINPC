@@ -1,16 +1,11 @@
-﻿//
-// Created by SuperPomme2Ter on 21/09/2025.
-//
-
-
-#include "FlagStructData.h"
+﻿#include "FlagStructData.h"
 
 
 
 const u_int32_t mask3DSToPC = 0b00000000000100000000111111110111;
 
 __attribute__ ((hot))
-u_int16_t ConvertToAppFlag(u_int32_t flag3DS) {
+u_int16_t ConvertToAppFlag(const u_int32_t flag3DS) {
 
 
     int n = 0;
@@ -24,3 +19,4 @@ u_int16_t ConvertToAppFlag(u_int32_t flag3DS) {
     }
     return rslt;
 }
+
