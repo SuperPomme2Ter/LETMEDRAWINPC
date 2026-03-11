@@ -17,10 +17,6 @@
 #define NOTOUCH 999
 
 
-
-u_int16_t From3DSFlagsToAppFlags(u_int16_t flags3ds);
-
-
 static u_int32_t *SOC_buffer = NULL;
 s32 DSServerSocket = -1, PCClientSocket = -1, PCServerSocket=-1;
 
@@ -30,19 +26,15 @@ void failExit(const char *fmt, ...);
 __attribute__((cold))
 void PrintWarning(const char *fmt, ...);
 
-//---------------------------------------------------------------------------------
+
 __attribute__((cold))
 void socShutdown() {
-    //---------------------------------------------------------------------------------
+
     printf("waiting for socExit...\n");
     socExit();
 }
 
-
-//---------------------------------------------------------------------------------
 int main(int argc, char **argv) {
-
-    //---------------------------------------------------------------------------------
 
     int socketMode = -1;
     int status;
@@ -69,22 +61,17 @@ int main(int argc, char **argv) {
     atexit(gfxExit);
 
     consoleInit(GFX_TOP, NULL);
-
-    // allocate buffer for SOC service
+    
     SOC_buffer = (u32 *) memalign(SOC_ALIGN, SOC_BUFFERSIZE);
 
     if (SOC_buffer == NULL) {
         failExit("memalign: failed to allocate\n");
     }
-
-    // Now intialise soc:u service
     int ret;
     if ((ret = socInit(SOC_buffer, SOC_BUFFERSIZE)) != 0) {
         failExit("socInit: 0x%08X\n", (unsigned int) ret);
     }
 
-    // register socShutdown to run at exit
-    // atexit functions execute in reverse order so this runs before gfxExit
     atexit(socShutdown);
     clientlen = sizeof(client);
 
@@ -105,7 +92,6 @@ int main(int argc, char **argv) {
 
 
     if ((bind(DSServerSocket, (struct sockaddr *) &server, sizeof (server)))<0) {
-        //close(DSServerSocket);
         failExit("bind: %d %s\n", errno, strerror(errno));
     }
 
@@ -115,8 +101,7 @@ int main(int argc, char **argv) {
     printf("3DS IP Adress %s\n", inet_ntoa(server.sin_addr));
     printf("3DS Listening\n");
 
-
-    //fcntl(PCClientSocket, F_SETFL, fcntl(PCClientSocket, F_GETFL, 0) | O_NONBLOCK);
+    
     fcntl(DSServerSocket, F_SETFL, fcntl(DSServerSocket, F_GETFL, 0) | O_NONBLOCK);
 
     while (aptMainLoop()) {
@@ -172,15 +157,13 @@ int main(int argc, char **argv) {
                         PrintWarning("connection in progress\n\n");
                         printf(" port : %d\n", PCAdr.sin_port);
                         printf(" IP : %s\n", inet_ntoa(PCAdr.sin_addr));
-                    }//else {
+                    }
                         printf("Connected\n\n");
                         printf("Touchscreen work as your mouse\n");
                         socketMode = 1;
                         inputInfo[1] = NOTOUCH;
                         inputInfo[2] = NOTOUCH;
-                        //printf("%i",1 & ~TOUCHSCREEN);
-                    //}
-
+                    
                 }
         } else if (socketMode == 1) {
 
@@ -220,8 +203,7 @@ int main(int argc, char **argv) {
             }
 
         }
-
-        // Flush and swap framebuffers
+        
         gfxFlushBuffers();
         gfxSwapBuffers();
     }
