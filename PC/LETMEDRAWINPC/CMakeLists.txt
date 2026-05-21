@@ -17,13 +17,8 @@ add_executable(LETMEDRAWINPC
 
 )
 target_link_libraries(LETMEDRAWINPC ws2_32)
-target_link_libraries(LETMEDRAWINPC libcomctl32.a)
+
+include_directories(C:/msys2/ucrt64/include/gtk-4.0)
 
 
-
-#[[
-include_directories(F:/devkitPro/devkitARM/include)
-include_directories(F:/devkitPro/libctru/include)
-include_directories(F:/devkitPro/devkitARM/arm-none-eabi/include)
-]]
 
