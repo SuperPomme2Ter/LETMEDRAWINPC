@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
+    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="LETMEDRAWINPC" targetName="LETMEDRAWINPC" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="15a9bb14-9e5a-4222-925d-65f671912e1e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/LETMEDRAWINPC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/LETMEDRAWINPC.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/copilot.data.migration.agent.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/copilot.data.migration.agent.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/copilot.data.migration.ask.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/copilot.data.migration.ask.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/copilot.data.migration.ask2agent.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/copilot.data.migration.edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/copilot.data.migration.edit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Include/FlagStructData.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Include/FlagStructData.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/Source.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/Source.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/FlagStructData.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/FlagStructData.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/Source/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/build/FlagStructData.d" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/build/FlagStructData.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/build/LETMEDRAWINPC.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/build/LETMEDRAWINPC.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/build/LETMEDRAWINPC.map" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/build/LETMEDRAWINPC.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/build/main.d" beforeDir="false" afterPath="$PROJECT_DIR$/../../3DS/LETMEDRAWINPC/build/main.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../A FAIRE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../A FAIRE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PC.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client.c" beforeDir="false" afterPath="$PROJECT_DIR$/Client.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client.h" beforeDir="false" afterPath="$PROJECT_DIR$/Client.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controls.c" beforeDir="false" afterPath="$PROJECT_DIR$/Controls.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controls.h" beforeDir="false" afterPath="$PROJECT_DIR$/Controls.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Debug.c" beforeDir="false" afterPath="$PROJECT_DIR$/Debug.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Debug.h" beforeDir="false" afterPath="$PROJECT_DIR$/Debug.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server.c" beforeDir="false" afterPath="$PROJECT_DIR$/Server.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server.h" beforeDir="false" afterPath="$PROJECT_DIR$/Server.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../commandes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../commandes.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/LETMEDRAWINPC/PC/LETMEDRAWINPC" value="3Ei2Bdjga3SOkqkNLeOQDLhfXyw" />
+    </persistenceIdMap>
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="QaTGTzAR" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2025" />
+    <option name="minorVersion" value="3.2" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3Ei2Bdjga3SOkqkNLeOQDLhfXyw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CMake Application.LETMEDRAWINPC.executor&quot;: &quot;Run&quot;,
+    &quot;CMake Debug.Project.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Test-WindowUI&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="LETMEDRAWINPC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="LETMEDRAWINPC" TARGET_NAME="LETMEDRAWINPC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="LETMEDRAWINPC" RUN_TARGET_NAME="LETMEDRAWINPC">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="15a9bb14-9e5a-4222-925d-65f671912e1e" name="Changes" comment="" />
+      <created>1780646936004</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1780646936004</updated>
+      <workItem from="1780646938422" duration="5176000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

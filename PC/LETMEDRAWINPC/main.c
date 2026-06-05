@@ -137,8 +137,7 @@ activate (GtkApplication *app,
     g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
     gtk_window_set_child (GTK_WINDOW (window), button);
 
-    gtk_window_present (GTK_WINDOW (window));
-}
+    gtk_window_present (GTK_WINDOW (window));}
 
 int
 main (int    argc,
@@ -148,8 +147,11 @@ main (int    argc,
     int status;
 
     app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
+
     g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+
     status = g_application_run (G_APPLICATION (app), argc, argv);
+    
     g_object_unref (app);
 
     return status;
