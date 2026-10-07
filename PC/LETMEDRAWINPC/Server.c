@@ -60,7 +60,11 @@ int ReadDSScreenCoordinates(uint16_t coordinatesRecv[3],short actualCoordinates[
             ||  coordinatesRecv[1]<=0
             ||  coordinatesRecv[1]>=XTOUCH
             ||  coordinatesRecv[2]<=0
-            ||  coordinatesRecv[2]>=YTOUCH) { return 0; }
+            ||  coordinatesRecv[2]>=YTOUCH)
+        {
+            printf("invalid coordinates\n");
+            return 0;
+        }
 
         actualCoordinates[0] = (short)-((XTOUCH*0.5)- coordinatesRecv[1]);
         actualCoordinates[1] = (short)-((YTOUCH*0.5)- coordinatesRecv[2]);
@@ -85,9 +89,6 @@ int ReadDSFlags(const uint16_t* flagsRecv,uint16_t* actualFlags) {
 
 __attribute__ ((hot))
 int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coordinatesBuffer[2]) {
-
-    
-
 
     uint16_t buffer[3];
     int bytes_read=0;
@@ -121,11 +122,9 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 
 
 
-    if (!ReadDSScreenCoordinates(buffer, coordinatesBuffer)) {
+    if (!GetFLag(*flagsBuffer, TOUCHSCREEN) || !ReadDSScreenCoordinates(buffer, coordinatesBuffer)) {
         coordinatesBuffer[0]= NOTOUCH;
         coordinatesBuffer[1]= NOTOUCH;
-
-        return 1;
     }
     return 1;
 
@@ -135,7 +134,7 @@ int ReadDSInputInfo (int *DSSocket,int *PCSocket,uint16_t* flagsBuffer,short coo
 int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12]) {
 
     printf("Entering server mode\n\n");
-    short posBuffer[2]= {0,0};
+    int16_t posBuffer[2]= {0,0};
     uint16_t flags=0;
     int status;
 
@@ -232,27 +231,30 @@ int ServerPart(const uint32_t *PCIP, INPUT*(* inputs)[12][2], int inputSize[12])
 
         }
         else {
+            
             status=ReadDSInputInfo(&SocketDS, &SocketPC, &flags, posBuffer);
+            short lastPosBuffer[2]= {0,0};
 
             if (status==1) {
 
                 if (GetFLag(flags,TOUCHSCREEN) && posBuffer[0]!=NOTOUCH) {
 
+                    if (GetFLag(lastFlagsValue,TOUCHSCREEN))
+                    {
+                        
+                    }
                     absoluteCursorPos[0] = posBuffer[0]+lastCursorPos[0];
                     absoluteCursorPos[1] = posBuffer[1]+lastCursorPos[1];
-
-                    // if (!SetCursorPos(absoluteCursorPos[0], absoluteCursorPos[1])) {
-                    //     printf("set cursor fail\n");
-                    //
-                    // }
+                    
+                    // check if the cursor is out of bounds of the screen coordinates 
+                    absoluteCursorPos[0] = (absoluteCursorPos[0]>GetSystemMetrics(SM_CXSCREEN)) ? GetSystemMetrics(SM_CXSCREEN) : (absoluteCursorPos[0]<0) ? 0 : absoluteCursorPos[0];
+                    absoluteCursorPos[1] = (absoluteCursorPos[1]>GetSystemMetrics(SM_CYSCREEN)) ? GetSystemMetrics(SM_CYSCREEN) : (absoluteCursorPos[1]<0) ? 0 : absoluteCursorPos[1]; 
+                    
                     if (GenerateMouseMvmtInput((*inputs)[11][0],absoluteCursorPos[0],absoluteCursorPos[1])<0) {
                         printf("cursor movement failed\n");
                     }
-                    // else {
-                    //     printf("Nope\n");
-                    // }
                 }
-                else if (GetFLag(lastFlagsValue,TOUCHSCREEN)) {
+                else if (GetFLag(lastFlagsValue,TOUCHSCREEN) && posBuffer[0]==NOTOUCH) {
 
                     lastCursorPos[0] = absoluteCursorPos[0];
                     lastCursorPos[1] = absoluteCursorPos[1];
